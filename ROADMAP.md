@@ -20,8 +20,8 @@
 - [x] Link GitHub pentru proiectul FPGA (repo FPGA-Multi-Player-Reaction-Time-Game, din CV)
 
 ## v2 — publicare
-- [ ] Repo GitHub `site-cv` (Denis îl creează și face push)
-- [ ] Publicare pe Cloudflare Pages / GitHub Pages
+- [x] Repo GitHub `deniscalea/deniscalea.github.io` (public; CV-ul vechi cu telefon e în .gitignore)
+- [x] Publicat gratuit pe GitHub Pages: https://deniscalea.github.io
 - [ ] Imagine Open Graph PNG 1200×630 + URL-uri absolute în meta
 - [ ] Domeniu (Denis îl cumpără) + conectare DNS + HTTPS
 - [ ] Link-ul site-ului pus în CV, GitHub și LinkedIn

@@ -30,4 +30,5 @@ Ce trebuie atins (pentru Claude sau dacă o faci de mână):
 - După orice schimbare: verifici în browser la 360px și pe desktop, în ambele limbi.
 
 ## Publicare
+Live: https://deniscalea.github.io (GitHub Pages, repo `deniscalea/deniscalea.github.io`, branch `main`). Orice `git push` pe main republică site-ul în 1–2 minute, așa că se face doar cu OK-ul lui Denis. Nu urca `assets/Denis_Calin_CV.pdf` (are telefonul).
 Vezi `PUBLICARE.md`. Deploy-ul public și cumpărarea domeniului le face Denis (sau doar cu OK-ul lui).
