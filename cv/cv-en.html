@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Denis-Alexandru Călin · CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=block" rel="stylesheet">
+<link rel="stylesheet" href="cv.css">
+<script>if (/[?&]print/.test(location.search)) document.documentElement.className = 'shot';</script>
+</head>
+<body>
+<main class="page">
+
+  <div class="topbar mono">
+    <span class="brand">CALEA</span>
+    <span>Curriculum Vitae / 2026</span>
+  </div>
+
+  <header class="head">
+    <p class="head-k mono">Cluj-Napoca<br>Romania</p>
+    <div>
+      <h1 class="name"><span>Denis-Alexandru</span><span>Călin</span></h1>
+      <p class="role mono">Computer Engineering Student · Software &amp; Hardware</p>
+    </div>
+    <ul class="contact mono">
+      <li><a href="mailto:deniscaleax@gmail.com">deniscaleax@gmail.com</a></li>
+      <li><a href="https://github.com/deniscalea">github.com/deniscalea</a></li>
+      <li>Cluj-Napoca, Romania</li>
+    </ul>
+  </header>
+
+  <section class="sec">
+    <h2 class="sec-k mono"><b>01</b>Profile</h2>
+    <p class="profile">
+      Second-year Computer Science student at the Technical University of <span class="nw">Cluj-Napoca</span> with <span class="nw">hands-on</span> work
+      across the stack, from VHDL designs on FPGA and x86 assembly to C/C++ and Java.
+      I enjoy building complete systems and test what I build.
+      Looking for an internship where I can learn from an experienced team and contribute to real products.
+    </p>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-k mono"><b>02</b>Education</h2>
+    <div>
+      <div class="item">
+        <div class="item-head">
+          <h3 class="item-title">Technical University of Cluj-Napoca (UTCN)</h3>
+          <span class="when mono">2025 – present</span>
+        </div>
+        <p class="sub">B.Sc. Computer Science and Information Technology, Faculty of Automation and Computer Science · Year 2</p>
+      </div>
+      <div class="item">
+        <div class="item-head">
+          <h3 class="item-title">„Ion Minulescu” National College</h3>
+          <span class="when mono">2021 – 2025</span>
+        </div>
+        <p class="sub">Mathematics &amp; Computer Science, intensive Computer Science track</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-k mono"><b>03</b>Projects</h2>
+    <div>
+      <div class="item">
+        <div class="item-head">
+          <h3 class="item-title"><a href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">FPGA Multi-Player Reaction Time Game</a></h3>
+          <span class="when mono">2026</span>
+        </div>
+        <a class="url mono" href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game</a>
+        <ul class="points">
+          <li>Designed a hardware reaction game for up to 4 players × 5 rounds, written entirely in VHDL with no software layer.</li>
+          <li>Built a modular architecture of 14 VHDL modules driven by a central FSM control unit, with a clear data path (subtractors, comparators, records memory).</li>
+          <li>Generated unpredictable stimulus delays with an LFSR and detected false starts; stored each player's best time and picked the winner automatically.</li>
+          <li>Divided the 100 MHz clock to a 1 ms tick; drove 8 multiplexed 7-segment digits via Double Dabble binary-to-BCD conversion; debounced buttons with short/long-press actions.</li>
+        </ul>
+        <ul class="tags mono"><li>VHDL</li><li>FPGA</li><li>Vivado</li><li>FSM</li><li>Digital Design</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-k mono"><b>04</b>Coursework</h2>
+    <ul class="courses">
+      <li>Fundamental Algorithms <span class="mono">C++</span></li>
+      <li>Object-Oriented Programming <span class="mono">Java</span></li>
+      <li>Data Structures &amp; Algorithms <span class="mono">C</span></li>
+      <li>Databases <span class="mono">SQL</span></li>
+      <li>Computer Architecture <span class="mono">x86 Assembly</span></li>
+      <li>Digital Systems Design <span class="mono">VHDL</span></li>
+    </ul>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-k mono"><b>05</b>Skills</h2>
+    <dl class="skills">
+      <dt class="mono">Languages</dt><dd>C, C++, Java, SQL, VHDL, x86 Assembly</dd>
+      <dt class="mono">CS fundamentals</dt><dd>Data structures, sorting, trees, graphs, hash tables, greedy, divide-and-conquer</dd>
+      <dt class="mono">Tools</dt><dd>Git &amp; GitHub, Vivado, IntelliJ IDEA, Visual Studio, VS Code, CMake</dd>
+      <dt class="mono">Spoken</dt><dd>Romanian (native), English (advanced, B2–C1)</dd>
+    </dl>
+  </section>
+
+  <footer class="foot mono">
+    <span>Denis-Alexandru Călin</span>
+    <span>deniscaleax@gmail.com</span>
+  </footer>
+
+</main>
+</body>
+</html>
