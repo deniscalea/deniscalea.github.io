@@ -1,0 +1,75 @@
+<!doctype html>
+<!-- Sursa imaginii assets/img/seg7.webp: afișajul pe 8 cifre în prim-plan.
+     Ordinea e cea din DISPLAY_CTRL.vhd: AN7 = „U”, AN6 = jucătorul, AN5 = „r”, AN4 = runda, AN3…AN0 = timpul în ms (BCD).
+     Glifele „U” și „r” sunt exact cele din decodorul de segmente. Randare: bash art/render.sh -->
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>seg7</title>
+<link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1600px; height: 1000px; overflow: hidden; background: #000; }
+  .scene { position: absolute; inset: 0; perspective: 1400px; perspective-origin: 50% 30%; background: radial-gradient(70% 60% at 50% 45%, #161616, #000 70%); }
+  .plane { position: absolute; left: 50%; top: 50%; width: 2100px; height: 900px; margin: -560px 0 0 -1050px; transform: rotateX(32deg) rotateZ(-7deg) translateZ(-330px) translateX(-40px); transform-style: preserve-3d; }
+  svg { display: block; width: 100%; height: 100%; }
+  .mono { font-family: "Martian Mono", monospace; font-stretch: 87.5%; }
+  .grain { position: absolute; inset: 0; opacity: 0.2; mix-blend-mode: screen; }
+  .vig { position: absolute; inset: 0; background: radial-gradient(80% 70% at 50% 50%, transparent 50%, rgba(0,0,0,.9)); }
+</style>
+</head>
+<body>
+<div class="scene"><div class="plane"><svg id="s" viewBox="0 0 2100 900" xmlns="http://www.w3.org/2000/svg"></svg></div></div>
+<svg class="grain" width="1600" height="1000"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1600" height="1000" filter="url(#n)"/></svg>
+<div class="vig"></div>
+<script>
+(function () {
+  var T = 22, L = 104;                        // grosimea și lungimea unui segment
+  function hSeg(cx, cy) { var a = L / 2, h = T / 2; return [cx - a, cy, cx - a + h, cy - h, cx + a - h, cy - h, cx + a, cy, cx + a - h, cy + h, cx - a + h, cy + h].join(' '); }
+  function vSeg(cx, cy) { var a = L / 2, h = T / 2; return [cx, cy - a, cx + h, cy - a + h, cx + h, cy + a - h, cx, cy + a, cx - h, cy + a - h, cx - h, cy - a + h].join(' '); }
+  var G = 4;
+  var SEG = { a: hSeg(62, 12), b: vSeg(62 + L / 2 + G, 12 + L / 2 + G), c: vSeg(62 + L / 2 + G, 12 + L * 1.5 + 3 * G), d: hSeg(62, 12 + 2 * L + 4 * G), e: vSeg(62 - L / 2 - G, 12 + L * 1.5 + 3 * G), f: vSeg(62 - L / 2 - G, 12 + L / 2 + G), g: hSeg(62, 12 + L + 2 * G) };
+  /* segmente aprinse, după decodorul din DISPLAY_CTRL.vhd */
+  var GLYPH = { '0': 'abcdef', '1': 'bc', '2': 'abdeg', '3': 'abcdg', '4': 'bcfg', '7': 'abc', 'U': 'bcdef', 'r': 'eg' };
+  var text = ['U', '1', 'r', '3', '0', '2', '4', '7'];
+  var focus = 5.2;                             // cifra în focus (DOF)
+  var out = '<defs>';
+  for (var i = 0; i < 8; i++) {
+    var b = Math.min(7, Math.abs(i - focus) * 1.55);
+    out += '<filter id="d' + i + '" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="' + b.toFixed(2) + '"/></filter>';
+  }
+  out += '<filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="14" result="b1"/><feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b2"/><feMerge><feMergeNode in="b1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+  out += '<linearGradient id="win" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#161616"/><stop offset="1" stop-color="#090909"/></linearGradient>';
+  out += '<linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0.3" stop-color="#fff" stop-opacity="0"/><stop offset="0.45" stop-color="#fff" stop-opacity="0.07"/><stop offset="0.6" stop-color="#fff" stop-opacity="0"/></linearGradient>';
+  out += '<filter id="soft"><feGaussianBlur stdDeviation="2.2"/></filter>';
+  out += '</defs>';
+  /* placa */
+  out += '<rect x="0" y="0" width="2100" height="900" fill="#050505"/>';
+  for (var y = 30; y < 900; y += 36) out += '<line x1="0" x2="2100" y1="' + y + '" y2="' + y + '" stroke="#fff" stroke-opacity="0.03"/>';
+  /* trasee spre anozi */
+  for (var k = 0; k < 8; k++) {
+    var x = 250 + k * 205 + (k > 3 ? 70 : 0);
+    out += '<polyline points="' + (x + 60) + ',700 ' + (x + 60) + ',760 ' + (x + 120) + ',820 ' + (x + 120) + ',900" fill="none" stroke="#fff" stroke-opacity="0.22" stroke-width="3" filter="url(#soft)"/>';
+    out += '<text class="mono" x="' + (x + 30) + '" y="745" font-size="22" fill="#fff" fill-opacity="0.35" filter="url(#d' + k + ')">AN' + (7 - k) + '</text>';
+  }
+  out += '<text class="mono" x="250" y="140" font-size="26" fill="#fff" fill-opacity="0.4" filter="url(#d1)">U  r  /  t_reactie (ms)</text>';
+  /* fereastra afișajului */
+  out += '<rect x="200" y="190" width="1760" height="470" rx="14" fill="url(#win)" stroke="#fff" stroke-opacity="0.12" stroke-width="2"/>';
+  out += '<rect x="200" y="190" width="1760" height="470" rx="14" fill="url(#sheen)"/>';
+  for (var d = 0; d < 8; d++) {
+    var ox = 250 + d * 205 + (d > 3 ? 70 : 0), oy = 252;
+    var on = GLYPH[text[d]] || '';
+    var g = '<g transform="translate(' + ox + ' ' + oy + ') skewX(-8) scale(1.4)" filter="url(#d' + d + ')">';
+    var lit = '';
+    for (var s in SEG) {
+      if (on.indexOf(s) !== -1) lit += '<polygon points="' + SEG[s] + '" fill="#fff"/>';
+      else g += '<polygon points="' + SEG[s] + '" fill="#1c1c1c"/>';
+    }
+    g += '<circle cx="134" cy="' + (12 + 2 * L + 4 * G) + '" r="12" fill="#1c1c1c"/>';
+    g += '<g filter="url(#glow)">' + lit + '</g></g>';
+    out += g;
+  }
+  document.getElementById('s').innerHTML = out;
+})();
+</script>
+</body>
+</html>

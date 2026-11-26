@@ -1,0 +1,42 @@
+<!doctype html>
+<!-- Sursa imaginii assets/og.png (Open Graph, 1200×630). Randare: bash art/render.sh -->
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>og</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #000; color: #fff; }
+  .bg { position: absolute; inset: 0; }
+  .c { position: absolute; inset: 0; padding: 56px 64px; display: flex; flex-direction: column; justify-content: space-between; font-family: "Archivo", sans-serif; }
+  .top { display: flex; justify-content: space-between; font-family: "Martian Mono", monospace; font-stretch: 87.5%; font-size: 18px; color: #bdbdbd; border-bottom: 1px solid rgba(255,255,255,.3); padding-bottom: 16px; }
+  .wm { display: flex; justify-content: space-between; font-weight: 900; font-stretch: 125%; font-size: 236px; line-height: 0.78; margin: 0 -8px; }
+  .bot { display: flex; justify-content: space-between; align-items: end; border-top: 1px solid rgba(255,255,255,.3); padding-top: 18px; }
+  .name { font-size: 46px; font-weight: 750; font-stretch: 106%; letter-spacing: -1.4px; line-height: 1; }
+  .meta { font-family: "Martian Mono", monospace; font-stretch: 87.5%; font-size: 17px; color: #bdbdbd; text-align: right; line-height: 1.6; }
+</style>
+</head>
+<body>
+<svg class="bg" width="1200" height="630" id="bg"></svg>
+<div class="c">
+  <div class="top"><span>deniscalea.github.io</span><span>Cluj-Napoca</span></div>
+  <div class="wm"><span>C</span><span>A</span><span>L</span><span>E</span><span>A</span></div>
+  <div class="bot">
+    <div class="name">Denis-Alexandru Călin</div>
+    <div class="meta">UTCN / CTI<br>VHDL, FPGA, C++, Java</div>
+  </div>
+</div>
+<script>
+(function () {
+  var s = 3, o = '';
+  function r() { s = (s * 16807) % 2147483647; return s / 2147483647; }
+  for (var i = 0; i < 46; i++) {
+    var y = 20 + i * 13.3, x = r() * 500, l = 120 + r() * 520, k = r() < 0.5 ? 1 : -1, b = 20 + r() * 40;
+    o += '<polyline points="' + x + ',' + y + ' ' + (x + l) + ',' + y + ' ' + (x + l + b) + ',' + (y + k * b) + ' ' + (x + l + b + 300) + ',' + (y + k * b) + '" fill="none" stroke="#fff" stroke-opacity="' + (0.05 + r() * 0.1).toFixed(2) + '"/>';
+  }
+  o += '<filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="2"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="630" filter="url(#n)" opacity="0.12" style="mix-blend-mode:screen"/>';
+  document.getElementById('bg').innerHTML = o;
+})();
+</script>
+</body>
+</html>

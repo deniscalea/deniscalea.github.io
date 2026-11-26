@@ -12,6 +12,14 @@
 - [x] 3D scris de mână (teren în hero, placa FPGA în straturi, tranziții 3D carusel)
 - [x] Animații premium (intro, reveal, parallax, cursor, marquee), vizualuri SVG/canvas, fără AI tooling
 
+## v3 — redesign premium (local, nepublicat)
+- [x] Hero WebGL scris de mână: câmp de trasee PCB cu pulsuri, undă la mouse/touch, wordmark CALEA în shader
+- [x] Intro nou (≤1,5 s), dezvăluiri editoriale pe ecrane, indicator de progres „semnal”, carusel cu mască + parallax, drag
+- [x] Imagini proprii randate din `art/` (cip FPGA, afișaj 7 segmente, diagramă de timp, semi-sumator, poster CALEA, OG)
+- [x] Studiu de caz `proiecte/fpga.html`: arhitectură și FSM din codul real, detalii tehnice, simulare jucabilă
+- [x] Cursor custom, butoane magnetice, temă cu tranziție circulară, comutator RO/EN animat, favicon animat, ora din Cluj
+- [ ] Denis verifică textul „Ce am învățat” din studiul de caz (TODO în fișier)
+
 ## Denis completează
 - [ ] Link LinkedIn (sau scoatem butonul)
 - [ ] Proiecte noi (OOP/C/VBA sau altele): titlu, an, ce face, link, captură. Sunt template comentat în index.html
@@ -22,6 +30,6 @@
 ## v2 — publicare
 - [x] Repo GitHub `deniscalea/deniscalea.github.io` (public; CV-ul vechi cu telefon e în .gitignore)
 - [x] Publicat gratuit pe GitHub Pages: https://deniscalea.github.io
-- [ ] Imagine Open Graph PNG 1200×630 + URL-uri absolute în meta
+- [x] Imagine Open Graph PNG 1200×630 + URL-uri absolute în meta (v3, local, nepublicat)
 - [ ] Domeniu (Denis îl cumpără) + conectare DNS + HTTPS
 - [ ] Link-ul site-ului pus în CV, GitHub și LinkedIn

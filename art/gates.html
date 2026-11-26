@@ -1,0 +1,77 @@
+<!doctype html>
+<!-- Sursa imaginii assets/img/gates.webp (ecranul Studii): un semi-sumator din porți logice, pe hârtie milimetrică, peste „UTCN”.
+     Randare: bash art/render.sh -->
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>gates</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1600px; height: 1100px; overflow: hidden; background: #000; }
+  svg { display: block; }
+  .mono { font-family: "Martian Mono", monospace; font-stretch: 87.5%; }
+  .sans { font-family: "Archivo", sans-serif; }
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+  <defs>
+    <pattern id="mm" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#fff" stroke-opacity="0.05"/></pattern>
+    <pattern id="cm" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" fill="none" stroke="#fff" stroke-opacity="0.1"/></pattern>
+    <radialGradient id="lt" cx="55%" cy="45%" r="70%"><stop offset="0" stop-color="#1c1c1c"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="9"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="75%"><stop offset="0.6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.8"/></radialGradient>
+  </defs>
+  <rect width="1600" height="1100" fill="url(#lt)"/>
+  <rect width="1600" height="1100" fill="url(#mm)"/>
+  <rect width="1600" height="1100" fill="url(#cm)"/>
+
+  <text class="sans" x="800" y="1010" text-anchor="middle" font-size="560" font-weight="900" font-stretch="125%" letter-spacing="-10" fill="none" stroke="#fff" stroke-opacity="0.16" stroke-width="2">UTCN</text>
+
+  <g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="square" stroke-linejoin="round" filter="url(#glow)">
+    <!-- fire de intrare -->
+    <path d="M200 360H560M200 640H520"/>
+    <path d="M380 360V760H700M440 640V860H700" />
+    <path d="M560 360V420H700M520 640V580H700"/>
+    <!-- XOR: S -->
+    <path d="M690 380Q730 500 690 620"/>
+    <path d="M715 380Q755 500 715 620Q900 620 960 500Q900 380 715 380Z"/>
+    <path d="M960 500H1360"/>
+    <!-- AND: C -->
+    <path d="M700 720H820A90 90 0 0 1 820 900H700Z"/>
+    <path d="M910 810H1360"/>
+  </g>
+  <g fill="#fff">
+    <circle cx="380" cy="360" r="10"/><circle cx="440" cy="640" r="10"/>
+    <circle cx="200" cy="360" r="12" fill="#000" stroke="#fff" stroke-width="4"/>
+    <circle cx="200" cy="640" r="12" fill="#000" stroke="#fff" stroke-width="4"/>
+    <circle cx="1360" cy="500" r="12" fill="#000" stroke="#fff" stroke-width="4"/>
+    <circle cx="1360" cy="810" r="12" fill="#000" stroke="#fff" stroke-width="4"/>
+  </g>
+  <g class="sans" fill="#fff" font-weight="800" font-stretch="112%" font-size="64">
+    <text x="120" y="382">A</text><text x="120" y="662">B</text>
+    <text x="1400" y="522">S</text><text x="1400" y="832">C</text>
+  </g>
+  <g class="mono" fill="#fff" font-size="18" fill-opacity="0.6">
+    <text x="790" y="660">S = A ⊕ B</text>
+    <text x="760" y="950">C = A · B</text>
+  </g>
+
+  <!-- tabelul de adevăr -->
+  <g class="mono" font-size="20" fill="#fff">
+    <text x="1130" y="140" fill-opacity="0.5">A  B  │  S  C</text>
+    <path d="M1130 156H1420" stroke="#fff" stroke-opacity="0.4"/>
+    <text x="1130" y="190">0  0  │  0  0</text>
+    <text x="1130" y="224">0  1  │  1  0</text>
+    <text x="1130" y="258">1  0  │  1  0</text>
+    <text x="1130" y="292">1  1  │  0  1</text>
+  </g>
+  <text class="mono" x="120" y="140" font-size="18" fill="#fff" fill-opacity="0.55">46.77° N  23.59° E</text>
+  <text class="mono" x="120" y="170" font-size="18" fill="#fff" fill-opacity="0.35">Cluj-Napoca</text>
+
+  <rect width="1600" height="1100" fill="url(#vig)"/>
+  <rect width="1600" height="1100" filter="url(#g)" opacity="0.16" style="mix-blend-mode:screen"/>
+</svg>
+</body>
+</html>

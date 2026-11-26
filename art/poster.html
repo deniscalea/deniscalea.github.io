@@ -1,0 +1,46 @@
+<!doctype html>
+<!-- Sursa imaginii assets/img/poster.webp (ecranul CV): poster tipografic CALEA.
+     Același cuvânt, de cinci ori, pe axa de lățime și de grosime a fontului Archivo, ca un semnal care crește.
+     Randare: bash art/render.sh -->
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>poster</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1200px; height: 1600px; overflow: hidden; background: #f0f0f0; color: #000; }
+  .p { position: absolute; inset: 0; padding: 70px 72px; display: flex; flex-direction: column; font-family: "Archivo", sans-serif; }
+  .top, .bot { display: flex; justify-content: space-between; font-family: "Martian Mono", monospace; font-stretch: 87.5%; font-size: 17px; }
+  .top { border-bottom: 2px solid #000; padding-bottom: 18px; }
+  .stack { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .w { display: flex; justify-content: space-between; line-height: 0.8; letter-spacing: 0; font-size: 238px; margin: 0 -6px; }
+  .w:nth-child(1) { font-weight: 100; font-stretch: 62%;  opacity: 0.18; }
+  .w:nth-child(2) { font-weight: 300; font-stretch: 78%;  opacity: 0.34; }
+  .w:nth-child(3) { font-weight: 500; font-stretch: 94%;  opacity: 0.55; }
+  .w:nth-child(4) { font-weight: 700; font-stretch: 110%; opacity: 0.78; }
+  .w:nth-child(5) { font-weight: 900; font-stretch: 125%; }
+  .sig { height: 90px; margin: 26px 0 30px; }
+  .name { font-size: 64px; font-weight: 750; font-stretch: 106%; letter-spacing: -2px; line-height: 0.95; margin-bottom: 26px; }
+  .bot { border-top: 2px solid #000; padding-top: 18px; }
+  .grain { position: absolute; inset: 0; opacity: 0.14; mix-blend-mode: multiply; }
+</style>
+</head>
+<body>
+<div class="p">
+  <div class="top"><span>CALEA</span><span>CV / 2026</span></div>
+  <div class="stack">
+    <div class="w"><span>C</span><span>A</span><span>L</span><span>E</span><span>A</span></div>
+    <div class="w"><span>C</span><span>A</span><span>L</span><span>E</span><span>A</span></div>
+    <div class="w"><span>C</span><span>A</span><span>L</span><span>E</span><span>A</span></div>
+    <div class="w"><span>C</span><span>A</span><span>L</span><span>E</span><span>A</span></div>
+    <div class="w"><span>C</span><span>A</span><span>L</span><span>E</span><span>A</span></div>
+  </div>
+  <svg class="sig" viewBox="0 0 1056 90" preserveAspectRatio="none">
+    <path d="M0 70H180V20H260V70H420V20H440V70H620V20H780V70H860V20H1056" fill="none" stroke="#000" stroke-width="3"/>
+  </svg>
+  <div class="name">Denis-Alexandru<br>Călin</div>
+  <div class="bot"><span>Cluj-Napoca</span><span>UTCN / CTI</span><span>deniscaleax@gmail.com</span></div>
+</div>
+<svg class="grain" width="1200" height="1600"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4"/><feColorMatrix type="saturate" values="0"/></filter><rect width="1200" height="1600" filter="url(#n)"/></svg>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- Unealtă pentru art/render.sh: convertește un PNG în WebP prin canvas (doar pe serverul local). -->
+<meta charset="utf-8">
+<title>to-webp</title>
+<pre id="out"></pre>
+<script>
+  var src = new URLSearchParams(location.search).get('src');
+  var q = +(new URLSearchParams(location.search).get('q') || 0.84);
+  var img = new Image();
+  img.onload = function () {
+    var c = document.createElement('canvas');
+    c.width = img.naturalWidth; c.height = img.naturalHeight;
+    c.getContext('2d').drawImage(img, 0, 0);
+    document.getElementById('out').textContent = c.toDataURL('image/webp', q);
+  };
+  img.src = src;
+</script>

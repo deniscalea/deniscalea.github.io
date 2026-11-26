@@ -1,0 +1,110 @@
+<!doctype html>
+<!-- Sursa imaginii assets/img/waveform.webp: diagramă de timp ilustrativă pentru o rundă.
+     Numele semnalelor și ordinea evenimentelor vin din TOPMODULE.vhd, UC.vhd, comparator.vhd, Scazator.vhd și DISPLAY_CTRL.vhd.
+     Valorile (2000 ms, 247 ms) sunt un exemplu. Randare: bash art/render.sh -->
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>waveform</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; width: 1600px; height: 900px; overflow: hidden; background: #ececec; }
+  svg { display: block; }
+  .mono { font-family: "Martian Mono", monospace; font-stretch: 87.5%; }
+  .sans { font-family: "Archivo", sans-serif; }
+</style>
+</head>
+<body>
+<svg id="s" xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900"></svg>
+<script>
+(function () {
+  var INK = '#0a0a0a';
+  /* axa timpului (ms), cu o întrerupere între 160 și 1940 ms */
+  var SC = 2.08;
+  function X(t) { return t <= 160 ? 300 + t * SC : 300 + 160 * SC + 54 + (t - 1940) * SC; }
+  var BREAK0 = X(160), BREAK1 = BREAK0 + 54, END = X(2340);
+  var rows = [], o = '';
+  var y0 = 210, dy = 66, hh = 26;
+  var START = 40, DONE = 2040, REACT = 2287;
+
+  function label(i, name, sub) {
+    var y = y0 + i * dy;
+    o += '<text class="mono" x="80" y="' + (y + 5) + '" font-size="17" fill="' + INK + '">' + name + '</text>';
+    if (sub) o += '<text class="mono" x="80" y="' + (y + 25) + '" font-size="12" fill="' + INK + '" fill-opacity="0.45">' + sub + '</text>';
+    o += '<line x1="80" x2="' + END + '" y1="' + (y + 33) + '" y2="' + (y + 33) + '" stroke="' + INK + '" stroke-opacity="0.07"/>';
+  }
+  function digital(i, edges, start) { // edges: listă de momente în care semnalul comută
+    var y = y0 + i * dy, hi = y - hh / 2, lo = y + hh / 2, v = start, x = 300, d = 'M' + x + ' ' + (v ? hi : lo);
+    edges.forEach(function (t) { var xe = X(t); d += ' H' + xe.toFixed(1); v = !v; d += ' V' + (v ? hi : lo); });
+    d += ' H' + END;
+    o += '<path d="' + d + '" fill="none" stroke="' + INK + '" stroke-width="2.2" stroke-linejoin="miter"/>';
+  }
+  function pulses(i, period, w, from, to, op) {
+    var y = y0 + i * dy, hi = y - hh / 2, lo = y + hh / 2, d = '';
+    for (var x = from; x < to; x += period) d += 'M' + x.toFixed(1) + ' ' + lo + ' V' + hi + ' H' + (x + w).toFixed(1) + ' V' + lo + ' ';
+    o += '<path d="M' + from + ' ' + lo + ' H' + to + '" stroke="' + INK + '" stroke-width="2" fill="none"/>';
+    o += '<path d="' + d + '" fill="none" stroke="' + INK + '" stroke-width="' + (op ? 1.2 : 2) + '" stroke-opacity="' + (op || 1) + '"/>';
+  }
+  function bus(i, segs) { // segs: [[t0, t1, text, fill]]
+    var y = y0 + i * dy, h = hh / 2, k = 7;
+    segs.forEach(function (s) {
+      var a = X(s[0]), b = X(s[1]);
+      var p = (a + (s[0] === 0 ? 0 : k)) + ',' + (y - h) + ' ' + (b - k) + ',' + (y - h) + ' ' + b + ',' + y + ' ' + (b - k) + ',' + (y + h) + ' ' + (a + (s[0] === 0 ? 0 : k)) + ',' + (y + h) + ' ' + a + ',' + y;
+      o += '<polygon points="' + p + '" fill="' + (s[3] ? INK : 'none') + '" stroke="' + INK + '" stroke-width="2"/>';
+      var tx = (s[0] < 160 && s[1] > 1940) ? (a + BREAK0) / 2 : (a + b) / 2;
+      if (s[2]) o += '<text class="mono" x="' + tx.toFixed(1) + '" y="' + (y + 5) + '" font-size="13" text-anchor="middle" fill="' + (s[3] ? '#ececec' : INK) + '">' + s[2] + '</text>';
+    });
+  }
+  function brk() {
+    for (var j = 0; j < 2; j++) {
+      var x = BREAK0 + 18 + j * 14;
+      o += '<path d="M' + (x - 6) + ' 150 L' + (x + 6) + ' 140 M' + (x - 6) + ' 820 L' + (x + 6) + ' 810" stroke="' + INK + '" stroke-width="1.5"/>';
+    }
+    o += '<rect x="' + (BREAK0 + 4) + '" y="160" width="46" height="640" fill="#ececec"/>';
+    o += '<text class="mono" x="' + (BREAK0 + 27) + '" y="485" font-size="20" text-anchor="middle" fill="' + INK + '" fill-opacity="0.5">≈</text>';
+  }
+
+  /* titlu */
+  o += '<text class="sans" x="80" y="100" font-size="52" font-weight="800" font-stretch="118%" letter-spacing="-1.4" fill="' + INK + '">TOP_GAME</text>';
+  o += '<text class="mono" x="80" y="132" font-size="14" fill="' + INK + '" fill-opacity="0.5">t_random = 2000 ms / t_reactie = 247 ms</text>';
+
+  var names = [
+    ['CLK', '100 MHz'], ['clk_1ms', 'freq_div / 100 000 CLK'], ['state', 'UC (FSM)'], ['t_random', 'rand_reg (LFSR)'],
+    ['t_total', 'MAIN_COUNT, ms'], ['time_done', 'comparator: t_total ≥ t_random'], ['LED_SEMNAL', 'UC'], ['REACT', 'debouncer'],
+    ['t_reactie', 'Scazator: t_total − t_random'], ['held_score', 'DISPLAY_CTRL']
+  ];
+  names.forEach(function (n, i) { label(i, n[0], n[1]); });
+
+  pulses(0, 7, 3.5, 300, END, 0.85);
+  pulses(1, SC * 20, 2.5, 300, END);
+  bus(2, [[0, START, 'IDLE'], [START, DONE, 'WAIT_RANDOM'], [DONE, REACT, 'PLAY', 1], [REACT, 2340, 'EVAL']]);
+  bus(3, [[0, START, ''], [START, 2340, 'x"07D0" = 2000']]);
+  bus(4, [[0, START, '0'], [START, 150, '0, 1, 2 …'], [1945, DONE, '… 2000'], [DONE, REACT, '2000 … 2247'], [REACT, 2340, '0']]);
+  digital(5, [DONE, REACT], false);
+  digital(6, [DONE, REACT], false);
+  digital(7, [REACT, REACT + 5], false);
+  bus(8, [[0, DONE, '0'], [DONE, REACT, '0 … 247', 1], [REACT, 2340, '0']]);
+  bus(9, [[0, DONE, '0'], [DONE, REACT, '= t_reactie'], [REACT, 2340, '247', 1]]);
+  brk();
+
+  /* marcaje de timp */
+  [[START, 'START'], [DONE, 'time_done'], [REACT, 'REACT']].forEach(function (m) {
+    var x = X(m[0]);
+    o += '<line x1="' + x + '" x2="' + x + '" y1="160" y2="840" stroke="' + INK + '" stroke-dasharray="3 5" stroke-opacity="0.45"/>';
+    o += '<text class="mono" x="' + (x + 6) + '" y="168" font-size="12" fill="' + INK + '">' + m[1] + '</text>';
+  });
+  /* axa */
+  [[0, '0'], [100, '100'], [1980, '1980'], [2100, '2100'], [2200, '2200'], [2300, '2300 ms']].forEach(function (a) {
+    var x = X(a[0]);
+    o += '<line x1="' + x + '" x2="' + x + '" y1="850" y2="858" stroke="' + INK + '"/>';
+    o += '<text class="mono" x="' + x + '" y="876" font-size="11" text-anchor="middle" fill="' + INK + '" fill-opacity="0.55">' + a[1] + '</text>';
+  });
+  o += '<line x1="300" x2="' + END + '" y1="850" y2="850" stroke="' + INK + '"/>';
+
+  o += '<filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="5"/><feColorMatrix type="saturate" values="0"/></filter>';
+  o += '<rect width="1600" height="900" filter="url(#g)" opacity="0.12" style="mix-blend-mode:multiply"/>';
+  document.getElementById('s').innerHTML = o;
+})();
+</script>
+</body>
+</html>
