@@ -9,8 +9,8 @@
   <title>Joc de reacție pe FPGA · Studiu de caz · CALEA</title>
   <meta name="description" content="Studiu de caz: un joc de timp de reacție pentru mai mulți jucători, scris integral în VHDL pe FPGA. Arhitectura, FSM-ul, LFSR, Double Dabble, debouncing și o simulare jucabilă.">
   <meta name="author" content="Denis-Alexandru Călin">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#070708">
   <link rel="canonical" href="https://deniscalea.github.io/proiecte/fpga.html">
 
   <meta property="og:type" content="article">
@@ -30,15 +30,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css?v=3.0">
+  <link rel="stylesheet" href="../assets/css/style.css?v=4.0">
 
   <script>
     (function () {
-      var root = document.documentElement;
+      var root = document.documentElement, lang = null;
       root.classList.add('js');
-      var theme = null, lang = null;
-      try { theme = localStorage.getItem('theme'); lang = localStorage.getItem('lang'); } catch (e) {}
-      if (theme === 'light' || theme === 'dark') root.setAttribute('data-theme', theme);
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
       if (lang !== 'ro' && lang !== 'en') lang = (navigator.language || 'en').toLowerCase().indexOf('ro') === 0 ? 'ro' : 'en';
       root.setAttribute('lang', lang);
     })();
@@ -58,9 +56,10 @@
 
       <div class="nav-panel" id="meniu">
         <ul class="nav-links">
-          <li><a href="../#proiecte"><span class="mono nav-num" aria-hidden="true">02</span><span class="nav-label" data-i18n="nav.projects">Proiecte</span></a></li>
-          <li><a href="../#cv"><span class="mono nav-num" aria-hidden="true">04</span><span class="nav-label">CV</span></a></li>
-          <li><a href="../#contact"><span class="mono nav-num" aria-hidden="true">05</span><span class="nav-label" data-i18n="nav.contact">Contact</span></a></li>
+          <li><a href="../#proiecte" data-i18n="nav.projects">Proiecte</a></li>
+          <li><a href="../#despre" data-i18n="nav.about">Despre</a></li>
+          <li><a href="../#cv">CV</a></li>
+          <li><a href="../#contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
         <div class="nav-tools">
           <div class="lang-switch" role="group" aria-label="Limba site-ului" data-i18n-aria="lang.aria">
@@ -68,11 +67,7 @@
             <button type="button" class="lang-btn mono" data-lang="ro" aria-pressed="true" lang="ro" aria-label="Română">RO</button>
             <button type="button" class="lang-btn mono" data-lang="en" aria-pressed="false" lang="en" aria-label="English">EN</button>
           </div>
-          <button class="theme-toggle" type="button" aria-label="Comută tema" data-i18n-aria="theme.aria">
-            <span class="theme-dot" aria-hidden="true"></span>
-            <span class="theme-toggle-text mono" data-i18n="theme.label">Temă</span>
-          </button>
-          <a class="nav-cv mono" href="../assets/CV_Denis_Calin_RO.pdf" download data-cv><span data-i18n="nav.cv">CV</span> <span aria-hidden="true">↓</span></a>
+          <a class="nav-cv" href="../assets/CV_Denis_Calin_RO.pdf" download data-cv><span data-i18n="nav.cv">Descarcă CV</span> <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </nav>
@@ -467,9 +462,7 @@
     </section>
   </main>
 
-  <div class="cursor" aria-hidden="true"><span class="cursor-ring"><span class="cursor-label"></span></span><span class="cursor-dot"></span></div>
-
-  <script src="../assets/js/i18n-fpga.js?v=3.0" defer></script>
-  <script src="../assets/js/main.js?v=3.0" defer></script>
+  <script src="../assets/js/i18n-fpga.js?v=4.0" defer></script>
+  <script src="../assets/js/main.js?v=4.0" defer></script>
 </body>
 </html>

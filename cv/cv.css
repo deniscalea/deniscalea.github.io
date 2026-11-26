@@ -1,24 +1,24 @@
-/* CALEA · CV (A4, alb-negru). Comun pentru cv-en.html și cv-ro.html. */
+/* CALEA · CV v4 (A4, hârtie albă, un singur accent gunmetal). Comun pentru cv-en.html și cv-ro.html. */
 @page { size: A4; margin: 0; }
 
 :root {
-  --ink: #000;
-  --ink-2: #3d3d3d;
-  --ink-3: #6b6b6b;
-  --line: #d4d4d4;
+  --ink: #141518;
+  --ink-2: #3c4047;
+  --ink-3: #6b7078;
+  --line: #dcdfe3;
+  --accent: #2f343b;       /* gunmetal: markerii secțiunilor, sublinierea link-urilor */
+  --accent-2: #8a9099;
   --font: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --mono: "Martian Mono", ui-monospace, Consolas, monospace;
-  --label: 35mm;
-  --gap: 6mm;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { background: #e9e9e9; }
+html { background: #e7e8ea; }
 body {
   font-family: var(--font);
   color: var(--ink);
-  font-size: 9.3pt;
-  line-height: 1.45;
+  font-size: 10.4pt;
+  line-height: 1.5;
   font-stretch: 100%;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -26,13 +26,14 @@ body {
 }
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
+b, strong { font-weight: 650; }
 
 .page {
   position: relative;
   width: 210mm;
   height: 297mm;
   margin: 24px auto;
-  padding: 13mm 15mm 11mm;
+  padding: 16mm 17mm 13mm;
   background: #fff;
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
   display: flex;
@@ -50,161 +51,67 @@ html.shot .page { margin: 0; box-shadow: none; }
   .page { width: auto; height: auto; margin: 0; padding: 24px 16px; box-shadow: none; }
 }
 
-.mono {
+.mono { font-family: var(--mono); font-stretch: 87.5%; font-weight: 400; }
+
+/* ---------- Antet ---------- */
+.name {
+  font-size: 27pt;
+  font-weight: 700;
+  font-stretch: 104%;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+.title { margin-top: 1.6mm; font-size: 11pt; color: var(--ink-2); }
+.contacts { margin-top: 3.6mm; display: grid; gap: 1.3mm; font-size: 8.6pt; color: var(--ink-2); }
+.contacts .sep { color: var(--accent-2); margin: 0 1.6mm; }
+.ul { border-bottom: 0.9pt solid var(--accent); padding-bottom: 0.2mm; color: var(--ink); }
+.seek { margin-top: 3.8mm; font-size: 10.6pt; }
+
+/* ---------- Secțiuni ---------- */
+.sec { margin-top: 6.2mm; }
+.sec-h {
+  display: flex;
+  align-items: center;
+  gap: 2.6mm;
+  margin-bottom: 2.6mm;
   font-family: var(--mono);
   font-stretch: 87.5%;
-  font-weight: 400;
-  font-size: 6.6pt;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-}
-
-/* ---------- Top bar ---------- */
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-bottom: 2.4mm;
-  border-bottom: 0.6pt solid var(--ink);
-  color: var(--ink-3);
+  font-size: 8pt;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-}
-.topbar .brand {
-  color: var(--ink);
-  font-family: var(--font);
-  font-weight: 800;
-  font-stretch: 125%;
-  font-size: 9pt;
-  letter-spacing: 0.24em;
-}
-
-/* ---------- Header ---------- */
-.head {
-  display: grid;
-  grid-template-columns: var(--label) 1fr;
-  column-gap: var(--gap);
-  padding: 8mm 0 6.5mm;
-  border-bottom: 1.6pt solid var(--ink);
-}
-.head-k { color: var(--ink-3); text-transform: uppercase; padding-top: 1.5mm; }
-.name {
-  font-size: 34pt;
-  font-weight: 800;
-  font-stretch: 112%;
-  letter-spacing: -0.035em;
-  line-height: 0.92;
-}
-.name span { display: block; }
-.role {
-  margin-top: 3.2mm;
-  font-size: 7.6pt;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   color: var(--ink);
 }
-.contact {
-  grid-column: 2;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1mm 0;
-  margin-top: 3.4mm;
-  font-size: 7pt;
-  color: var(--ink-2);
-}
-.contact li:not(:last-child)::after { content: "/"; margin: 0 2.4mm; color: var(--line); }
+.sec-h::before { content: ""; flex: none; width: 2.3mm; height: 2.3mm; border-radius: 0.5mm; background: var(--accent); }
+.sec-h::after { content: ""; flex: 1; height: 0.6pt; background: var(--line); }
 
-/* ---------- Sections ---------- */
-.sec {
-  display: grid;
-  grid-template-columns: var(--label) 1fr;
-  column-gap: var(--gap);
-  padding: 4.6mm 0 4.8mm;
-  border-bottom: 0.5pt solid var(--line);
-}
-.sec:last-of-type { border-bottom: 0; }
-.sec-k { text-transform: uppercase; color: var(--ink-3); padding-top: 0.6mm; }
-.sec-k b { color: var(--ink); font-weight: 500; margin-right: 1.6mm; }
+.profile { color: var(--ink); max-width: 172mm; }
 
-.profile { font-size: 10pt; line-height: 1.45; color: var(--ink); max-width: 138mm; }
-
-.item + .item { margin-top: 2.6mm; }
-.item-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 4mm;
-}
-.item-title {
-  font-size: 10.8pt;
-  font-weight: 700;
-  font-stretch: 106%;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-}
-.when { color: var(--ink-3); white-space: nowrap; }
+.item + .item { margin-top: 4mm; }
+.item-head { display: flex; justify-content: space-between; align-items: baseline; gap: 6mm; }
+.item-title { font-size: 11.2pt; font-weight: 650; letter-spacing: -0.005em; line-height: 1.3; }
+.meta { font-family: var(--mono); font-stretch: 87.5%; font-size: 8.2pt; color: var(--ink-3); white-space: nowrap; }
+.meta a { border-bottom: 0.9pt solid var(--accent); color: var(--ink-2); }
 .sub { color: var(--ink-2); margin-top: 0.4mm; }
-.url { display: inline-block; margin-top: 0.6mm; color: var(--ink-2); }
 
 .points { margin-top: 1.4mm; }
-.points li {
-  position: relative;
-  padding-left: 4mm;
-  margin-top: 1.1mm;
-  color: var(--ink);
-}
+.points li { position: relative; padding-left: 4.6mm; margin-top: 1mm; }
 .points li::before {
   content: "";
   position: absolute;
-  left: 0.6mm;
+  left: 0.8mm;
   top: 0.62em;
-  width: 1.6mm;
-  height: 0.5pt;
-  background: var(--ink);
+  width: 1.5mm;
+  height: 1.5mm;
+  border-radius: 0.4mm;
+  background: var(--accent);
 }
 
-.tags { display: flex; flex-wrap: wrap; gap: 1.2mm; margin-top: 1.8mm; }
-.tags li {
-  border: 0.5pt solid var(--ink);
-  padding: 0.3mm 1.6mm;
-  border-radius: 10mm;
-  font-size: 6.2pt;
-}
+.skills { display: grid; gap: 1.4mm; }
+.skills b { font-weight: 650; }
 
-.courses {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 6mm;
-}
-.courses li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 3mm;
-  padding: 1.2mm 0;
-  border-bottom: 0.5pt dotted var(--line);
-}
-.courses li .mono { color: var(--ink-3); }
-
-.skills { display: grid; grid-template-columns: 30mm 1fr; row-gap: 1.6mm; column-gap: 4mm; }
-.skills dt { color: var(--ink-3); text-transform: uppercase; padding-top: 0.5mm; }
-.skills dd { color: var(--ink); }
-
-/* ---------- Footer ---------- */
-.foot {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding-top: 2.4mm;
-  border-top: 0.6pt solid var(--ink);
-  color: var(--ink-3);
-  text-transform: uppercase;
-}
+.nw { white-space: nowrap; }
 
 @media screen and (max-width: 780px) {
-  .head, .sec { grid-template-columns: 1fr; row-gap: 2mm; }
-  .contact { grid-column: 1; }
-  .courses, .skills { grid-template-columns: 1fr; }
-  .foot { margin-top: 24px; }
+  .item-head { flex-direction: column; gap: 0; }
 }
-.nw { white-space: nowrap; }

@@ -1,16 +1,43 @@
 <!doctype html>
-<!-- Unealtă pentru art/render.sh: convertește un PNG în WebP prin canvas (doar pe serverul local). -->
+<!-- Unealtă pentru art/render.sh: convertește un PNG în WebP prin canvas (doar pe serverul local).
+     v4: aplică și tonul site-ului (duotone grafit → argint rece). ?inv=1 inversează întâi luminozitatea
+     (pentru sursele desenate pe hârtie deschisă: waveform, poster). ?tone=0 lasă culorile neatinse. -->
 <meta charset="utf-8">
 <title>to-webp</title>
 <pre id="out"></pre>
 <script>
-  var src = new URLSearchParams(location.search).get('src');
-  var q = +(new URLSearchParams(location.search).get('q') || 0.84);
+  var qs = new URLSearchParams(location.search);
+  var src = qs.get('src');
+  var q = +(qs.get('q') || 0.86);
+  var tone = qs.get('tone') !== '0';
+  var inv = qs.get('inv') === '1';
+  /* Paleta CALEA: negru adânc, gunmetal rece la mijloc, argint periat sus */
+  var STOPS = [[0, 7, 7, 8], [0.18, 20, 21, 24], [0.48, 80, 86, 95], [0.78, 168, 174, 183], [1, 232, 235, 239]];
+  function lut() {
+    var t = new Uint8ClampedArray(256 * 3);
+    for (var i = 0; i < 256; i++) {
+      var x = i / 255, k = 0;
+      while (k < STOPS.length - 2 && x > STOPS[k + 1][0]) k++;
+      var a = STOPS[k], b = STOPS[k + 1], f = (x - a[0]) / (b[0] - a[0]);
+      for (var c = 0; c < 3; c++) t[i * 3 + c] = a[c + 1] + (b[c + 1] - a[c + 1]) * f;
+    }
+    return t;
+  }
   var img = new Image();
   img.onload = function () {
     var c = document.createElement('canvas');
     c.width = img.naturalWidth; c.height = img.naturalHeight;
-    c.getContext('2d').drawImage(img, 0, 0);
+    var x = c.getContext('2d');
+    x.drawImage(img, 0, 0);
+    if (tone) {
+      var d = x.getImageData(0, 0, c.width, c.height), p = d.data, T = lut();
+      for (var i = 0; i < p.length; i += 4) {
+        var l = Math.round(p[i] * 0.2126 + p[i + 1] * 0.7152 + p[i + 2] * 0.0722);
+        if (inv) l = 255 - l;
+        p[i] = T[l * 3]; p[i + 1] = T[l * 3 + 1]; p[i + 2] = T[l * 3 + 2];
+      }
+      x.putImageData(d, 0, 0);
+    }
     document.getElementById('out').textContent = c.toDataURL('image/webp', q);
   };
   img.src = src;

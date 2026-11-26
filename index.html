@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="ro" class="snap">
+<html lang="ro">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CALEA · Denis-Alexandru Călin</title>
-  <meta name="description" content="CALEA, portofoliul lui Denis-Alexandru Călin: student în anul 2 la Calculatoare și Tehnologia Informației (UTCN, Cluj-Napoca). Proiecte în VHDL pe FPGA, C++, Java și C. Caut un internship.">
+  <meta name="description" content="CALEA, portofoliul lui Denis-Alexandru Călin: student în anul 2 la Calculatoare (UTCN, Cluj-Napoca). Un joc de reacție scris în VHDL pe FPGA și o aplicație de cheltuieli în lucru. Caut un internship, în Cluj-Napoca sau remote.">
   <meta name="author" content="Denis-Alexandru Călin">
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#000000">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#070708">
   <link rel="canonical" href="https://deniscalea.github.io/">
 
   <meta property="og:type" content="website">
@@ -16,14 +16,14 @@
   <meta property="og:locale" content="ro_RO">
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="CALEA · Denis-Alexandru Călin">
-  <meta property="og:description" content="Student în anul 2 la CTI, UTCN Cluj-Napoca. De la VHDL pe FPGA la C++ și Java. Caut un internship.">
+  <meta property="og:description" content="Student în anul 2 la Calculatoare, UTCN Cluj-Napoca. De la porți logice în VHDL la aplicații. Caut un internship.">
   <meta property="og:image" content="https://deniscalea.github.io/assets/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="CALEA, Denis-Alexandru Călin">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="CALEA · Denis-Alexandru Călin">
-  <meta name="twitter:description" content="Student în anul 2 la CTI, UTCN Cluj-Napoca. De la VHDL pe FPGA la C++ și Java. Caut un internship.">
+  <meta name="twitter:description" content="Student în anul 2 la Calculatoare, UTCN Cluj-Napoca. De la porți logice în VHDL la aplicații. Caut un internship.">
   <meta name="twitter:image" content="https://deniscalea.github.io/assets/og.png">
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -31,38 +31,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=3.0">
+  <link rel="stylesheet" href="assets/css/style.css?v=4.0">
 
   <script>
-    /* Tema, limba și intro-ul se decid înainte de randare. Fără JS, conținutul rămâne vizibil. */
+    /* Limba se decide înainte de randare. Fără JS, conținutul rămâne vizibil (RO). */
     (function () {
-      var root = document.documentElement;
+      var root = document.documentElement, lang = null;
       root.classList.add('js');
-      var theme = null, lang = null, seen = '1';
-      try { theme = localStorage.getItem('theme'); lang = localStorage.getItem('lang'); } catch (e) {}
-      if (theme === 'light' || theme === 'dark') root.setAttribute('data-theme', theme);
-      if (lang !== 'ro' && lang !== 'en') {
-        var nav = (navigator.language || 'en').toLowerCase();
-        lang = nav.indexOf('ro') === 0 ? 'ro' : 'en';
-      }
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      if (lang !== 'ro' && lang !== 'en') lang = (navigator.language || 'en').toLowerCase().indexOf('ro') === 0 ? 'ro' : 'en';
       root.setAttribute('lang', lang);
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      try { seen = sessionStorage.getItem('calea-intro'); } catch (e) { seen = '1'; }
-      if (!seen && !reduce) {
-        root.classList.add('intro');
-        try { sessionStorage.setItem('calea-intro', '1'); } catch (e) {}
-      }
     })();
   </script>
 </head>
 <body class="page-home">
   <a class="skip-link" href="#continut" data-i18n="skip">Sari la conținut</a>
-
-  <!-- Intro (≤1,5 s): un semnal trece ecranul, apare CALEA, apoi ecranul se închide ca un CRT. O dată pe sesiune. -->
-  <div class="intro-ov" aria-hidden="true">
-    <svg class="intro-sig" viewBox="0 0 1000 100" preserveAspectRatio="none"><path d="M0 70H380V22H620V70H1000" pathLength="1"/></svg>
-    <p class="intro-word"><span style="--i:0">C</span><span style="--i:1">A</span><span style="--i:2">L</span><span style="--i:3">E</span><span style="--i:4">A</span></p>
-  </div>
 
   <header class="site-header">
     <nav class="nav wrap" aria-label="Navigație principală" data-i18n-aria="nav.aria">
@@ -75,11 +58,10 @@
 
       <div class="nav-panel" id="meniu">
         <ul class="nav-links">
-          <li><a href="#acasa"><span class="mono nav-num" aria-hidden="true">01</span><span class="nav-label" data-i18n="nav.home">Start</span></a></li>
-          <li><a href="#proiecte"><span class="mono nav-num" aria-hidden="true">02</span><span class="nav-label" data-i18n="nav.projects">Proiecte</span></a></li>
-          <li><a href="#studii"><span class="mono nav-num" aria-hidden="true">03</span><span class="nav-label" data-i18n="nav.studies">Studii</span></a></li>
-          <li><a href="#cv"><span class="mono nav-num" aria-hidden="true">04</span><span class="nav-label">CV</span></a></li>
-          <li><a href="#contact"><span class="mono nav-num" aria-hidden="true">05</span><span class="nav-label" data-i18n="nav.contact">Contact</span></a></li>
+          <li><a href="#proiecte" data-i18n="nav.projects">Proiecte</a></li>
+          <li><a href="#despre" data-i18n="nav.about">Despre</a></li>
+          <li><a href="#cv">CV</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
         <div class="nav-tools">
           <div class="lang-switch" role="group" aria-label="Limba site-ului" data-i18n-aria="lang.aria">
@@ -87,215 +69,191 @@
             <button type="button" class="lang-btn mono" data-lang="ro" aria-pressed="true" lang="ro" aria-label="Română">RO</button>
             <button type="button" class="lang-btn mono" data-lang="en" aria-pressed="false" lang="en" aria-label="English">EN</button>
           </div>
-          <button class="theme-toggle" type="button" aria-label="Comută tema" data-i18n-aria="theme.aria">
-            <span class="theme-dot" aria-hidden="true"></span>
-            <span class="theme-toggle-text mono" data-i18n="theme.label">Temă</span>
-          </button>
-          <a class="nav-cv mono" href="assets/CV_Denis_Calin_RO.pdf" download data-cv><span data-i18n="nav.cv">CV</span> <span aria-hidden="true">↓</span></a>
+          <a class="nav-cv" href="assets/CV_Denis_Calin_RO.pdf" download data-cv><span data-i18n="nav.cv">Descarcă CV</span> <span aria-hidden="true">↓</span></a>
         </div>
       </div>
     </nav>
   </header>
 
-  <!-- Indicator de progres: o linie de semnal care e „sus” la ecranul curent (decorativ; navigația reală e în header) -->
-  <div class="signal" aria-hidden="true">
-    <div class="signal-track"><span class="signal-fill"></span><span class="signal-high"></span></div>
-    <ol class="signal-steps">
-      <li><button type="button" tabindex="-1" data-go="acasa"><span class="mono">01</span><span class="signal-name" data-i18n="nav.home">Start</span></button></li>
-      <li><button type="button" tabindex="-1" data-go="proiecte"><span class="mono">02</span><span class="signal-name" data-i18n="nav.projects">Proiecte</span></button></li>
-      <li><button type="button" tabindex="-1" data-go="studii"><span class="mono">03</span><span class="signal-name" data-i18n="nav.studies">Studii</span></button></li>
-      <li><button type="button" tabindex="-1" data-go="cv"><span class="mono">04</span><span class="signal-name">CV</span></button></li>
-      <li><button type="button" tabindex="-1" data-go="contact"><span class="mono">05</span><span class="signal-name" data-i18n="nav.contact">Contact</span></button></li>
-    </ol>
-  </div>
-
   <main id="continut">
 
-    <!-- 01 START: câmp WebGL de trasee de semnal; wordmark-ul CALEA e desenat în shader (HTML-ul rămâne ca fallback) -->
-    <section class="screen hero" id="acasa" aria-labelledby="hero-titlu" data-reveal>
+    <!-- 1. HERO: raze de lumină WebGL care trec pe lângă literele CALEA (literele metalice sunt HTML, deasupra) -->
+    <section class="hero" id="acasa" aria-labelledby="hero-titlu">
       <canvas class="hero-gl" aria-hidden="true"></canvas>
+      <div class="hero-glow" aria-hidden="true"></div>
       <div class="wrap hero-inner">
-        <div class="hero-meta mono rule-b">
-          <span data-i18n="hero.meta2">Cluj-Napoca, România</span>
-          <span class="hero-status"><span class="status-sq" aria-hidden="true"></span><span data-i18n="hero.meta3">Disponibil pentru internship</span></span>
-        </div>
-
         <p class="wordmark" aria-hidden="true"><span class="m"><span style="--i:0">C</span></span><span class="m"><span style="--i:1">A</span></span><span class="m"><span style="--i:2">L</span></span><span class="m"><span style="--i:3">E</span></span><span class="m"><span style="--i:4">A</span></span></p>
 
         <div class="hero-grid">
-          <h1 id="hero-titlu" class="hero-name"><span class="m"><span style="--i:0">Denis-Alexandru</span></span><span class="m"><span style="--i:1">Călin</span></span></h1>
+          <h1 id="hero-titlu" class="hero-name"><span class="m"><span style="--i:0">Denis-Alexandru</span></span> <span class="m"><span style="--i:1">Călin</span></span></h1>
           <div class="hero-text">
-            <p class="hero-role mono" data-i18n="hero.role">Student la Calculatoare, software și hardware</p>
-            <p class="hero-lede" data-i18n="hero.lede">Construiesc sisteme complete, de la porți logice în VHDL pe FPGA până la aplicații în C++ și Java, și testez tot ce construiesc.</p>
+            <p class="hero-role" data-i18n="hero.role">Student în anul 2 la Calculatoare, UTCN · Cluj-Napoca</p>
+            <p class="hero-seek"><span class="status-dot" aria-hidden="true"></span><span data-i18n="hero.seek">Caut un internship, în Cluj-Napoca sau remote.</span></p>
             <div class="hero-actions">
               <a class="btn btn-primary magnetic" href="#proiecte"><span class="btn-in"><span data-i18n="hero.cta1">Vezi proiectele</span><span class="arrow" aria-hidden="true">↓</span></span></a>
-              <a class="btn btn-ghost magnetic" href="assets/CV_Denis_Calin_RO.pdf" download data-cv><span class="btn-in"><span data-i18n="hero.cta2">Descarcă CV</span><span class="arrow" aria-hidden="true">↓</span></span></a>
+              <a class="btn btn-ghost magnetic" href="#cv"><span class="btn-in"><span data-i18n="hero.cta2">CV-ul meu</span></span></a>
             </div>
           </div>
         </div>
-
-        <p class="hero-hint mono" aria-hidden="true"><span class="scroll-line"></span><span data-i18n="hero.scroll">Derulează</span><span class="hero-hint-gl" data-i18n="hero.touch">Mișcă mouse-ul peste trasee</span></p>
       </div>
     </section>
 
-    <!-- 02 PROIECTE: bandă orizontală, un proiect pe ecran -->
-    <section class="screen sec-projects" id="proiecte" aria-labelledby="proiecte-titlu" data-reveal>
-      <div class="wrap projects-inner">
-        <header class="rail-head">
-          <h2 class="sec-label mono" id="proiecte-titlu"><span>02</span> / <span data-i18n="nav.projects">Proiecte</span></h2>
-          <div class="rail-ctrl">
-            <p class="rail-count mono" aria-hidden="true"><span class="rail-cur">01</span> / <span class="rail-total">02</span></p>
-            <button class="rail-btn" type="button" data-dir="-1" aria-controls="rail" aria-label="Proiectul anterior" data-i18n-aria="rail.prev"><span aria-hidden="true">←</span></button>
-            <button class="rail-btn" type="button" data-dir="1" aria-controls="rail" aria-label="Proiectul următor" data-i18n-aria="rail.next"><span aria-hidden="true">→</span></button>
-          </div>
-          <span class="rail-progress rule" aria-hidden="true"><span class="rail-bar"></span></span>
-          <p class="rail-live visually-hidden" aria-live="polite"></p>
-        </header>
-
-        <div class="rail-wrap" aria-roledescription="carusel" aria-label="Proiecte" data-i18n-aria="rail.aria" data-i18n-rd="rail.rd">
-          <ul class="rail" id="rail" tabindex="0" data-cursor="drag">
-
-            <!-- P.01 FPGA -->
-            <li class="slide" role="group" aria-roledescription="slide" aria-label="1 din 2" data-i18n-slide="1">
-              <article class="proj" aria-labelledby="p1-titlu">
-                <figure class="proj-visual">
-                  <a class="curtain" href="proiecte/fpga.html" data-cursor="view" tabindex="-1" aria-hidden="true">
-                    <span class="frame"><img class="fx" src="assets/img/fpga-chip.webp" width="1600" height="1200" loading="lazy" decoding="async"
-                         alt="Randare izometrică alb-negru a unui cip FPGA marcat TOP_GAME, cu trasee care pleacă din pini" data-i18n-alt="p1.img"></span>
-                  </a>
-                  <figcaption class="mono fig-cap"><span data-i18n="p1.cap">TOP_GAME, entitatea de top din proiect</span><span>fig. 01</span></figcaption>
-                </figure>
-
-                <div class="proj-text">
-                  <p class="proj-meta mono rule-b"><span>P.01</span><span>2026</span></p>
-                  <h3 class="proj-title split" id="p1-titlu" data-i18n="p1.title">Joc de reacție multi-player pe FPGA</h3>
-                  <p class="proj-desc lift" data-i18n="p1.desc">Joc hardware de timp de reacție pentru până la 4 jucători și 5 runde, scris integral în VHDL, fără niciun strat software, coordonat de o unitate de control FSM.</p>
-                  <ul class="specs lift">
-                    <li><span class="spec-n"><span class="count" data-to="14">14</span></span><span class="spec-l mono" data-i18n="p1.s1">module VHDL</span></li>
-                    <li><span class="spec-n"><span class="count" data-to="11">11</span></span><span class="spec-l mono" data-i18n="p1.s4">stări în FSM</span></li>
-                    <li><span class="spec-n"><span class="count" data-to="100">100</span></span><span class="spec-l mono" data-i18n="p1.s3">MHz, divizat la un tick de 1 ms</span></li>
-                  </ul>
-                  <ul class="tags lift" aria-label="Tehnologii" data-i18n-aria="tags.aria">
-                    <li>VHDL</li><li>FPGA</li><li>Vivado</li><li>FSM</li>
-                  </ul>
-                  <div class="proj-actions lift">
-                    <a class="btn btn-primary magnetic" href="proiecte/fpga.html" data-cursor="view"><span class="btn-in"><span data-i18n="p1.case">Vezi studiul de caz</span><span class="arrow arrow-r" aria-hidden="true">→</span></span></a>
-                    <a class="proj-link mono" href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game" target="_blank" rel="noopener noreferrer"><span data-i18n="link.code">Codul pe GitHub</span> <span aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
-                  </div>
-                </div>
-              </article>
-            </li>
-
-            <!-- TODO Denis: proiect OOP/C/VBA, decomentează când ai detaliile.
-                 Copiază slide-ul P.01, pune-l înaintea slide-ului „În curând”, schimbă textele RO aici și pe cele EN în assets/js/main.js,
-                 apoi actualizează aria-label="N din M" și data-i18n-slide pe toate slide-urile. Imaginea intră în assets/img/ (sursa în art/).
-                 Idei de conținut din vechile carduri:
-                 - Java · Proiect de programare orientată pe obiecte (clase, moștenire, încapsulare) · link GitHub · an
-                 - C · Structuri de date în C (memorie gestionată manual, pointeri) · link GitHub · an
-                 - VBA · Automatizare cu VBA (sarcini repetitive în Microsoft Office) · link · an
-            -->
-
-            <!-- Card final: site-ul rămâne deschis la proiecte noi -->
-            <li class="slide slide-soon" role="group" aria-roledescription="slide" aria-label="2 din 2" data-i18n-slide="2">
-              <div class="soon">
-                <p class="soon-k mono">P.02</p>
-                <p class="soon-title" data-i18n="soon.title">În curând</p>
-                <p class="soon-text" data-i18n="soon.text">Lucrez la următoarele proiecte. Între timp, tot ce am publicat e pe GitHub.</p>
-                <a class="proj-link mono" href="https://github.com/deniscalea" target="_blank" rel="noopener noreferrer">github.com/deniscalea <span aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
-              </div>
-            </li>
-          </ul>
+    <!-- 2. SEMNUL: un „C” din CALEA construit din celule de grilă și trasee de PCB.
+         Pe scroll (secțiune înaltă + position: sticky) se rotește și se desface pe liniile grilei.
+         Fără WebGL / cu reduced-motion: desenul SVG static de mai jos. -->
+    <section class="sign" id="calea" aria-labelledby="calea-titlu">
+      <div class="sign-pin">
+        <div class="sign-stage" aria-hidden="true">
+          <canvas class="sign-gl"></canvas>
+          <svg class="sign-svg" viewBox="-20 -20 520 640" aria-hidden="true" focusable="false">
+          <defs><clipPath id="c-cells"><rect x="81" y="561" width="38" height="38"/><rect x="121" y="561" width="38" height="38"/><rect x="161" y="561" width="38" height="38"/><rect x="201" y="561" width="38" height="38"/><rect x="241" y="561" width="38" height="38"/><rect x="281" y="561" width="38" height="38"/><rect x="321" y="561" width="38" height="38"/><rect x="361" y="561" width="38" height="38"/><rect x="41" y="521" width="38" height="38"/><rect x="81" y="521" width="38" height="38"/><rect x="121" y="521" width="38" height="38"/><rect x="161" y="521" width="38" height="38"/><rect x="201" y="521" width="38" height="38"/><rect x="241" y="521" width="38" height="38"/><rect x="281" y="521" width="38" height="38"/><rect x="321" y="521" width="38" height="38"/><rect x="361" y="521" width="38" height="38"/><rect x="401" y="521" width="38" height="38"/><rect x="1" y="481" width="38" height="38"/><rect x="41" y="481" width="38" height="38"/><rect x="81" y="481" width="38" height="38"/><rect x="121" y="481" width="38" height="38"/><rect x="161" y="481" width="38" height="38"/><rect x="201" y="481" width="38" height="38"/><rect x="241" y="481" width="38" height="38"/><rect x="281" y="481" width="38" height="38"/><rect x="321" y="481" width="38" height="38"/><rect x="361" y="481" width="38" height="38"/><rect x="401" y="481" width="38" height="38"/><rect x="441" y="481" width="38" height="38"/><rect x="1" y="441" width="38" height="38"/><rect x="41" y="441" width="38" height="38"/><rect x="81" y="441" width="38" height="38"/><rect x="121" y="441" width="38" height="38"/><rect x="161" y="441" width="38" height="38"/><rect x="201" y="441" width="38" height="38"/><rect x="241" y="441" width="38" height="38"/><rect x="281" y="441" width="38" height="38"/><rect x="321" y="441" width="38" height="38"/><rect x="361" y="441" width="38" height="38"/><rect x="401" y="441" width="38" height="38"/><rect x="441" y="441" width="38" height="38"/><rect x="1" y="401" width="38" height="38"/><rect x="41" y="401" width="38" height="38"/><rect x="81" y="401" width="38" height="38"/><rect x="121" y="401" width="38" height="38"/><rect x="161" y="401" width="38" height="38"/><rect x="281" y="401" width="38" height="38"/><rect x="321" y="401" width="38" height="38"/><rect x="361" y="401" width="38" height="38"/><rect x="401" y="401" width="38" height="38"/><rect x="441" y="401" width="38" height="38"/><rect x="1" y="361" width="38" height="38"/><rect x="41" y="361" width="38" height="38"/><rect x="81" y="361" width="38" height="38"/><rect x="121" y="361" width="38" height="38"/><rect x="1" y="321" width="38" height="38"/><rect x="41" y="321" width="38" height="38"/><rect x="81" y="321" width="38" height="38"/><rect x="121" y="321" width="38" height="38"/><rect x="1" y="281" width="38" height="38"/><rect x="41" y="281" width="38" height="38"/><rect x="81" y="281" width="38" height="38"/><rect x="121" y="281" width="38" height="38"/><rect x="1" y="241" width="38" height="38"/><rect x="41" y="241" width="38" height="38"/><rect x="81" y="241" width="38" height="38"/><rect x="121" y="241" width="38" height="38"/><rect x="1" y="201" width="38" height="38"/><rect x="41" y="201" width="38" height="38"/><rect x="81" y="201" width="38" height="38"/><rect x="121" y="201" width="38" height="38"/><rect x="1" y="161" width="38" height="38"/><rect x="41" y="161" width="38" height="38"/><rect x="81" y="161" width="38" height="38"/><rect x="121" y="161" width="38" height="38"/><rect x="161" y="161" width="38" height="38"/><rect x="281" y="161" width="38" height="38"/><rect x="321" y="161" width="38" height="38"/><rect x="361" y="161" width="38" height="38"/><rect x="401" y="161" width="38" height="38"/><rect x="441" y="161" width="38" height="38"/><rect x="1" y="121" width="38" height="38"/><rect x="41" y="121" width="38" height="38"/><rect x="81" y="121" width="38" height="38"/><rect x="121" y="121" width="38" height="38"/><rect x="161" y="121" width="38" height="38"/><rect x="201" y="121" width="38" height="38"/><rect x="241" y="121" width="38" height="38"/><rect x="281" y="121" width="38" height="38"/><rect x="321" y="121" width="38" height="38"/><rect x="361" y="121" width="38" height="38"/><rect x="401" y="121" width="38" height="38"/><rect x="441" y="121" width="38" height="38"/><rect x="1" y="81" width="38" height="38"/><rect x="41" y="81" width="38" height="38"/><rect x="81" y="81" width="38" height="38"/><rect x="121" y="81" width="38" height="38"/><rect x="161" y="81" width="38" height="38"/><rect x="201" y="81" width="38" height="38"/><rect x="241" y="81" width="38" height="38"/><rect x="281" y="81" width="38" height="38"/><rect x="321" y="81" width="38" height="38"/><rect x="361" y="81" width="38" height="38"/><rect x="401" y="81" width="38" height="38"/><rect x="441" y="81" width="38" height="38"/><rect x="41" y="41" width="38" height="38"/><rect x="81" y="41" width="38" height="38"/><rect x="121" y="41" width="38" height="38"/><rect x="161" y="41" width="38" height="38"/><rect x="201" y="41" width="38" height="38"/><rect x="241" y="41" width="38" height="38"/><rect x="281" y="41" width="38" height="38"/><rect x="321" y="41" width="38" height="38"/><rect x="361" y="41" width="38" height="38"/><rect x="401" y="41" width="38" height="38"/><rect x="81" y="1" width="38" height="38"/><rect x="121" y="1" width="38" height="38"/><rect x="161" y="1" width="38" height="38"/><rect x="201" y="1" width="38" height="38"/><rect x="241" y="1" width="38" height="38"/><rect x="281" y="1" width="38" height="38"/><rect x="321" y="1" width="38" height="38"/><rect x="361" y="1" width="38" height="38"/></clipPath>
+            <linearGradient id="c-steel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a3e45"/><stop offset=".5" stop-color="#17181b"/><stop offset="1" stop-color="#2c2f35"/></linearGradient></defs>
+          <g class="sign-cells" fill="url(#c-steel)" stroke="rgba(200,210,225,.22)"><rect x="81" y="561" width="38" height="38"/><rect x="121" y="561" width="38" height="38"/><rect x="161" y="561" width="38" height="38"/><rect x="201" y="561" width="38" height="38"/><rect x="241" y="561" width="38" height="38"/><rect x="281" y="561" width="38" height="38"/><rect x="321" y="561" width="38" height="38"/><rect x="361" y="561" width="38" height="38"/><rect x="41" y="521" width="38" height="38"/><rect x="81" y="521" width="38" height="38"/><rect x="121" y="521" width="38" height="38"/><rect x="161" y="521" width="38" height="38"/><rect x="201" y="521" width="38" height="38"/><rect x="241" y="521" width="38" height="38"/><rect x="281" y="521" width="38" height="38"/><rect x="321" y="521" width="38" height="38"/><rect x="361" y="521" width="38" height="38"/><rect x="401" y="521" width="38" height="38"/><rect x="1" y="481" width="38" height="38"/><rect x="41" y="481" width="38" height="38"/><rect x="81" y="481" width="38" height="38"/><rect x="121" y="481" width="38" height="38"/><rect x="161" y="481" width="38" height="38"/><rect x="201" y="481" width="38" height="38"/><rect x="241" y="481" width="38" height="38"/><rect x="281" y="481" width="38" height="38"/><rect x="321" y="481" width="38" height="38"/><rect x="361" y="481" width="38" height="38"/><rect x="401" y="481" width="38" height="38"/><rect x="441" y="481" width="38" height="38"/><rect x="1" y="441" width="38" height="38"/><rect x="41" y="441" width="38" height="38"/><rect x="81" y="441" width="38" height="38"/><rect x="121" y="441" width="38" height="38"/><rect x="161" y="441" width="38" height="38"/><rect x="201" y="441" width="38" height="38"/><rect x="241" y="441" width="38" height="38"/><rect x="281" y="441" width="38" height="38"/><rect x="321" y="441" width="38" height="38"/><rect x="361" y="441" width="38" height="38"/><rect x="401" y="441" width="38" height="38"/><rect x="441" y="441" width="38" height="38"/><rect x="1" y="401" width="38" height="38"/><rect x="41" y="401" width="38" height="38"/><rect x="81" y="401" width="38" height="38"/><rect x="121" y="401" width="38" height="38"/><rect x="161" y="401" width="38" height="38"/><rect x="281" y="401" width="38" height="38"/><rect x="321" y="401" width="38" height="38"/><rect x="361" y="401" width="38" height="38"/><rect x="401" y="401" width="38" height="38"/><rect x="441" y="401" width="38" height="38"/><rect x="1" y="361" width="38" height="38"/><rect x="41" y="361" width="38" height="38"/><rect x="81" y="361" width="38" height="38"/><rect x="121" y="361" width="38" height="38"/><rect x="1" y="321" width="38" height="38"/><rect x="41" y="321" width="38" height="38"/><rect x="81" y="321" width="38" height="38"/><rect x="121" y="321" width="38" height="38"/><rect x="1" y="281" width="38" height="38"/><rect x="41" y="281" width="38" height="38"/><rect x="81" y="281" width="38" height="38"/><rect x="121" y="281" width="38" height="38"/><rect x="1" y="241" width="38" height="38"/><rect x="41" y="241" width="38" height="38"/><rect x="81" y="241" width="38" height="38"/><rect x="121" y="241" width="38" height="38"/><rect x="1" y="201" width="38" height="38"/><rect x="41" y="201" width="38" height="38"/><rect x="81" y="201" width="38" height="38"/><rect x="121" y="201" width="38" height="38"/><rect x="1" y="161" width="38" height="38"/><rect x="41" y="161" width="38" height="38"/><rect x="81" y="161" width="38" height="38"/><rect x="121" y="161" width="38" height="38"/><rect x="161" y="161" width="38" height="38"/><rect x="281" y="161" width="38" height="38"/><rect x="321" y="161" width="38" height="38"/><rect x="361" y="161" width="38" height="38"/><rect x="401" y="161" width="38" height="38"/><rect x="441" y="161" width="38" height="38"/><rect x="1" y="121" width="38" height="38"/><rect x="41" y="121" width="38" height="38"/><rect x="81" y="121" width="38" height="38"/><rect x="121" y="121" width="38" height="38"/><rect x="161" y="121" width="38" height="38"/><rect x="201" y="121" width="38" height="38"/><rect x="241" y="121" width="38" height="38"/><rect x="281" y="121" width="38" height="38"/><rect x="321" y="121" width="38" height="38"/><rect x="361" y="121" width="38" height="38"/><rect x="401" y="121" width="38" height="38"/><rect x="441" y="121" width="38" height="38"/><rect x="1" y="81" width="38" height="38"/><rect x="41" y="81" width="38" height="38"/><rect x="81" y="81" width="38" height="38"/><rect x="121" y="81" width="38" height="38"/><rect x="161" y="81" width="38" height="38"/><rect x="201" y="81" width="38" height="38"/><rect x="241" y="81" width="38" height="38"/><rect x="281" y="81" width="38" height="38"/><rect x="321" y="81" width="38" height="38"/><rect x="361" y="81" width="38" height="38"/><rect x="401" y="81" width="38" height="38"/><rect x="441" y="81" width="38" height="38"/><rect x="41" y="41" width="38" height="38"/><rect x="81" y="41" width="38" height="38"/><rect x="121" y="41" width="38" height="38"/><rect x="161" y="41" width="38" height="38"/><rect x="201" y="41" width="38" height="38"/><rect x="241" y="41" width="38" height="38"/><rect x="281" y="41" width="38" height="38"/><rect x="321" y="41" width="38" height="38"/><rect x="361" y="41" width="38" height="38"/><rect x="401" y="41" width="38" height="38"/><rect x="81" y="1" width="38" height="38"/><rect x="121" y="1" width="38" height="38"/><rect x="161" y="1" width="38" height="38"/><rect x="201" y="1" width="38" height="38"/><rect x="241" y="1" width="38" height="38"/><rect x="281" y="1" width="38" height="38"/><rect x="321" y="1" width="38" height="38"/><rect x="361" y="1" width="38" height="38"/></g>
+          <g class="sign-traces" clip-path="url(#c-cells)" fill="none" stroke="#c4c9d0" stroke-width="2.4"><path d="M340.0 408.3 L340.0 191.7 L288.3 140.0 L191.7 140.0 L140.0 191.7 L140.0 408.3 L191.7 460.0 L288.3 460.0Z"/><path d="M360.0 416.6 L360.0 183.4 L296.6 120.0 L183.4 120.0 L120.0 183.4 L120.0 416.6 L183.4 480.0 L296.6 480.0Z"/><path d="M380.0 424.9 L380.0 175.1 L304.9 100.0 L175.1 100.0 L100.0 175.1 L100.0 424.9 L175.1 500.0 L304.9 500.0Z"/><path d="M400.0 433.1 L400.0 166.9 L313.1 80.0 L166.9 80.0 L80.0 166.9 L80.0 433.1 L166.9 520.0 L313.1 520.0Z"/><path d="M420.0 441.4 L420.0 158.6 L321.4 60.0 L158.6 60.0 L60.0 158.6 L60.0 441.4 L158.6 540.0 L321.4 540.0Z"/><path d="M440.0 449.7 L440.0 150.3 L329.7 40.0 L150.3 40.0 L40.0 150.3 L40.0 449.7 L150.3 560.0 L329.7 560.0Z"/><path d="M460.0 458.0 L460.0 142.0 L338.0 20.0 L142.0 20.0 L20.0 142.0 L20.0 458.0 L142.0 580.0 L338.0 580.0Z"/></g>
+        </svg>
+        </div>
+        <div class="wrap sign-copy">
+          <h2 class="sign-title" id="calea-titlu" data-i18n="sign.title">Ce fac</h2>
+          <p class="sign-lede" data-i18n="sign.lede">Studiez Calculatoare la UTCN și lucrez la proiecte pe lângă facultate. Până acum mai mult hardware, de acum și aplicații.</p>
+          <ol class="sign-steps">
+            <li class="is-on"><span class="step-n mono" aria-hidden="true">01</span><b data-i18n="sign.s1h">Hardware</b><span data-i18n="sign.s1">VHDL pe FPGA: un joc de reacție cu 14 module și un FSM.</span></li>
+            <li><span class="step-n mono" aria-hidden="true">02</span><b data-i18n="sign.s2h">Cod</b><span data-i18n="sign.s2">C/C++ la facultate. Java și SQL, abia la început.</span></li>
+            <li><span class="step-n mono" aria-hidden="true">03</span><b data-i18n="sign.s3h">Aplicații</b><span data-i18n="sign.s3">Urmează o aplicație de telefon pentru cheltuieli, în Flutter.</span></li>
+          </ol>
         </div>
       </div>
     </section>
 
-    <!-- 03 STUDII -->
-    <section class="screen sec" id="studii" aria-labelledby="studii-titlu" data-reveal>
-      <div class="wrap screen-inner">
-        <header class="sec-head rule-t">
-          <p class="sec-label mono"><span>03</span> / <span data-i18n="nav.studies">Studii</span></p>
-          <h2 class="sec-title split" id="studii-titlu" data-i18n="studies.title">Ce studiez</h2>
+    <!-- 3. PROIECTE: carduri mari cu imagine -->
+    <section class="sec sec-work" id="proiecte" aria-labelledby="proiecte-titlu">
+      <div class="wrap">
+        <header class="sec-head" data-reveal="once">
+          <h2 class="sec-title split" id="proiecte-titlu" data-i18n="work.title">Proiecte</h2>
+          <p class="sec-note lift" data-i18n="work.note">Ce am construit până acum și ce urmează.</p>
         </header>
-        <div class="study">
-          <figure class="study-fig">
-            <span class="curtain"><span class="frame"><img class="fx" src="assets/img/gates.webp" width="1600" height="1100" loading="lazy" decoding="async"
-                 alt="Schemă a unui semi-sumator din două porți logice, XOR și AND, desenată cu alb pe hârtie milimetrică neagră, peste conturul literelor UTCN" data-i18n-alt="studies.img"></span></span>
-            <figcaption class="mono fig-cap"><span data-i18n="studies.cap">Semi-sumator: S = A ⊕ B, C = A · B</span><span>fig. 02</span></figcaption>
-          </figure>
-          <div class="study-text lift">
-            <p class="study-big" aria-hidden="true">UTCN</p>
-            <p class="study-when mono rule-b" data-i18n="studies.when1">2025 – prezent, anul 2</p>
-            <h3 class="study-title" data-i18n="studies.school1">Universitatea Tehnică din Cluj-Napoca</h3>
-            <p class="study-sub" data-i18n="studies.sub1">Licență în Calculatoare și Tehnologia Informației, Facultatea de Automatică și Calculatoare.</p>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- 04 CV -->
-    <section class="screen sec" id="cv" aria-labelledby="cv-titlu" data-reveal>
-      <div class="wrap screen-inner">
-        <header class="sec-head rule-t">
-          <p class="sec-label mono"><span>04</span> / <span>CV</span></p>
-          <h2 class="sec-title split" id="cv-titlu" data-i18n="cv.title">Totul, pe o pagină</h2>
-        </header>
-        <div class="cvbox">
-          <div class="cv-fig">
-            <span class="cv-poster curtain" aria-hidden="true"><span class="frame"><img src="assets/img/poster.webp" width="1200" height="1600" loading="lazy" decoding="async" alt=""></span></span>
-            <a class="cv-preview" href="assets/CV_Denis_Calin_RO.pdf" target="_blank" rel="noopener" data-cv data-cursor="view">
-              <img src="assets/cv-preview-ro.png" width="1588" height="2246" loading="lazy" decoding="async" data-cv-img
-                   alt="Previzualizare: prima pagină a CV-ului" data-i18n-alt="cv.alt">
-              <span class="visually-hidden" data-i18n="cv.open">Deschide CV-ul (PDF) într-un tab nou</span>
+        <div class="works">
+          <!-- P1: FPGA -->
+          <article class="work" aria-labelledby="p1-titlu" data-reveal="once">
+            <a class="work-media curtain" href="proiecte/fpga.html" tabindex="-1" aria-hidden="true">
+              <span class="frame"><img class="fx par" src="assets/img/fpga-chip.webp" width="1600" height="1200" loading="lazy" decoding="async"
+                   alt="Randare izometrică în grafit și argint a unui cip FPGA marcat TOP_GAME, cu trasee care pleacă din pini" data-i18n-alt="p1.img"></span>
             </a>
-          </div>
-          <div class="cv-text lift">
-            <p class="cv-lead" data-i18n="cv.lead">Cursurile, competențele, limbile și restul detaliilor stau în CV. O pagină A4, în română sau în engleză.</p>
-            <div class="cv-actions">
-              <a class="btn btn-primary magnetic" href="assets/CV_Denis_Calin_EN.pdf" download><span class="btn-in"><span>CV (EN) PDF</span><span class="arrow" aria-hidden="true">↓</span></span></a>
-              <a class="btn btn-ghost magnetic" href="assets/CV_Denis_Calin_RO.pdf" download><span class="btn-in"><span>CV (RO) PDF</span><span class="arrow" aria-hidden="true">↓</span></span></a>
+            <div class="work-body">
+              <p class="work-meta mono"><span>2026</span><span data-i18n="p1.kind">Hardware, VHDL</span></p>
+              <h3 class="work-title split" id="p1-titlu" data-i18n="p1.title">Joc de reacție multi-player pe FPGA</h3>
+              <p class="work-desc lift" data-i18n="p1.desc">Un joc de timp de reacție pentru până la 4 jucători și 5 runde, scris integral în VHDL: fără procesor și fără software. Placa aprinde un LED după o întârziere aleatoare și măsoară reacția în milisecunde.</p>
+              <ul class="specs lift">
+                <li><span class="spec-n"><span class="count" data-to="14">14</span></span><span class="spec-l" data-i18n="p1.s1">module VHDL</span></li>
+                <li><span class="spec-n"><span class="count" data-to="11">11</span></span><span class="spec-l" data-i18n="p1.s2">stări în FSM</span></li>
+                <li><span class="spec-n">1 ms</span><span class="spec-l" data-i18n="p1.s3">tick obținut din ceasul de 100 MHz</span></li>
+              </ul>
+              <div class="work-actions lift">
+                <a class="btn btn-primary magnetic" href="proiecte/fpga.html"><span class="btn-in"><span data-i18n="p1.case">Vezi studiul de caz</span><span class="arrow arrow-r" aria-hidden="true">→</span></span></a>
+                <a class="text-link mono" href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game" target="_blank" rel="noopener noreferrer"><span data-i18n="link.code">Codul pe GitHub</span> <span aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
+              </div>
             </div>
+          </article>
+
+          <!-- P2: aplicația de cheltuieli. PLANIFICATĂ, nu e construită: rămâne marcată „Urmează” până există cod. -->
+          <article class="work work-next" aria-labelledby="p2-titlu" data-reveal="once">
+            <div class="work-media curtain">
+              <span class="frame"><img class="fx par" src="assets/img/next-app.webp" width="1600" height="1200" loading="lazy" decoding="async"
+                   alt="Imagine-concept: un telefon cu raportul de cheltuieli al săptămânii, pe categorii, lângă un bon de casă scanat" data-i18n-alt="p2.img"></span>
+            </div>
+            <div class="work-body">
+              <p class="work-meta mono"><span class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="p2.state">Urmează, start în noiembrie 2026</span></span><span data-i18n="p2.kind">Aplicație mobilă</span></p>
+              <h3 class="work-title split" id="p2-titlu" data-i18n="p2.title">Aplicație de cheltuieli</h3>
+              <p class="work-desc lift" data-i18n="p2.desc">Scanezi bonul de la casă, iar aplicația citește produsele și prețurile direct pe telefon, fără internet, și le pune pe categorii. Adaugi de mână parcarea, sala sau abonamentele. Apoi primești un raport cu cât ai dat pe fiecare lucru în parte: pe fiecare aliment (banane, piept de pui), pe parcare, pe sală, pe tot.</p>
+              <ul class="tags lift" aria-label="Tehnologii planificate" data-i18n-aria="p2.tags">
+                <li>Flutter</li><li>Google ML Kit</li><li data-i18n="p2.t3">OCR offline</li>
+              </ul>
+              <p class="work-note lift" data-i18n="p2.note">Încă nu e construită. Când apare codul, îl pun pe GitHub și aici.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. DESPRE + STUDII -->
+    <section class="sec sec-about" id="despre" aria-labelledby="despre-titlu" data-reveal="once">
+      <div class="wrap about">
+        <figure class="portrait curtain">
+          <span class="frame">
+            <!-- TODO Denis: pune poza în assets/img/denis.jpg (portret, ideal 1200×1500), apoi decomentează linia de mai jos
+                 și șterge blocul .portrait-empty. CSS-ul o face automat monocromă.
+            <img class="par" src="assets/img/denis.jpg" width="1200" height="1500" loading="lazy" decoding="async" alt="Denis-Alexandru Călin" data-i18n-alt="about.img">
+            -->
+            <span class="portrait-empty" aria-hidden="true">
+              <span class="pe-mono">DC</span>
+              <span class="pe-note mono" data-i18n="about.photo">Fotografia vine în curând</span>
+            </span>
+          </span>
+        </figure>
+        <div class="about-text">
+          <h2 class="sec-title split" id="despre-titlu" data-i18n="about.title">Despre mine</h2>
+          <p class="about-lede lift" data-i18n="about.lede">Sunt Denis și studiez la Cluj. Îmi place să înțeleg un sistem de jos în sus: de la porți logice și VHDL până la programe în C++ și Java.</p>
+          <p class="about-p lift" data-i18n="about.p">Caut un internship într-o echipă de la care să învăț, în Cluj-Napoca sau remote.</p>
+          <dl class="study lift">
+            <dt class="mono" data-i18n="about.when">2025 – prezent</dt>
+            <dd>
+              <b data-i18n="about.school">Universitatea Tehnică din Cluj-Napoca</b>
+              <span data-i18n="about.prog">Calculatoare și Tehnologia Informației, anul 2. Facultatea de Automatică și Calculatoare.</span>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. CV -->
+    <section class="sec sec-cv" id="cv" aria-labelledby="cv-titlu" data-reveal="once">
+      <div class="wrap cvbox">
+        <div class="cv-fig">
+          <span class="cv-poster curtain" aria-hidden="true"><span class="frame"><img src="assets/img/poster.webp" width="1200" height="1600" loading="lazy" decoding="async" alt=""></span></span>
+          <a class="cv-preview" href="assets/CV_Denis_Calin_RO.pdf" target="_blank" rel="noopener" data-cv>
+            <img src="assets/cv-preview-ro.png" width="1588" height="2246" loading="lazy" decoding="async" data-cv-img
+                 alt="Previzualizare: CV-ul, o pagină A4" data-i18n-alt="cv.alt">
+            <span class="visually-hidden" data-i18n="cv.open">Deschide CV-ul (PDF) într-un tab nou</span>
+          </a>
+        </div>
+        <div class="cv-text">
+          <h2 class="sec-title split" id="cv-titlu" data-i18n="cv.title">CV, pe o pagină</h2>
+          <p class="cv-lead lift" data-i18n="cv.lead">Proiectele, studiile, limbile și ce tehnologii folosesc. O pagină A4, în română sau în engleză.</p>
+          <div class="cv-actions lift">
+            <a class="btn btn-primary magnetic" href="assets/CV_Denis_Calin_EN.pdf" download><span class="btn-in"><span data-i18n="cv.en">CV în engleză</span><span class="arrow" aria-hidden="true">↓</span></span></a>
+            <a class="btn btn-ghost magnetic" href="assets/CV_Denis_Calin_RO.pdf" download><span class="btn-in"><span data-i18n="cv.ro">CV în română</span><span class="arrow" aria-hidden="true">↓</span></span></a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 05 CONTACT -->
-    <section class="screen sec sec-contact" id="contact" aria-labelledby="contact-titlu" data-reveal>
-      <div class="wrap screen-inner">
-        <header class="sec-head rule-t">
-          <p class="sec-label mono"><span>05</span> / <span data-i18n="nav.contact">Contact</span></p>
-          <h2 class="sec-title split" id="contact-titlu" data-i18n="contact.title">Hai să vorbim</h2>
-        </header>
+    <!-- 6. CONTACT -->
+    <section class="sec sec-contact" id="contact" aria-labelledby="contact-titlu" data-reveal="once">
+      <div class="wrap">
+        <h2 class="sec-title split" id="contact-titlu" data-i18n="contact.title">Scrie-mi</h2>
+        <p class="contact-lead lift" data-i18n="contact.lead">Ai un internship sau un proiect la care pot ajuta? Răspund pe email.</p>
+        <a class="contact-email lift" href="mailto:deniscaleax@gmail.com"><span class="ce-text">deniscaleax<wbr>@gmail.com</span><span class="ce-arrow" aria-hidden="true">↗</span></a>
 
-        <div class="contact">
-          <p class="contact-lead lift" data-i18n="contact.lead">Ai un internship sau un proiect la care pot ajuta? Scrie-mi pe email.</p>
-          <a class="contact-email lift" href="mailto:deniscaleax@gmail.com"><span class="ce-text">deniscaleax<wbr>@gmail.com</span><span class="ce-arrow" aria-hidden="true">↗</span></a>
+        <ul class="contact-links lift">
+          <li>
+            <a href="https://github.com/deniscalea" target="_blank" rel="noopener noreferrer"><span class="cl-k">GitHub</span><span class="cl-v">github.com/deniscalea</span><span class="cl-arrow" aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
+          </li>
+          <!-- TODO Denis: LinkedIn, decomentează când ai link-ul real
+          <li>
+            <a href="https://www.linkedin.com/in/LINK-REAL" target="_blank" rel="noopener noreferrer"><span class="cl-k">LinkedIn</span><span class="cl-v">linkedin.com/in/LINK-REAL</span><span class="cl-arrow" aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
+          </li>
+          -->
+        </ul>
 
-          <ul class="contact-links lift">
-            <li class="inv">
-              <a class="stretch" href="https://github.com/deniscalea" target="_blank" rel="noopener noreferrer"><span class="mono cl-k">GitHub</span><span class="cl-v">github.com/deniscalea</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
-              <span class="cl-arrow" aria-hidden="true">↗</span>
-            </li>
-            <!-- TODO Denis: LinkedIn, decomentează când ai link-ul real
-            <li class="inv">
-              <a class="stretch" href="https://www.linkedin.com/in/LINK-REAL" target="_blank" rel="noopener noreferrer"><span class="mono cl-k">LinkedIn</span><span class="cl-v">linkedin.com/in/LINK-REAL</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
-              <span class="cl-arrow" aria-hidden="true">↗</span>
-            </li>
-            -->
-          </ul>
-        </div>
-
-        <footer class="site-footer rule-t">
+        <footer class="site-footer">
           <p>© 2026 CALEA, Denis-Alexandru Călin</p>
           <p class="clock mono" hidden><span data-i18n="clock.label">Ora în Cluj</span> <time class="clock-time">--:--:--</time></p>
-          <a href="#acasa" class="mono to-top"><span data-i18n="footer.top">Înapoi sus</span> <span aria-hidden="true">↑</span></a>
+          <a href="#acasa" class="to-top mono"><span data-i18n="footer.top">Înapoi sus</span> <span aria-hidden="true">↑</span></a>
         </footer>
       </div>
     </section>
   </main>
 
-  <div class="cursor" aria-hidden="true"><span class="cursor-ring"><span class="cursor-label"></span></span><span class="cursor-dot"></span></div>
-
-  <script src="assets/js/main.js?v=3.0" defer></script>
+  <script src="assets/js/main.js?v=4.2" defer></script>
 </body>
 </html>

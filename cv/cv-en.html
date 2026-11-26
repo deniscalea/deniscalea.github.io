@@ -13,100 +13,82 @@
 <body>
 <main class="page">
 
-  <div class="topbar mono">
-    <span class="brand">CALEA</span>
-    <span>Curriculum Vitae / 2026</span>
-  </div>
-
-  <header class="head">
-    <p class="head-k mono">Cluj-Napoca<br>Romania</p>
-    <div>
-      <h1 class="name"><span>Denis-Alexandru</span><span>Călin</span></h1>
-      <p class="role mono">Computer Engineering Student · Software &amp; Hardware</p>
+  <header>
+    <h1 class="name">Denis-Alexandru Călin</h1>
+    <p class="title">Year 2 Computer Engineering student, UTCN · Cluj-Napoca</p>
+    <div class="contacts mono">
+      <p><a class="ul" href="mailto:deniscaleax@gmail.com">deniscaleax@gmail.com</a><span class="sep">·</span><a class="ul" href="https://github.com/deniscalea">github.com/deniscalea</a></p>
+      <p>Site with my projects: <a class="ul" href="https://deniscalea.github.io">deniscalea.github.io</a></p>
     </div>
-    <ul class="contact mono">
-      <li><a href="mailto:deniscaleax@gmail.com">deniscaleax@gmail.com</a></li>
-      <li><a href="https://github.com/deniscalea">github.com/deniscalea</a></li>
-      <li>Cluj-Napoca, Romania</li>
-    </ul>
+    <p class="seek"><b>Looking for</b> an internship, in Cluj-Napoca or remote.</p>
   </header>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>01</b>Profile</h2>
+    <h2 class="sec-h">Profile</h2>
     <p class="profile">
-      Second-year Computer Science student at the Technical University of <span class="nw">Cluj-Napoca</span> with <span class="nw">hands-on</span> work
-      across the stack, from VHDL designs on FPGA and x86 assembly to C/C++ and Java.
-      I enjoy building complete systems and test what I build.
-      Looking for an internship where I can learn from an experienced team and contribute to real products.
+      I am a second-year Computer Engineering student at UTCN. My main project so far is a reaction time game
+      built entirely in VHDL on an FPGA, with no processor and no software. I like to understand a system from
+      the logic gates up, and my next step is a phone app that people can use every day.
     </p>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>02</b>Education</h2>
-    <div>
-      <div class="item">
-        <div class="item-head">
-          <h3 class="item-title">Technical University of Cluj-Napoca (UTCN)</h3>
-          <span class="when mono">2025 – present</span>
-        </div>
-        <p class="sub">B.Sc. Computer Science and Information Technology, Faculty of Automation and Computer Science · Year 2</p>
+    <h2 class="sec-h">Projects</h2>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">FPGA Multi-Player Reaction Time Game</h3>
+        <span class="meta">2026 · <a href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">github</a></span>
       </div>
-      <div class="item">
-        <div class="item-head">
-          <h3 class="item-title">„Ion Minulescu” National College</h3>
-          <span class="when mono">2021 – 2025</span>
-        </div>
-        <p class="sub">Mathematics &amp; Computer Science, intensive Computer Science track</p>
+      <ul class="points">
+        <li>A reaction time game for up to 4 players and 5 rounds, written entirely in VHDL: no processor, no software.</li>
+        <li>14 VHDL modules (15 instances) around a control unit: an FSM with 11 states and a data path that counts, compares and keeps each player’s best time.</li>
+        <li>A random 1–5 s delay from a 16-bit LFSR, false start detection, and debounced buttons (10 ms) with short and long presses.</li>
+        <li>The 100 MHz clock is divided down to a 1 ms tick; times appear on 8 multiplexed 7-segment digits, converted to BCD with Double Dabble.</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">Expense tracking app for phones</h3>
+        <span class="meta">planned · starting Nov 2026</span>
       </div>
+      <ul class="points">
+        <li>You scan a store receipt and the app reads the products and prices offline (OCR), then sorts them into categories. Parking, gym or subscriptions are added by hand, and a report shows how much went on each item: every food, parking, everything.</li>
+        <li>I will build it in Flutter, with Google ML Kit for on-device text recognition.</li>
+      </ul>
     </div>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>03</b>Projects</h2>
-    <div>
-      <div class="item">
-        <div class="item-head">
-          <h3 class="item-title"><a href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">FPGA Multi-Player Reaction Time Game</a></h3>
-          <span class="when mono">2026</span>
-        </div>
-        <a class="url mono" href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game</a>
-        <ul class="points">
-          <li>Designed a hardware reaction game for up to 4 players × 5 rounds, written entirely in VHDL with no software layer.</li>
-          <li>Built a modular architecture of 14 VHDL modules driven by a central FSM control unit, with a clear data path (subtractors, comparators, records memory).</li>
-          <li>Generated unpredictable stimulus delays with an LFSR and detected false starts; stored each player's best time and picked the winner automatically.</li>
-          <li>Divided the 100 MHz clock to a 1 ms tick; drove 8 multiplexed 7-segment digits via Double Dabble binary-to-BCD conversion; debounced buttons with short/long-press actions.</li>
-        </ul>
-        <ul class="tags mono"><li>VHDL</li><li>FPGA</li><li>Vivado</li><li>FSM</li><li>Digital Design</li></ul>
+    <h2 class="sec-h">Education</h2>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">Technical University of Cluj-Napoca (UTCN)</h3>
+        <span class="meta">2025 – present</span>
       </div>
+      <p class="sub">Faculty of Automation and Computer Science. BSc, Computer Engineering, year 2.</p>
+      <p class="sub">Relevant courses: Fundamental Algorithms (C++), Object-Oriented Programming (Java), Data Structures and Algorithms (C), Databases (SQL), Computer Architecture (x86 assembly), Digital Systems Design (VHDL).</p>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">„Ion Minulescu” National College (high school)</h3>
+        <span class="meta">2021 – 2025</span>
+      </div>
+      <p class="sub">Mathematics and Computer Science track.</p>
     </div>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>04</b>Coursework</h2>
-    <ul class="courses">
-      <li>Fundamental Algorithms <span class="mono">C++</span></li>
-      <li>Object-Oriented Programming <span class="mono">Java</span></li>
-      <li>Data Structures &amp; Algorithms <span class="mono">C</span></li>
-      <li>Databases <span class="mono">SQL</span></li>
-      <li>Computer Architecture <span class="mono">x86 Assembly</span></li>
-      <li>Digital Systems Design <span class="mono">VHDL</span></li>
-    </ul>
+    <h2 class="sec-h">Spoken languages</h2>
+    <p>Romanian (native), English (B2).</p>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>05</b>Skills</h2>
-    <dl class="skills">
-      <dt class="mono">Languages</dt><dd>C, C++, Java, SQL, VHDL, x86 Assembly</dd>
-      <dt class="mono">CS fundamentals</dt><dd>Data structures, sorting, trees, graphs, hash tables, greedy, divide-and-conquer</dd>
-      <dt class="mono">Tools</dt><dd>Git &amp; GitHub, Vivado, IntelliJ IDEA, Visual Studio, VS Code, CMake</dd>
-      <dt class="mono">Spoken</dt><dd>Romanian (native), English (advanced, B2–C1)</dd>
-    </dl>
+    <h2 class="sec-h">Technical skills</h2>
+    <div class="skills">
+      <p><b>Languages:</b> C/C++ (from university), Java and SQL (just started), VHDL (FPGA project).</p>
+      <p><b>Tools:</b> Git &amp; GitHub, Vivado, IntelliJ IDEA, VS Code, CMake.</p>
+    </div>
   </section>
-
-  <footer class="foot mono">
-    <span>Denis-Alexandru Călin</span>
-    <span>deniscaleax@gmail.com</span>
-  </footer>
 
 </main>
 </body>

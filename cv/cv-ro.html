@@ -13,100 +13,82 @@
 <body>
 <main class="page">
 
-  <div class="topbar mono">
-    <span class="brand">CALEA</span>
-    <span>Curriculum Vitae / 2026</span>
-  </div>
-
-  <header class="head">
-    <p class="head-k mono">Cluj-Napoca<br>România</p>
-    <div>
-      <h1 class="name"><span>Denis-Alexandru</span><span>Călin</span></h1>
-      <p class="role mono">Student la Calculatoare · Software &amp; Hardware</p>
+  <header>
+    <h1 class="name">Denis-Alexandru Călin</h1>
+    <p class="title">Student în anul 2 la Calculatoare, UTCN · Cluj-Napoca</p>
+    <div class="contacts mono">
+      <p><a class="ul" href="mailto:deniscaleax@gmail.com">deniscaleax@gmail.com</a><span class="sep">·</span><a class="ul" href="https://github.com/deniscalea">github.com/deniscalea</a></p>
+      <p>Site cu proiectele mele: <a class="ul" href="https://deniscalea.github.io">deniscalea.github.io</a></p>
     </div>
-    <ul class="contact mono">
-      <li><a href="mailto:deniscaleax@gmail.com">deniscaleax@gmail.com</a></li>
-      <li><a href="https://github.com/deniscalea">github.com/deniscalea</a></li>
-      <li>Cluj-Napoca, România</li>
-    </ul>
+    <p class="seek"><b>Caut</b> un internship, în Cluj-Napoca sau remote.</p>
   </header>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>01</b>Profil</h2>
+    <h2 class="sec-h">Profil</h2>
     <p class="profile">
-      Student în anul 2 la Calculatoare și Tehnologia Informației, la Universitatea Tehnică din <span class="nw">Cluj-Napoca</span>,
-      cu experiență practică pe toată „stiva”: de la design-uri VHDL pe FPGA și asamblare x86, până la C/C++ și Java.
-      Îmi place să construiesc sisteme complete și testez ce construiesc.
-      Caut un internship unde să învăț de la o echipă cu experiență și să contribui la produse reale.
+      Sunt student în anul 2 la Calculatoare și Tehnologia Informației, la UTCN. Proiectul meu principal de până acum
+      e un joc de timp de reacție construit integral în VHDL pe o placă FPGA, fără procesor și fără software. Îmi place
+      să înțeleg un sistem pornind de la porțile logice, iar pasul următor e o aplicație de telefon pe care oamenii s-o folosească zilnic.
     </p>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>02</b>Studii</h2>
-    <div>
-      <div class="item">
-        <div class="item-head">
-          <h3 class="item-title">Universitatea Tehnică din Cluj-Napoca (UTCN)</h3>
-          <span class="when mono">2025 – prezent</span>
-        </div>
-        <p class="sub">Licență în Calculatoare și Tehnologia Informației, Facultatea de Automatică și Calculatoare · Anul 2</p>
+    <h2 class="sec-h">Proiecte</h2>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">Joc de reacție multi-player pe FPGA</h3>
+        <span class="meta">2026 · <a href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">github</a></span>
       </div>
-      <div class="item">
-        <div class="item-head">
-          <h3 class="item-title">Colegiul Național „Ion Minulescu”</h3>
-          <span class="when mono">2021 – 2025</span>
-        </div>
-        <p class="sub">Profil matematică-informatică, intensiv informatică</p>
+      <ul class="points">
+        <li>Un joc de timp de reacție pentru până la 4 jucători și 5 runde, scris integral în VHDL: fără procesor, fără software.</li>
+        <li>14 module VHDL (15 instanțe) în jurul unei unități de control: un FSM cu 11 stări și o cale de date care numără, compară și păstrează cel mai bun timp al fiecărui jucător.</li>
+        <li>Întârziere aleatoare de 1–5 s dintr-un LFSR pe 16 biți, detectarea startului fals și butoane cu debouncing (10 ms), cu apăsare scurtă și lungă.</li>
+        <li>Ceasul de 100 MHz e divizat la un tick de 1 ms; timpii apar pe 8 cifre de 7 segmente multiplexate, convertiți în BCD cu Double Dabble.</li>
+      </ul>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">Aplicație de cheltuieli pentru telefon</h3>
+        <span class="meta">planificat · start în noiembrie 2026</span>
       </div>
+      <ul class="points">
+        <li>Scanezi bonul de la casă, iar aplicația citește produsele și prețurile offline (OCR) și le pune pe categorii. Parcarea, sala sau abonamentele se adaugă de mână, iar un raport arată cât ai dat pe fiecare lucru: pe fiecare aliment, pe parcare, pe tot.</li>
+        <li>O voi face în Flutter, cu Google ML Kit pentru recunoașterea textului direct pe telefon.</li>
+      </ul>
     </div>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>03</b>Proiecte</h2>
-    <div>
-      <div class="item">
-        <div class="item-head">
-          <h3 class="item-title"><a href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">Joc de reacție multi-player pe FPGA</a></h3>
-          <span class="when mono">2026</span>
-        </div>
-        <a class="url mono" href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game</a>
-        <ul class="points">
-          <li>Am proiectat un joc hardware de timp de reacție pentru până la 4 jucători × 5 runde, scris integral în VHDL, fără niciun strat software.</li>
-          <li>Arhitectură modulară din 14 module VHDL, coordonată de o unitate de control FSM centrală, cu o cale de date clară (scăzătoare, comparatoare, memorie pentru recorduri).</li>
-          <li>Întârzieri imprevizibile ale stimulului generate cu un LFSR și detectarea startului fals; cel mai bun timp al fiecărui jucător este salvat, iar câștigătorul e ales automat.</li>
-          <li>Ceasul de 100 MHz divizat la un tick de 1 ms; 8 cifre pe 7 segmente multiplexate, cu conversie binar–BCD prin Double Dabble; butoane cu debouncing și acțiuni la apăsare scurtă sau lungă.</li>
-        </ul>
-        <ul class="tags mono"><li>VHDL</li><li>FPGA</li><li>Vivado</li><li>FSM</li><li>Proiectare digitală</li></ul>
+    <h2 class="sec-h">Studii</h2>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">Universitatea Tehnică din Cluj-Napoca (UTCN)</h3>
+        <span class="meta">2025 – prezent</span>
       </div>
+      <p class="sub">Facultatea de Automatică și Calculatoare. Licență, Calculatoare și Tehnologia Informației, anul 2.</p>
+      <p class="sub">Cursuri relevante: Algoritmi fundamentali (C++), Programare orientată pe obiecte (Java), Structuri de date și algoritmi (C), Baze de date (SQL), Arhitectura calculatoarelor (asamblare x86), Proiectarea sistemelor digitale (VHDL).</p>
+    </div>
+    <div class="item">
+      <div class="item-head">
+        <h3 class="item-title">Colegiul Național „Ion Minulescu” (liceu)</h3>
+        <span class="meta">2021 – 2025</span>
+      </div>
+      <p class="sub">Profil Matematică-Informatică.</p>
     </div>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>04</b>Cursuri</h2>
-    <ul class="courses">
-      <li>Algoritmi fundamentali <span class="mono">C++</span></li>
-      <li>Programare orientată pe obiecte <span class="mono">Java</span></li>
-      <li>Structuri de date și algoritmi <span class="mono">C</span></li>
-      <li>Baze de date <span class="mono">SQL</span></li>
-      <li>Arhitectura calculatoarelor <span class="mono">Asamblare x86</span></li>
-      <li>Proiectarea sistemelor numerice <span class="mono">VHDL</span></li>
-    </ul>
+    <h2 class="sec-h">Limbi vorbite</h2>
+    <p>Română (nativ), engleză (B2).</p>
   </section>
 
   <section class="sec">
-    <h2 class="sec-k mono"><b>05</b>Competențe</h2>
-    <dl class="skills">
-      <dt class="mono">Limbaje</dt><dd>C, C++, Java, SQL, VHDL, asamblare x86</dd>
-      <dt class="mono">Fundamente CS</dt><dd>Structuri de date, sortări, arbori, grafuri, tabele de dispersie, greedy, divide et impera</dd>
-      <dt class="mono">Unelte</dt><dd>Git și GitHub, Vivado, IntelliJ IDEA, Visual Studio, VS Code, CMake</dd>
-      <dt class="mono">Limbi vorbite</dt><dd>Română (nativ), engleză (avansat, B2–C1)</dd>
-    </dl>
+    <h2 class="sec-h">Competențe tehnice</h2>
+    <div class="skills">
+      <p><b>Limbaje:</b> C/C++ (de la facultate), Java și SQL (abia am început), VHDL (proiectul FPGA).</p>
+      <p><b>Unelte:</b> Git și GitHub, Vivado, IntelliJ IDEA, VS Code, CMake.</p>
+    </div>
   </section>
-
-  <footer class="foot mono">
-    <span>Denis-Alexandru Călin</span>
-    <span>deniscaleax@gmail.com</span>
-  </footer>
 
 </main>
 </body>

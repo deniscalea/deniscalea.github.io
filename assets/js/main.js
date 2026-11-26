@@ -1,6 +1,7 @@
-/* CALEA · Denis-Alexandru Călin · v3
-   Interacțiuni, i18n, WebGL (hero + lentilă pe imagini), tranziții, simularea plăcii FPGA.
-   Vanilla JS, fără librării. Folosit de index.html și de proiecte/fpga.html. */
+/* CALEA · Denis-Alexandru Călin · v4
+   i18n, meniu, dezvăluiri, raze WebGL în hero, semnul 3D pe scroll, lentilă WebGL pe imagini,
+   parallax, simularea plăcii FPGA, ceasul din footer. Vanilla JS, fără librării.
+   Folosit de index.html și de proiecte/fpga.html. */
 (function () {
   'use strict';
 
@@ -15,8 +16,8 @@
   var BASE = root.getAttribute('data-base') || '';
 
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  function pad2(n) { return (n < 10 ? '0' : '') + n; }
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function smooth(a, b, x) { var t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); }
 
   /* =========================================================
      i18n: textele RO se citesc din HTML; EN sunt aici
@@ -27,51 +28,60 @@
     'nav.aria': 'Main navigation',
     'brand.aria': 'CALEA, back to top',
     'menu.open': 'Open menu',
-    'nav.home': 'Start',
     'nav.projects': 'Projects',
-    'nav.studies': 'Education',
+    'nav.about': 'About',
     'nav.contact': 'Contact',
-    'nav.cv': 'CV',
+    'nav.cv': 'Download CV',
     'lang.aria': 'Site language',
-    'theme.aria': 'Toggle theme',
-    'theme.label': 'Theme',
-    'hero.meta2': 'Cluj-Napoca, Romania',
-    'hero.meta3': 'Open to an internship',
-    'hero.role': 'Computer Engineering student, software and hardware',
-    'hero.lede': 'I build complete systems, from logic gates in VHDL on FPGA up to applications in C++ and Java, and I test everything I build.',
+    'hero.role': 'Year 2 Computer Engineering student, UTCN · Cluj-Napoca',
+    'hero.seek': 'Looking for an internship, in Cluj-Napoca or remote.',
     'hero.cta1': 'See the projects',
-    'hero.cta2': 'Download CV',
-    'hero.scroll': 'Scroll',
-    'hero.touch': 'Move the mouse over the traces',
-    'rail.aria': 'Projects',
-    'rail.rd': 'carousel',
-    'rail.prev': 'Previous project',
-    'rail.next': 'Next project',
+    'hero.cta2': 'My CV',
+    'sign.title': 'What I do',
+    'sign.lede': 'I study Computer Engineering at UTCN and work on projects alongside university. Mostly hardware so far, apps from now on.',
+    'sign.s1h': 'Hardware',
+    'sign.s1': 'VHDL on an FPGA: a reaction game with 14 modules and an FSM.',
+    'sign.s2h': 'Code',
+    'sign.s2': 'C/C++ at university. Java and SQL, just getting started.',
+    'sign.s3h': 'Apps',
+    'sign.s3': 'Next up: a phone app for tracking expenses, in Flutter.',
+    'work.title': 'Selected work',
+    'work.note': 'What I have built so far, and what comes next.',
+    'p1.kind': 'Hardware, VHDL',
+    'p1.title': 'FPGA Multi-Player Reaction Time Game',
+    'p1.img': 'Isometric render in graphite and silver of an FPGA chip marked TOP_GAME, with traces fanning out from its pins',
+    'p1.desc': 'A reaction time game for up to 4 players and 5 rounds, written entirely in VHDL: no processor and no software. The board lights an LED after a random delay and measures the reaction in milliseconds.',
+    'p1.s1': 'VHDL modules',
+    'p1.s2': 'FSM states',
+    'p1.s3': 'tick derived from the 100 MHz clock',
+    'p1.case': 'Read the case study',
     'link.code': 'Code on GitHub',
     'link.newtab': ' (opens in a new tab)',
     'tags.aria': 'Technologies',
-    'p1.title': 'FPGA Multi-Player Reaction Time Game',
-    'p1.img': 'Black-and-white isometric render of an FPGA chip marked TOP_GAME, with traces fanning out from its pins',
-    'p1.cap': 'TOP_GAME, the project’s top-level entity',
-    'p1.desc': 'A hardware reaction game for up to 4 players and 5 rounds, written entirely in VHDL with no software layer, driven by an FSM control unit.',
-    'p1.s1': 'VHDL modules',
-    'p1.s4': 'FSM states',
-    'p1.s3': 'MHz, divided down to a 1 ms tick',
-    'p1.case': 'Read the case study',
-    'soon.title': 'More soon',
-    'soon.text': 'I am working on the next projects. Meanwhile, everything I have published is on GitHub.',
-    'studies.title': 'What I study',
-    'studies.img': 'Schematic of a half adder built from two logic gates, XOR and AND, drawn in white on black graph paper over the outline of the letters UTCN',
-    'studies.cap': 'Half adder: S = A ⊕ B, C = A · B',
-    'studies.when1': '2025 – present, year 2',
-    'studies.school1': 'Technical University of Cluj-Napoca',
-    'studies.sub1': 'B.Sc. in Computer Science and Information Technology, Faculty of Automation and Computer Science.',
-    'cv.title': 'All of it, on one page',
-    'cv.alt': 'Preview: the first page of the CV',
+    'p2.img': 'Concept image: a phone showing this week’s spending by category, next to a scanned store receipt',
+    'p2.state': 'Next, starting November 2026',
+    'p2.kind': 'Mobile app',
+    'p2.title': 'Expense tracking app',
+    'p2.desc': 'You scan a store receipt and the app reads the products and prices right on the phone, offline, and sorts them into categories. You add parking, the gym or subscriptions by hand. Then you get a report of how much you spent on each thing: every food item (bananas, chicken breast), parking, the gym, everything.',
+    'p2.tags': 'Planned technologies',
+    'p2.t3': 'Offline OCR',
+    'p2.note': 'Not built yet. When the code exists, it goes on GitHub and here.',
+    'about.title': 'About me',
+    'about.photo': 'Photo coming soon',
+    'about.img': 'Denis-Alexandru Călin',
+    'about.lede': 'I am Denis and I study in Cluj. I like understanding a system from the bottom up: from logic gates and VHDL to programs in C++ and Java.',
+    'about.p': 'I am looking for an internship in a team I can learn from, in Cluj-Napoca or remote.',
+    'about.when': '2025 – present',
+    'about.school': 'Technical University of Cluj-Napoca',
+    'about.prog': 'Computer Engineering, year 2. Faculty of Automation and Computer Science.',
+    'cv.title': 'The CV, on one page',
+    'cv.alt': 'Preview: the CV, one A4 page',
     'cv.open': 'Open the CV (PDF) in a new tab',
-    'cv.lead': 'Coursework, skills, languages and the rest of the details live in the CV. One A4 page, in English or Romanian.',
-    'contact.title': 'Let’s talk',
-    'contact.lead': 'Have an internship or a project I can help with? Send me an email.',
+    'cv.lead': 'Projects, education, languages and the technologies I use. One A4 page, in English or Romanian.',
+    'cv.en': 'CV in English',
+    'cv.ro': 'CV in Romanian',
+    'contact.title': 'Get in touch',
+    'contact.lead': 'Have an internship or a project I can help with? I reply by email.',
     'clock.label': 'Time in Cluj',
     'footer.top': 'Back to top'
   };
@@ -82,10 +92,6 @@
     ro: {
       title: document.title,
       menuOpen: 'Deschide meniul', menuClose: 'Închide meniul',
-      toLight: 'Comută pe tema luminoasă', toDark: 'Comută pe tema întunecată',
-      slide: function (i, n) { return i + ' din ' + n; },
-      slideNow: function (i, n) { return 'Slide-ul ' + i + ' din ' + n; },
-      cursor: { view: 'Vezi', drag: 'Trage' },
       rig: {
         start: 'Start', react: 'Reacționează', wait: 'Așteaptă…', again: 'Joc nou', fault: 'start fals',
         IDLE: 'Apasă Start. Placa alege o întârziere de 1–5 secunde, apoi aprinde LED_SEMNAL.',
@@ -101,10 +107,6 @@
     en: {
       title: document.title,
       menuOpen: 'Open menu', menuClose: 'Close menu',
-      toLight: 'Switch to light theme', toDark: 'Switch to dark theme',
-      slide: function (i, n) { return i + ' of ' + n; },
-      slideNow: function (i, n) { return 'Slide ' + i + ' of ' + n; },
-      cursor: { view: 'View', drag: 'Drag' },
       rig: {
         start: 'Start', react: 'React', wait: 'Wait…', again: 'New game', fault: 'false start',
         IDLE: 'Press Start. The board picks a 1–5 second delay, then lights LED_SEMNAL.',
@@ -118,26 +120,22 @@
       }
     }
   };
-  /* Meta-urile paginii: RO din HTML, EN din data-en-* pe <html> (setate pe fiecare pagină) */
   var metaDesc = $('meta[name="description"]'), ogDesc = $('meta[property="og:description"]');
   DYN.ro.desc = metaDesc ? metaDesc.content : '';
   DYN.ro.ogDesc = ogDesc ? ogDesc.content : '';
   DYN.en.title = root.getAttribute('data-en-title') || DYN.en.title;
-  DYN.en.desc = root.getAttribute('data-en-desc') || 'CALEA, the portfolio of Denis-Alexandru Călin: second-year Computer Science and Information Technology student (UTCN, Cluj-Napoca). Projects in VHDL on FPGA, C++, Java and C. Looking for an internship.';
-  DYN.en.ogDesc = root.getAttribute('data-en-og') || 'Second-year Computer Science student at UTCN, Cluj-Napoca. From VHDL on FPGA to C++ and Java. Looking for an internship.';
+  DYN.en.desc = root.getAttribute('data-en-desc') || 'CALEA, the portfolio of Denis-Alexandru Călin: Year 2 Computer Engineering student (UTCN, Cluj-Napoca). A reaction game written in VHDL on an FPGA and an expense app in the works. Looking for an internship, in Cluj-Napoca or remote.';
+  DYN.en.ogDesc = root.getAttribute('data-en-og') || 'Year 2 Computer Engineering student at UTCN, Cluj-Napoca. From logic gates in VHDL to apps. Looking for an internship.';
 
   var RO = {};
   var textEls = $$('[data-i18n]');
   var htmlEls = $$('[data-i18n-html]');
   var ariaEls = $$('[data-i18n-aria]');
   var altEls = $$('[data-i18n-alt]');
-  var rdEls = $$('[data-i18n-rd]');
-  var slideEls = $$('[data-i18n-slide]');
   textEls.forEach(function (el) { RO[el.getAttribute('data-i18n')] = el.textContent; });
   htmlEls.forEach(function (el) { RO[el.getAttribute('data-i18n-html')] = el.innerHTML; });
   ariaEls.forEach(function (el) { RO[el.getAttribute('data-i18n-aria')] = el.getAttribute('aria-label'); });
   altEls.forEach(function (el) { RO[el.getAttribute('data-i18n-alt')] = el.getAttribute('alt'); });
-  rdEls.forEach(function (el) { RO[el.getAttribute('data-i18n-rd')] = el.getAttribute('aria-roledescription'); });
 
   var lang = root.getAttribute('lang') === 'en' ? 'en' : 'ro';
   function t(key) { var d = lang === 'en' ? EN : RO; return d[key] != null ? d[key] : RO[key]; }
@@ -194,8 +192,6 @@
     htmlEls.forEach(function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
     ariaEls.forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     altEls.forEach(function (el) { el.setAttribute('alt', t(el.getAttribute('data-i18n-alt'))); });
-    rdEls.forEach(function (el) { el.setAttribute('aria-roledescription', t(el.getAttribute('data-i18n-rd'))); });
-    slideEls.forEach(function (el) { el.setAttribute('aria-label', D().slide(+el.getAttribute('data-i18n-slide'), slideEls.length)); });
     $$('.lang-btn').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
 
     var d = D();
@@ -207,13 +203,10 @@
 
     syncCv();
     syncMenuLabel();
-    syncThemeUi();
-    if (cursorApi) cursorApi.relabel();
     if (game) game.relabel();
-    if (heroGL) heroGL.retext();
   }
 
-  /* Micro-interacțiune: cursorul comutatorului se întinde, textul trece printr-un blur scurt */
+  /* Comutatorul de limbă: cursorul se întinde, textul trece printr-un blur scurt */
   $$('.lang-btn').forEach(function (b) {
     b.addEventListener('click', function () {
       var l = b.getAttribute('data-lang');
@@ -229,43 +222,6 @@
       }, 230);
     });
   });
-
-  /* =========================================================
-     Temă: cerc care pornește din punctul de click (View Transitions API)
-     ========================================================= */
-  var themeBtn = $('.theme-toggle');
-  var mqLight = mm('(prefers-color-scheme: light)');
-  function currentTheme() {
-    var th = root.getAttribute('data-theme');
-    if (th === 'light' || th === 'dark') return th;
-    return mqLight.matches ? 'light' : 'dark';
-  }
-  function syncThemeUi() {
-    var th = currentTheme();
-    if (themeBtn) themeBtn.setAttribute('aria-label', th === 'dark' ? D().toLight : D().toDark);
-    setMeta('meta[name="theme-color"]', 'content', th === 'dark' ? '#000000' : '#ffffff');
-    if (heroGL) heroGL.recolor();
-  }
-  if (themeBtn) {
-    themeBtn.addEventListener('click', function (e) {
-      var next = currentTheme() === 'dark' ? 'light' : 'dark';
-      var apply = function () { root.setAttribute('data-theme', next); store('theme', next); syncThemeUi(); };
-      if (!document.startViewTransition || reduce) { apply(); return; }
-      var r = themeBtn.getBoundingClientRect();
-      var x = e.clientX || (r.left + r.width / 2), y = e.clientY || (r.top + r.height / 2);
-      var rad = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
-      root.classList.add('vt-theme');
-      var tr = document.startViewTransition(apply);
-      tr.ready.then(function () {
-        root.animate(
-          { clipPath: ['circle(0px at ' + x + 'px ' + y + 'px)', 'circle(' + rad + 'px at ' + x + 'px ' + y + 'px)'] },
-          { duration: 900, easing: 'cubic-bezier(0.77, 0, 0.18, 1)', pseudoElement: '::view-transition-new(root)' }
-        );
-      }).catch(function () {});
-      tr.finished.then(function () { root.classList.remove('vt-theme'); }, function () { root.classList.remove('vt-theme'); });
-    });
-  }
-  if (mqLight.addEventListener) mqLight.addEventListener('change', syncThemeUi);
 
   /* =========================================================
      Meniu mobil + header
@@ -291,8 +247,9 @@
     window.addEventListener('resize', function () { if (window.innerWidth > 900 && menuOpen()) setMenu(false); });
   }
 
+  /* Un singur handler de scroll (rAF): header, parallax, progresul semnului */
   var lastY = window.pageYOffset;
-  var signal = $('.signal');
+  var scrollSubs = [];
   function onScroll() {
     var y = window.pageYOffset;
     if (header) {
@@ -303,60 +260,43 @@
       else if (up) header.classList.remove('is-hidden');
       if (down || up) lastY = y;
     }
-    if (signal) {
-      var max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      signal.style.setProperty('--p', (y / max).toFixed(4));
-    }
+    for (var i = 0; i < scrollSubs.length; i++) scrollSubs[i]();
   }
   if (header) header.addEventListener('focusin', function () { header.classList.remove('is-hidden'); });
   var ticking = false;
-  window.addEventListener('scroll', function () {
+  function requestScroll() {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () { onScroll(); ticking = false; });
-  }, { passive: true });
-  onScroll();
+  }
+  window.addEventListener('scroll', requestScroll, { passive: true });
+  window.addEventListener('resize', requestScroll);
 
-  /* Ecranul curent: în nav (aria-current) și în indicatorul de semnal */
+  /* Secțiunea curentă în nav (aria-current) */
   var navLinks = $$('.nav-links a[href^="#"]');
-  var sigItems = $$('.signal-steps li');
-  var screenIds = navLinks.map(function (a) { return a.getAttribute('href').slice(1); });
-  function setCurrent(id) {
-    navLinks.forEach(function (a) { if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
-    var i = screenIds.indexOf(id);
-    if (signal && i >= 0) {
-      signal.style.setProperty('--s', i);
-      sigItems.forEach(function (li, k) { li.classList.toggle('is-on', k === i); });
-    }
-  }
-  if ('IntersectionObserver' in window && screenIds.length) {
+  if ('IntersectionObserver' in window && navLinks.length) {
     var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) setCurrent(en.target.id); });
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        navLinks.forEach(function (a) { if (a.getAttribute('href') === '#' + en.target.id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      });
     }, { rootMargin: '-45% 0px -50% 0px' });
-    screenIds.forEach(function (id) { var el = document.getElementById(id); if (el) spy.observe(el); });
+    navLinks.forEach(function (a) { var el = document.getElementById(a.getAttribute('href').slice(1)); if (el) spy.observe(el); });
   }
-  $$('.signal-steps button').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var el = document.getElementById(b.getAttribute('data-go'));
-      if (el) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
-    });
-  });
 
   /* =========================================================
-     Dezvăluiri: un ecran (sau bloc) devine „activ” când ocupă jumătate din viewport.
-     Pe pagina principală se resetează când ecranul iese complet, ca să se reia la revenire.
+     Dezvăluiri: un bloc devine „activ” (o singură dată) când ocupă ~45% din viewport
      ========================================================= */
-  function fmt(n) { return String(Math.round(n)); }
   function countUp(el) {
     var to = +el.getAttribute('data-to');
-    if (reduce || !to) { el.textContent = fmt(to); return; }
+    if (reduce || !to) { el.textContent = String(to); return; }
     var start = null, dur = 1500;
     el.textContent = '0';
     function step(ts) {
       if (start === null) start = ts;
       var p = Math.min(1, (ts - start) / dur);
       var e = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-      el.textContent = fmt(to * e);
+      el.textContent = String(Math.round(to * e));
       if (p < 1) requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
@@ -373,11 +313,8 @@
     var rio = new IntersectionObserver(function (entries) {
       var vh = window.innerHeight;
       entries.forEach(function (en) {
-        var el = en.target;
-        var vis = en.intersectionRect.height;
-        var need = Math.min(vh, en.boundingClientRect.height) * 0.45;
-        if (en.isIntersecting && vis >= need) activate(el);
-        else if (!en.isIntersecting && el.getAttribute('data-reveal') !== 'once') el.classList.remove('is-active');
+        var need = Math.min(vh, en.boundingClientRect.height) * 0.4;
+        if (en.isIntersecting && en.intersectionRect.height >= need) { activate(en.target); rio.unobserve(en.target); }
       });
     }, { threshold: th });
     revealEls.forEach(function (el) { rio.observe(el); });
@@ -390,63 +327,19 @@
     try { p.style.setProperty('--len', Math.ceil(p.getTotalLength()) + 1); } catch (e) {}
   });
 
-  /* =========================================================
-     Cursor custom (punct + inel, stări link / vezi / trage) și butoane magnetice
-     ========================================================= */
-  var cursorApi = null;
+  /* Butoane magnetice (doar mouse, fără reduced-motion). Cursorul rămâne cel nativ. */
   if (finePointer && !reduce) {
-    var cur = $('.cursor');
-    if (cur) {
-      root.classList.add('has-cursor');
-      var cdot = $('.cursor-dot', cur), cring = $('.cursor-ring', cur), clabel = $('.cursor-label', cur);
-      var mx = -100, my = -100, rx = -100, ry = -100, craf = null, cstate = '';
-      var cloop = function () {
-        rx += (mx - rx) * 0.17;
-        ry += (my - ry) * 0.17;
-        cring.style.transform = 'translate3d(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px,0)';
-        cdot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
-        craf = (Math.abs(mx - rx) > 0.1 || Math.abs(my - ry) > 0.1) ? requestAnimationFrame(cloop) : null;
-      };
-      var setState = function (target) {
-        var s = '';
-        var a = target.closest && target.closest('a, button, [role="button"], label, summary');
-        if (a && a.hasAttribute('data-cursor')) s = a.getAttribute('data-cursor');
-        else if (a) s = 'link';
-        else {
-          var v = target.closest && target.closest('[data-cursor]');
-          if (v) s = v.getAttribute('data-cursor');
-        }
-        if (s === cstate) return;
-        cur.classList.remove('is-' + cstate);
-        cstate = s;
-        if (s) cur.classList.add('is-' + s);
-        clabel.textContent = (D().cursor[s]) || '';
-      };
-      document.addEventListener('pointermove', function (e) {
-        if (e.pointerType !== 'mouse') return;
-        mx = e.clientX; my = e.clientY;
-        if (rx < -50) { rx = mx; ry = my; }
-        cur.classList.add('is-on');
-        setState(e.target);
-        if (!craf) craf = requestAnimationFrame(cloop);
-      }, { passive: true });
-      document.addEventListener('pointerdown', function () { cur.classList.add('is-down'); });
-      document.addEventListener('pointerup', function () { cur.classList.remove('is-down'); });
-      document.documentElement.addEventListener('mouseleave', function () { cur.classList.remove('is-on'); });
-      cursorApi = { relabel: function () { clabel.textContent = (D().cursor[cstate]) || ''; } };
-    }
-
     $$('.magnetic').forEach(function (el) {
       var inner = $('.btn-in', el);
       el.addEventListener('pointermove', function (e) {
         var r = el.getBoundingClientRect();
         var dx = (e.clientX - (r.left + r.width / 2)), dy = (e.clientY - (r.top + r.height / 2));
-        el.style.transition = 'transform 0.18s linear';
-        el.style.transform = 'translate3d(' + (dx * 0.26).toFixed(1) + 'px,' + (dy * 0.36).toFixed(1) + 'px,0)';
-        if (inner) inner.style.transform = 'translate3d(' + (dx * 0.12).toFixed(1) + 'px,' + (dy * 0.16).toFixed(1) + 'px,0)';
+        el.style.transition = 'transform 0.18s linear, box-shadow 0.5s ease';
+        el.style.transform = 'translate3d(' + (dx * 0.2).toFixed(1) + 'px,' + (dy * 0.3).toFixed(1) + 'px,0)';
+        if (inner) inner.style.transform = 'translate3d(' + (dx * 0.1).toFixed(1) + 'px,' + (dy * 0.14).toFixed(1) + 'px,0)';
       });
       el.addEventListener('pointerleave', function () {
-        el.style.transition = 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+        el.style.transition = 'transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease';
         el.style.transform = '';
         if (inner) inner.style.transform = '';
       });
@@ -454,124 +347,116 @@
   }
 
   /* =========================================================
-     Intro: overlay-ul se termină din CSS; aici doar îl scoatem din DOM.
+     Utilitare WebGL
      ========================================================= */
-  var hadIntro = root.classList.contains('intro');
-  if (hadIntro) setTimeout(function () { var ov = $('.intro-ov'); if (ov) ov.parentNode.removeChild(ov); }, 1500);
-  setTimeout(function () { root.classList.add('settled'); }, reduce ? 0 : (hadIntro ? 2700 : 1700));
-
-  /* =========================================================
-     Hero WebGL: un câmp de trasee de semnal (ca pe un PCB), cu pulsuri care circulă,
-     distorsiune la mouse/touch și wordmark-ul CALEA desenat în shader, dezvăluit de câmp.
-     Fallback: grila statică din CSS + wordmark-ul HTML. Pauză off-screen.
-     ========================================================= */
-  var heroGL = (function () {
-    var section = $('.hero'), canvas = $('.hero-gl');
-    if (!section || !canvas) return null;
-    var gl = null;
-    /* failIfMajorPerformanceCaveat: fără GPU (randare software) rămânem pe fallback-ul static */
-    try { gl = canvas.getContext('webgl', { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true }); } catch (e) {}
-    if (!gl) { root.classList.add('no-gl'); return null; }
-
-    var VS = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}';
-    var FS = [
-      'precision highp float;',
-      'uniform vec2 uRes; uniform float uTime; uniform float uDpr; uniform float uReveal; uniform float uTextOn;',
-      'uniform vec3 uMouse; uniform vec4 uRip0; uniform vec4 uRip1; uniform vec4 uRip2; uniform vec4 uRip3;',
-      'uniform sampler2D uText; uniform vec3 uFg; uniform vec3 uBg;',
-      'float h21(vec2 p){ p = fract(p * vec2(233.34, 851.73)); p += dot(p, p + 23.45); return fract(p.x * p.y); }',
-      'float vnoise(vec2 p){ vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);',
-      '  return mix(mix(h21(i), h21(i + vec2(1.0, 0.0)), f.x), mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), f.x), f.y); }',
-      'float segd(vec2 p, vec2 a, vec2 b){ vec2 pa = p - a; vec2 ba = b - a; float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0); return length(pa - ba * h); }',
-      /* un strat de trasee: direcție cuantizată la 45° dintr-un câmp de zgomot, benzi pornite/oprite, pulsuri, pad-uri */
-      'vec3 circuit(vec2 p, float cell, float t, float seed, float density){',
-      '  vec2 g = p / cell; vec2 id = floor(g); vec2 f = fract(g) - 0.5;',
-      '  float n = vnoise(id * 0.055 + vec2(seed, t * 0.018)) * 0.75 + vnoise(id * 0.13 + vec2(t * 0.012, seed * 1.7)) * 0.25;',
-      '  float q = floor(n * 9.0);',
-      '  float ang = q * 0.78539816;',
-      '  vec2 dir = vec2(cos(ang), sin(ang));',
-      '  vec2 e = dir / max(abs(dir.x), abs(dir.y)) * 0.5;',
-      '  vec2 perp = vec2(-e.y, e.x) * 2.0;',
-      '  float lane = floor(dot(id, perp) + 0.5);',
-      '  float qq = mod(q, 4.0);',
-      '  float on = step(density, h21(vec2(lane * 0.731 + seed, qq + 1.3)));',
-      '  float d = segd(f, -e, e) * cell;',
-      '  float w = 0.55 * uDpr;',
-      '  float line = (1.0 - smoothstep(w, w + 1.1 * uDpr, d)) * on;',
-      '  float glow = (1.0 - smoothstep(0.0, 3.5 * uDpr, d)) * on;',
-      '  float s = dot(g, normalize(e));',
-      '  float sp = 0.22 + 0.4 * h21(vec2(lane, 7.1 + qq));',
-      '  float ph = fract(s * 0.03 - t * sp + h21(vec2(lane, 3.3 + qq)));',
-      '  float pulse = pow(ph, 22.0) * step(0.5, h21(vec2(lane, 11.0 + qq))) * glow;',
-      '  float pr = 0.17 * cell;',
-      '  float isPad = step(0.955, h21(id + seed * 3.1)) * on;',
-      '  float pd = length(f) * cell;',
-      '  float ring = (1.0 - smoothstep(0.6 * uDpr, 1.5 * uDpr, abs(pd - pr))) * isPad;',
-      '  float dotc = (1.0 - smoothstep(pr * 0.35, pr * 0.35 + uDpr, pd)) * isPad;',
-      '  return vec3(line, pulse, max(ring, dotc));',
-      '}',
-      /* undă care pleacă din punctul de click / touch */
-      'vec2 ripple(vec2 fc, vec4 r, float t){',
-      '  float age = t - r.z;',
-      '  if (age < 0.0 || age > 2.6 || r.w <= 0.0) return vec2(0.0);',
-      '  vec2 dv = fc - r.xy; float d = length(dv) + 0.001;',
-      '  float front = age * 620.0 * uDpr;',
-      '  float band = exp(-pow((d - front) / (90.0 * uDpr), 2.0));',
-      '  float amp = r.w * exp(-age * 1.4) * 22.0 * uDpr;',
-      '  return dv / d * sin((d - front) / (16.0 * uDpr)) * band * amp;',
-      '}',
-      'void main(){',
-      '  vec2 fc = gl_FragCoord.xy; float t = uTime;',
-      '  vec2 disp = ripple(fc, uRip0, t) + ripple(fc, uRip1, t) + ripple(fc, uRip2, t) + ripple(fc, uRip3, t);',
-      '  vec2 md = fc - uMouse.xy; float ml = length(md);',
-      '  float R = 180.0 * uDpr;',
-      '  float lens = exp(-(ml * ml) / (R * R)) * uMouse.z;',
-      '  vec2 p = fc - md * lens * 0.24 + disp;',
-      '  vec3 c = circuit(p, 24.0 * uDpr, t, 0.0, 0.5);',
-      '  float hr = 260.0 * uDpr;',
-      '  float halo = exp(-(ml * ml) / (hr * hr)) * uMouse.z;',
-      '  float yN = fc.y / uRes.y;',
-      '  float fade = mix(0.35, 1.0, smoothstep(0.08, 0.55, yN));',
-      '  float base = (c.x * (0.10 + 0.5 * halo) + c.y * 0.9 + c.z * (0.16 + 0.4 * halo)) * fade;',
-      '  vec3 tx = texture2D(uText, p / uRes).rgb;',
-      '  float m = tx.r * uTextOn; float mg = tx.g * uTextOn;',
-      '  float rv = vnoise(fc / (110.0 * uDpr)) * 0.55 + (fc.x / uRes.x) * 0.75 + (1.0 - yN) * 0.1;',
-      '  float thr = uReveal * 1.6 - 0.25;',
-      '  float vis = 1.0 - smoothstep(thr - 0.06, thr, rv);',
-      '  float edge = (1.0 - smoothstep(0.0, 0.12, abs(rv - thr))) * (1.0 - step(0.999, uReveal));',
-      '  vec3 c2 = circuit(p + vec2(0.0, t * 6.0 * uDpr), 7.0 * uDpr, t * 1.4, 4.0, 0.35);',
-      '  float fill = m * (0.86 + 0.14 * c2.x) * vis;',
-      '  float scan = m * edge * (0.4 + 0.6 * c2.x + c2.y);',
-      '  float aura = mg * 0.12 * vis * (0.6 + halo);',
-      '  float a = clamp(base * (1.0 - m * vis) + fill + scan + aura, 0.0, 1.0);',
-      '  vec3 col = mix(uBg, uFg, a);',
-      '  col += (h21(fc + fract(t * 7.0) * 113.0) - 0.5) * 0.03;',
-      '  gl_FragColor = vec4(col, 1.0);',
-      '}'
-    ].join('\n');
-
-    function compile(type, src) {
+  function glContext(canvas, opts) {
+    var o = { antialias: false, alpha: false, depth: false, stencil: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: true, premultipliedAlpha: true };
+    for (var k in opts) o[k] = opts[k];
+    try { return canvas.getContext('webgl', o) || null; } catch (e) { return null; }
+  }
+  function program(gl, vsSrc, fsSrc) {
+    function sh(type, src) {
       var s = gl.createShader(type);
       gl.shaderSource(s, src);
       gl.compileShader(s);
-      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { gl.deleteShader(s); return null; }
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { if (window.console) console.warn(gl.getShaderInfoLog(s)); gl.deleteShader(s); return null; }
       return s;
     }
-    var vs = compile(gl.VERTEX_SHADER, VS), fs = compile(gl.FRAGMENT_SHADER, FS);
-    var prog = vs && fs ? gl.createProgram() : null;
-    if (prog) { gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog); }
-    if (!prog || !gl.getProgramParameter(prog, gl.LINK_STATUS)) { root.classList.add('no-gl'); return null; }
-    gl.useProgram(prog);
+    var vs = sh(gl.VERTEX_SHADER, vsSrc), fs = sh(gl.FRAGMENT_SHADER, fsSrc);
+    if (!vs || !fs) return null;
+    var p = gl.createProgram();
+    gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p);
+    return gl.getProgramParameter(p, gl.LINK_STATUS) ? p : null;
+  }
+  function uniforms(gl, prog, names) { var U = {}; names.forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); }); return U; }
+  /* rulează doar cât elementul e pe ecran și tab-ul e vizibil */
+  function visLoop(el, frame) {
+    var visible = false, running = false, raf = null;
+    function tick(now) { frame(now); raf = running ? requestAnimationFrame(tick) : null; }
+    function update() {
+      var should = visible && !document.hidden;
+      if (should && !running) { running = true; raf = requestAnimationFrame(tick); }
+      else if (!should && running) { running = false; if (raf) cancelAnimationFrame(raf); raf = null; }
+    }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; update(); }).observe(el);
+    else { visible = true; }
+    document.addEventListener('visibilitychange', update);
+    update();
+    return { stop: function () { visible = false; update(); }, running: function () { return running; } };
+  }
 
+  /* =========================================================
+     1. Hero: raze de lumină volumetrice, reci, din spatele literelor CALEA.
+     Lumina stă în spatele cuvântului; literele (o mască desenată exact peste literele HTML) o blochează,
+     iar razele ies printre ele (radial blur spre sursă). Plus fascicule fine de sus și praf în lumină.
+     Randat la jumătate de rezoluție (lumina e moale), pauză off-screen, cadru static la reduced-motion.
+     ========================================================= */
+  (function () {
+    var section = $('.hero'), canvas = $('.hero-gl'), wm = $('.wordmark');
+    if (!section || !canvas || !wm) return;
+    var gl = glContext(canvas, {});
+    if (!gl) { root.classList.add('no-gl'); return; }
+    var N = coarse ? 28 : 48;
+    var VS = 'attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}';
+    var FS = [
+      'precision highp float;',
+      '#define N ' + N,
+      'uniform vec2 uRes; uniform float uTime; uniform float uIntro; uniform float uMaskOn; uniform vec2 uLight; uniform sampler2D uMask;',
+      'float h21(vec2 p){ p = fract(p * vec2(233.34, 851.73)); p += dot(p, p + 23.45); return fract(p.x * p.y); }',
+      'float vn(vec2 p){ vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);',
+      '  return mix(mix(h21(i), h21(i + vec2(1.0, 0.0)), f.x), mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), f.x), f.y); }',
+      'void main(){',
+      '  vec2 uv = gl_FragCoord.xy / uRes;',
+      '  vec2 asp = vec2(uRes.x / uRes.y, 1.0);',
+      '  vec2 L = uLight;',
+      '  vec2 d = (uv - L) * asp;',
+      '  float dist = length(d);',
+      '  float ang = atan(d.y, d.x);',
+      /* raze ocluzate: mergem de la pixel spre sursă și adunăm lumina care nu e blocată de litere */
+      '  vec2 st = (L - uv) / float(N) * 0.94;',
+      '  vec2 p = uv; float acc = 0.0; float w = 1.0; float wsum = 0.0;',
+      '  for (int i = 0; i < N; i++) {',
+      '    p += st;',
+      '    float occ = 1.0 - texture2D(uMask, p).r * uMaskOn;',
+      '    vec2 q = (p - L) * asp;',
+      '    float core = exp(-dot(q, q) * 7.0);',
+      '    acc += occ * core * w; wsum += w;',
+      '    w *= 0.955;',
+      '  }',
+      '  acc /= wsum;',
+      '  float streak = vn(vec2(ang * 10.0, uTime * 0.06)) * 0.62 + vn(vec2(ang * 27.0 + 4.0, uTime * 0.1)) * 0.38;',
+      '  float beams = 0.12 + 1.6 * streak * streak * streak;',
+      '  float rays = acc * beams * exp(-dist * 1.7) * 1.25;',
+      '  float glow = exp(-dist * dist * 12.0) * 0.16 + exp(-dist * 3.2) * 0.035;',
+      /* fascicule largi care coboară de sus, foarte discrete */
+      '  vec2 S = vec2(0.5 + 0.1 * sin(uTime * 0.04), 1.45);',
+      '  vec2 ds = (uv - S) * asp;',
+      '  float as = atan(ds.x, -ds.y);',
+      '  float shafts = pow(vn(vec2(as * 8.0, uTime * 0.035)), 4.0) * smoothstep(2.2, 0.3, length(ds)) * 0.07;',
+      '  float light = rays + glow + shafts;',
+      /* praf care plutește încet în lumină */
+      '  vec2 mp = vec2(uv.x * asp.x, uv.y + uTime * 0.008) * 18.0;',
+      '  vec2 id = floor(mp); vec2 f = fract(mp) - 0.5;',
+      '  vec2 o = (vec2(h21(id), h21(id + 7.31)) - 0.5) * 0.7;',
+      '  float mote = smoothstep(0.07, 0.0, length(f - o)) * step(0.8, h21(id + 3.7)) * (0.55 + 0.45 * sin(uTime * 1.1 + h21(id) * 40.0));',
+      '  vec3 bg = vec3(0.027, 0.027, 0.031);',
+      '  vec3 cold = vec3(0.80, 0.86, 0.95);',
+      '  vec3 col = bg + cold * (1.0 - exp(-light * 1.15)) * uIntro;',
+      '  col += cold * mote * (0.04 + light * 1.2) * uIntro;',
+      '  col += (h21(gl_FragCoord.xy + fract(uTime * 7.0) * 113.0) - 0.5) * 0.018;',
+      '  gl_FragColor = vec4(col, 1.0);',
+      '}'
+    ].join('\n');
+    var prog = program(gl, VS, FS);
+    if (!prog) { root.classList.add('no-gl'); return; }
+    gl.useProgram(prog);
     var buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     var aLoc = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(aLoc);
     gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
-
-    var U = {};
-    ['uRes', 'uTime', 'uDpr', 'uReveal', 'uTextOn', 'uMouse', 'uRip0', 'uRip1', 'uRip2', 'uRip3', 'uText', 'uFg', 'uBg'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+    var U = uniforms(gl, prog, ['uRes', 'uTime', 'uIntro', 'uMaskOn', 'uLight', 'uMask']);
 
     var tex = gl.createTexture();
     gl.activeTexture(gl.TEXTURE0);
@@ -582,188 +467,340 @@
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, 1, 1, 0, gl.RGB, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0]));
-    gl.uniform1i(U.uText, 0);
+    gl.uniform1i(U.uMask, 0);
 
     var tc = document.createElement('canvas'), tctx = tc.getContext('2d');
-    var W = 1, H = 1, dpr = 1, textOn = 0, fontOk = false;
-    var fg = [1, 1, 1], bg = [0, 0, 0];
-    var mxp = -9999, myp = -9999, smx = -9999, smy = -9999, mz = 0, hover = 0, lastRip = null, travel = 0;
-    var rips = [[0, 0, -10, 0], [0, 0, -10, 0], [0, 0, -10, 0], [0, 0, -10, 0]], ripI = 0;
-    var t0 = performance.now(), revealStart = t0 + (hadIntro ? 1150 : 150);
-    var visible = true, running = false, rafId = null, lost = false;
+    var W = 1, H = 1, maskOn = 0, fontOk = false, lost = false;
+    var center = [0.5, 0.6], mx = 0, my = 0, smx = 0, smy = 0;
+    var t0 = performance.now();
 
-    function readColors() {
-      var cs = getComputedStyle(root);
-      var f = (cs.getPropertyValue('--fg-rgb') || '255,255,255').split(',').map(function (v) { return (+v) / 255; });
-      var b = (cs.getPropertyValue('--bg-rgb') || '0,0,0').split(',').map(function (v) { return (+v) / 255; });
-      if (f.length === 3) fg = f;
-      if (b.length === 3) bg = b;
-    }
-
-    /* Textura wordmark-ului: fiecare literă e desenată exact peste litera HTML (aceeași poziție, lățime și linie de bază).
-       Canal R = litera, canal G = o aură estompată (prin umbră). */
-    function drawText() {
-      var wm = $('.wordmark', section);
+    /* Masca: fiecare literă desenată exact peste litera HTML (aceeași poziție, lățime, linie de bază) */
+    function drawMask() {
       tc.width = W; tc.height = H;
       tctx.setTransform(1, 0, 0, 1, 0, 0);
       tctx.fillStyle = '#000';
       tctx.fillRect(0, 0, W, H);
-      if (!wm || !fontOk) { upload(); return; }
       var sr = section.getBoundingClientRect();
+      var wr = wm.getBoundingClientRect();
+      center = [(wr.left + wr.width / 2 - sr.left) / sr.width, 1 - (wr.top + wr.height * 0.42 - sr.top) / sr.height];
+      if (!fontOk) { upload(); return; }
       var kx = W / Math.max(1, sr.width), ky = H / Math.max(1, sr.height);
       var fs = parseFloat(getComputedStyle(wm).fontSize) * ky;
       tctx.font = '900 ' + fs.toFixed(1) + 'px Archivo, "Helvetica Neue", Arial, sans-serif';
       if ('fontStretch' in tctx) { try { tctx.fontStretch = 'expanded'; } catch (e) {} }
       tctx.textBaseline = 'alphabetic';
-      var letters = [];
+      tctx.fillStyle = '#fff';
       $$('.m', wm).forEach(function (m) {
         var ch = m.textContent.trim();
         if (!ch) return;
-        var r = m.getBoundingClientRect();
+        var inner = m.firstElementChild || m;
+        var r = inner.getBoundingClientRect();
         var probe = document.createElement('i');
         probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
-        m.appendChild(probe);
+        inner.appendChild(probe);
         var by = probe.getBoundingClientRect().top;
-        m.removeChild(probe);
+        inner.removeChild(probe);
+        /* în timpul intrării literele sunt translatate în jos: folosim poziția finală */
+        var tr = getComputedStyle(inner).transform, dy = 0;
+        if (tr && tr !== 'none') { var mt = tr.match(/matrix\(([^)]+)\)/); if (mt) dy = parseFloat(mt[1].split(',')[5]) || 0; }
         var mw = tctx.measureText(ch).width || 1;
-        letters.push({ ch: ch, x: (r.left - sr.left) * kx, y: (by - sr.top) * ky, sx: (r.width * kx) / mw });
+        tctx.setTransform((r.width * kx) / mw, 0, 0, 1, (r.left - sr.left) * kx, (by - dy - sr.top) * ky);
+        tctx.fillText(ch, 0, 0);
       });
-      tctx.globalCompositeOperation = 'lighter';
-      letters.forEach(function (L) {
-        tctx.setTransform(L.sx, 0, 0, 1, L.x, L.y);
-        tctx.fillStyle = '#ff0000';
-        tctx.fillText(L.ch, 0, 0);
-      });
-      var off = 100000;
-      tctx.shadowColor = '#00ff00';
-      tctx.shadowBlur = 46 * ky;
-      tctx.shadowOffsetX = off;
-      letters.forEach(function (L) {
-        tctx.setTransform(L.sx, 0, 0, 1, L.x, L.y);
-        tctx.fillStyle = '#00ff00';
-        tctx.fillText(L.ch, -off / L.sx, 0);
-      });
-      tctx.shadowColor = 'transparent';
-      tctx.globalCompositeOperation = 'source-over';
       upload();
-      textOn = 1;
-      section.classList.add('gl-ready');
+      maskOn = 1;
     }
     function upload() {
       gl.bindTexture(gl.TEXTURE_2D, tex);
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, tc);
     }
-
     function resize() {
       var r = section.getBoundingClientRect();
-      dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1.25 : 1.5) * (typeof quality === 'number' ? quality : 1);
-      var w = Math.max(1, r.width * dpr), h = Math.max(1, r.height * dpr);
-      var k = Math.min(1, Math.sqrt(2.4e6 / (w * h)));        // plafon de pixeli, pentru 60 fps
-      dpr *= k;
-      W = Math.max(1, Math.round(r.width * dpr));
-      H = Math.max(1, Math.round(r.height * dpr));
+      var k = Math.min(window.devicePixelRatio || 1, 1.5) * 0.5;
+      W = Math.max(1, Math.round(r.width * k));
+      H = Math.max(1, Math.round(r.height * k));
       canvas.width = W; canvas.height = H;
       gl.viewport(0, 0, W, H);
-      drawText();
-      if (!running) render(performance.now());
+      drawMask();
+      render(performance.now());
     }
-
     function render(now) {
       if (lost) return;
-      var time = reduce ? 14 : (now - t0) / 1000;
-      mz += (hover - mz) * 0.06;
-      if (smx < -9000) { smx = mxp; smy = myp; }
-      smx += (mxp - smx) * 0.16;
-      smy += (myp - smy) * 0.16;
-      var rv = reduce ? 1 : clamp((now - revealStart) / 1900, 0, 1);
-      rv = 1 - Math.pow(1 - rv, 3);
+      var time = reduce ? 18 : (now - t0) / 1000;
+      var intro = reduce ? 1 : smooth(0.25, 2.8, time);
+      smx += (mx - smx) * 0.05; smy += (my - smy) * 0.05;
       gl.uniform2f(U.uRes, W, H);
       gl.uniform1f(U.uTime, time);
-      gl.uniform1f(U.uDpr, dpr);
-      gl.uniform1f(U.uReveal, rv);
-      gl.uniform1f(U.uTextOn, textOn);
-      gl.uniform3f(U.uMouse, smx, smy, mz);
-      for (var i = 0; i < 4; i++) gl.uniform4f(U['uRip' + i], rips[i][0], rips[i][1], rips[i][2], rips[i][3]);
-      gl.uniform3f(U.uFg, fg[0], fg[1], fg[2]);
-      gl.uniform3f(U.uBg, bg[0], bg[1], bg[2]);
+      gl.uniform1f(U.uIntro, intro);
+      gl.uniform1f(U.uMaskOn, maskOn);
+      gl.uniform2f(U.uLight, center[0] + smx * 0.07, center[1] + 0.02 + smy * 0.04);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
-    }
-    /* Calitate adaptivă: dacă media cadrelor trece de ~28 ms, scădem rezoluția (de cel mult două ori) */
-    var quality = 1, fN = 0, fSum = 0, fLast = 0;
-    function frame(now) {
-      render(now);
-      if (fLast) { fSum += now - fLast; fN++; }
-      fLast = now;
-      if (fN >= 40) {
-        if (fSum / fN > 28 && quality > 0.5) { quality = Math.max(0.5, quality - 0.25); resize(); }
-        fN = 0; fSum = 0;
-      }
-      rafId = running ? requestAnimationFrame(frame) : null;
-    }
-    function update() {
-      var should = visible && !document.hidden && !reduce && !lost;
-      if (should && !running) { running = true; fLast = 0; fN = 0; fSum = 0; rafId = requestAnimationFrame(frame); }
-      else if (!should && running) { running = false; if (rafId) cancelAnimationFrame(rafId); rafId = null; }
-    }
-
-    function toLocal(e) {
-      var r = canvas.getBoundingClientRect();
-      return [(e.clientX - r.left) * (W / r.width), (r.bottom - e.clientY) * (H / r.height)];
-    }
-    function addRipple(x, y, amp) {
-      rips[ripI] = [x, y, (performance.now() - t0) / 1000, amp];
-      ripI = (ripI + 1) % 4;
-      if (reduce) render(performance.now());
     }
     if (!reduce) {
       section.addEventListener('pointermove', function (e) {
-        var p = toLocal(e);
-        if (e.pointerType === 'mouse') {
-          if (lastRip) travel += Math.hypot(p[0] - lastRip[0], p[1] - lastRip[1]) / dpr;
-          lastRip = p;
-          if (travel > 140) { travel = 0; addRipple(p[0], p[1], 0.32); }
-          mxp = p[0]; myp = p[1]; hover = 1;
-        }
+        if (e.pointerType !== 'mouse') return;
+        var r = section.getBoundingClientRect();
+        mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+        my = -((e.clientY - r.top) / r.height - 0.5) * 2;
       }, { passive: true });
-      section.addEventListener('pointerleave', function () { hover = 0; lastRip = null; });
-      section.addEventListener('pointerdown', function (e) {
-        var p = toLocal(e);
-        addRipple(p[0], p[1], 1);
-        if (e.pointerType !== 'mouse') { mxp = p[0]; myp = p[1]; smx = p[0]; smy = p[1]; hover = 1; setTimeout(function () { hover = 0; }, 700); }
-      }, { passive: true });
+      section.addEventListener('pointerleave', function () { mx = 0; my = 0; });
     }
-
     canvas.addEventListener('webglcontextlost', function (e) {
-      e.preventDefault(); lost = true; update();
+      e.preventDefault(); lost = true;
       section.classList.remove('gl-ready'); root.classList.add('no-gl');
     });
 
-    readColors();
     resize();
-    if (document.fonts && document.fonts.load) {
-      document.fonts.load('900 100px Archivo').then(function () { fontOk = true; drawText(); if (!running) render(performance.now()); }, function () { fontOk = true; drawText(); });
-    } else {
-      setTimeout(function () { fontOk = true; drawText(); }, 600);
-    }
+    section.classList.add('gl-ready');
+    var whenFont = document.fonts && document.fonts.load ? document.fonts.load('900 100px Archivo') : Promise.resolve();
+    whenFont.then(function () { fontOk = true; drawMask(); render(performance.now()); }, function () { fontOk = true; drawMask(); });
+    /* după intrarea literelor, re-măsurăm (fonturile și layout-ul sunt sigur gata) */
+    setTimeout(function () { fontOk = true; drawMask(); if (reduce) render(performance.now()); }, 1800);
     var rt = null;
     var onResize = function () { clearTimeout(rt); rt = setTimeout(resize, 120); };
     if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(section);
     else window.addEventListener('resize', onResize);
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; update(); }).observe(section);
-    }
-    document.addEventListener('visibilitychange', update);
-    update();
-
-    return {
-      recolor: function () { requestAnimationFrame(function () { readColors(); if (!running) render(performance.now()); }); },
-      retext: function () { /* literele nu depind de limbă; păstrat pentru simetrie */ }
-    };
+    if (!reduce) visLoop(section, render);
   })();
 
   /* =========================================================
+     2. Semnul: un „C” din CALEA, construit din celule de grilă (cutii extrudate) cu trasee de PCB pe față.
+     Pe scroll (secțiunea e înaltă, interiorul e position: sticky) se rotește și se desface pe liniile grilei.
+     Scroll-ul rămâne nativ: doar citim progresul. Fără WebGL sau cu reduced-motion: SVG-ul static din HTML
+     (la reduced-motion, WebGL randează un singur cadru, fără pin).
+     ========================================================= */
+  var signApi = (function () {
+    var section = $('.sign'), canvas = $('.sign-gl');
+    if (!section || !canvas) return null;
+    var gl = glContext(canvas, { antialias: true, alpha: true, depth: true });
+    if (!gl) return null;
+    var deriv = gl.getExtension('OES_standard_derivatives');
+
+    /* celulele „C”-ului: grilă 12 × 15, colțuri teșite, gol interior, gura spre dreapta */
+    var cells = [];
+    for (var j = 0; j < 15; j++) {
+      for (var i = 0; i < 12; i++) {
+        var dx = i + 0.5 - 6, dy = j + 0.5 - 7.5;
+        if (Math.abs(dx) + Math.abs(dy) > 10.5) continue;
+        if (Math.abs(dx) < 2 && Math.abs(dy) < 3.5 && Math.abs(dx) + Math.abs(dy) < 4.5) continue;
+        if (dx > 1 && Math.abs(dy) <= 2) continue;
+        cells.push([dx, dy]);
+      }
+    }
+    var seed = 3;
+    function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+    var HS = 0.47, HD = 0.85;
+    var FACES = [
+      [[1, 0, 0], [0, 1, 0], [0, 0, 1]], [[-1, 0, 0], [0, 0, 1], [0, 1, 0]],
+      [[0, 1, 0], [0, 0, 1], [1, 0, 0]], [[0, -1, 0], [1, 0, 0], [0, 0, 1]],
+      [[0, 0, 1], [1, 0, 0], [0, 1, 0]], [[0, 0, -1], [0, 1, 0], [1, 0, 0]]
+    ];
+    var ext = [HS, HS, HD];
+    var data = [];
+    cells.forEach(function (c) {
+      var r = rnd();
+      FACES.forEach(function (F) {
+        var n = F[0], u = F[1], v = F[2];
+        var corners = [[-1, -1], [1, -1], [1, 1], [-1, -1], [1, 1], [-1, 1]];
+        corners.forEach(function (k) {
+          for (var a = 0; a < 3; a++) data.push((n[a] + u[a] * k[0] + v[a] * k[1]) * ext[a]);
+          data.push(n[0], n[1], n[2], c[0], c[1], r);
+        });
+      });
+    });
+    var COUNT = data.length / 9;
+
+    var VS = [
+      'attribute vec3 aPos; attribute vec3 aNrm; attribute vec3 aCell;',
+      'uniform mat4 uProj; uniform mat3 uRot; uniform float uExp; uniform float uTime; uniform float uDist; uniform vec2 uShift;',
+      'varying vec3 vN; varying vec3 vV; varying vec3 vObj; varying vec3 vLoc; varying float vFront; varying float vR;',
+      'void main(){',
+      '  float r = aCell.z;',
+      '  float e = clamp(uExp * 1.55 - r * 0.55, 0.0, 1.0); e = e * e * (3.0 - 2.0 * e);',
+      '  vec3 off = vec3(aCell.xy * 0.4 * e, ((r - 0.5) * 10.0 + sin(r * 41.0 + uTime * 0.5) * 0.35) * e);',
+      '  vec3 obj = aPos + vec3(aCell.xy, 0.0);',
+      '  vec3 w = uRot * (obj + off);',
+      '  vN = uRot * aNrm;',
+      '  vec3 pos = w + vec3(0.0, 0.0, -uDist);',
+      '  vV = -pos; vObj = obj; vLoc = aPos; vFront = aNrm.z; vR = r;',
+      '  gl_Position = uProj * vec4(pos, 1.0);',
+      '  gl_Position.xy += uShift * gl_Position.w;',
+      '}'
+    ].join('\n');
+    var FS = [
+      deriv ? '#extension GL_OES_standard_derivatives : enable' : '',
+      'precision highp float;',
+      'varying vec3 vN; varying vec3 vV; varying vec3 vObj; varying vec3 vLoc; varying float vFront; varying float vR;',
+      'uniform float uTime;',
+      'float h21(vec2 p){ p = fract(p * vec2(233.34, 851.73)); p += dot(p, p + 23.45); return fract(p.x * p.y); }',
+      /* distanța „teșită” de la golul din mijloc: liniile ei de nivel sunt traseele concentrice, cu colțuri la 45° */
+      'float sdc(vec2 p){ vec2 a = abs(p); return max(max(a.x - 2.0, a.y - 3.5), (a.x + a.y - 4.5) * 0.70710678); }',
+      'float aa(float x, float w){',
+      deriv ? '  float fw = fwidth(x) * 1.2;' : '  float fw = 0.04;',
+      '  return 1.0 - smoothstep(w - fw, w + fw, x);',
+      '}',
+      'void main(){',
+      '  vec3 N = normalize(vN); vec3 V = normalize(vV);',
+      '  vec3 L1 = normalize(vec3(-0.45, 0.75, 0.55));',
+      '  vec3 R = reflect(-V, N);',
+      /* mediu de studio fictiv: un softbox sus, o linie de orizont, întuneric jos */
+      '  float env = 0.02 + 0.85 * smoothstep(0.25, 0.95, R.y) * (0.55 + 0.45 * smoothstep(-0.6, 0.4, R.x))',
+      '            + 0.22 * exp(-pow((R.y + 0.05) * 7.0, 2.0)) + 0.12 * smoothstep(0.6, 1.0, -R.x);',
+      '  float ndl = max(dot(N, L1), 0.0);',
+      '  float spec = pow(max(dot(N, normalize(L1 + V)), 0.0), 70.0);',
+      '  float fres = pow(1.0 - max(dot(N, V), 0.0), 4.0);',
+      '  vec3 metal = vec3(0.70, 0.74, 0.80);',
+      '  vec3 col;',
+      '  if (vFront > 0.5) {',
+      /* fața: mască de lipire grafit + trasee argintii + vias + un puls care circulă pe trasee */
+      '    float d = sdc(vObj.xy);',
+      '    float tt = d * 2.0;',
+      '    float k = floor(tt + 0.5);',
+      '    float ld = abs(tt - k);',
+      '    float inRing = step(0.25, d) * step(d, 3.85);',
+      '    float tr = aa(ld, 0.14) * inRing;',
+      '    float ang = atan(vObj.y, vObj.x) / 6.2831853 + 0.5;',
+      '    float ph = fract(ang * 1.0 - uTime * (0.05 + 0.025 * mod(k, 3.0)) + k * 0.37);',
+      '    float pulse = pow(ph, 26.0) * tr;',
+      '    vec2 cid = floor(vObj.xy + vec2(6.0, 7.5));',
+      '    float isVia = step(0.84, h21(cid + 2.3));',
+      '    float vd = length(vLoc.xy);',
+      '    float via = (aa(abs(vd - 0.16), 0.045) + aa(vd, 0.06)) * isVia;',
+      '    float edge = smoothstep(0.40, 0.47, max(abs(vLoc.x), abs(vLoc.y)));',
+      '    vec3 maskc = vec3(0.045, 0.047, 0.053) * (0.6 + 0.6 * ndl) + metal * env * 0.07;',
+      '    vec3 copper = metal * (0.28 + 0.75 * env + 0.6 * spec + 0.25 * ndl);',
+      '    col = mix(maskc, copper, clamp(tr + via, 0.0, 1.0));',
+      '    col += vec3(0.85, 0.92, 1.0) * pulse * 1.4;',
+      '    col += metal * edge * (0.08 + 0.4 * env);',
+      '  } else if (vFront < -0.5) {',
+      '    col = vec3(0.03, 0.031, 0.035) + metal * env * 0.1;',
+      '  } else {',
+      /* laturile: gunmetal periat */
+      '    float br = 0.9 + 0.1 * sin(dot(vLoc, vec3(0.0, 0.0, 1.0)) * 140.0 + vR * 30.0);',
+      '    vec3 base = vec3(0.10, 0.105, 0.115);',
+      '    col = base * (0.3 + 0.9 * ndl) * br + metal * (env * 0.5 + spec * 0.9) * br;',
+      '  }',
+      '  col += metal * fres * 0.22;',
+      '  col *= vec3(0.96, 0.98, 1.03);',
+      '  gl_FragColor = vec4(col, 1.0);',
+      '}'
+    ].join('\n');
+    var prog = program(gl, VS, FS);
+    if (!prog) return null;
+    gl.useProgram(prog);
+    var vb = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vb);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
+    var S = 36;
+    [['aPos', 0], ['aNrm', 12], ['aCell', 24]].forEach(function (a) {
+      var l = gl.getAttribLocation(prog, a[0]);
+      gl.enableVertexAttribArray(l);
+      gl.vertexAttribPointer(l, 3, gl.FLOAT, false, S, a[1]);
+    });
+    var U = uniforms(gl, prog, ['uProj', 'uRot', 'uExp', 'uTime', 'uDist', 'uShift']);
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.CULL_FACE);
+    gl.clearColor(0, 0, 0, 0);
+
+    var steps = $$('.sign-steps li', section);
+    var W = 1, H = 1, aspect = 1, dist = 40, shift = [0, 0], t0 = performance.now(), lost = false;
+    var target = reduce ? 0.45 : 0, prog01 = target, curStep = -1;
+    var FOV = 32 * Math.PI / 180, TANF = Math.tan(FOV / 2);
+    var useScroll = !reduce;
+    if (useScroll) section.classList.add('sign-scroll');
+
+    function persp(a) {
+      var f = 1 / TANF, n = 1, fa = 300;
+      return new Float32Array([f / a, 0, 0, 0, 0, f, 0, 0, 0, 0, (fa + n) / (n - fa), -1, 0, 0, (2 * fa * n) / (n - fa), 0]);
+    }
+    function rotm(yaw, pitch) {
+      var cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch);
+      /* R = Rx(pitch) * Ry(yaw), coloană cu coloană */
+      return new Float32Array([cy, sp * sy, -cp * sy, 0, cp, sp, sy, -sp * cy, cp * cy]);
+    }
+    function resize() {
+      var r = canvas.getBoundingClientRect();
+      var dpr = Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 1.75);
+      W = Math.max(1, Math.round(r.width * dpr)); H = Math.max(1, Math.round(r.height * dpr));
+      canvas.width = W; canvas.height = H;
+      gl.viewport(0, 0, W, H);
+      aspect = W / H;
+      var narrow = r.width < 761;
+      if (narrow) {
+        /* telefon: semnul sus, în ~40% din înălțime */
+        var fracH = useScroll ? 0.36 : 0.62;
+        dist = Math.max(16.5 / (fracH * 2 * TANF), 13 / (0.7 * 2 * TANF * aspect));
+        shift = [0, useScroll ? 0.36 : 0];
+      } else {
+        dist = Math.max(16.5 / (0.66 * 2 * TANF), 13 / (0.42 * 2 * TANF * aspect));
+        shift = [r.width > 1100 ? 0.36 : 0.42, 0];
+      }
+      gl.uniformMatrix4fv(U.uProj, false, persp(aspect));
+      draw(performance.now());
+    }
+    function progress() {
+      var r = section.getBoundingClientRect();
+      var span = Math.max(1, r.height - window.innerHeight);
+      return clamp(-r.top / span, 0, 1);
+    }
+    function draw(now) {
+      if (lost) return;
+      var time = reduce ? 6 : (now - t0) / 1000;
+      if (!reduce) prog01 += (target - prog01) * 0.1;
+      var p = prog01;
+      var e = smooth(0.2, 0.62, p) * (1 - 0.6 * smooth(0.82, 1.0, p));
+      var idle = reduce ? 0 : Math.sin(time * 0.35) * 0.06;
+      var yaw = -0.78 + p * 1.75 + idle;
+      var pitch = 0.3 - p * 0.42 + (reduce ? 0 : Math.cos(time * 0.27) * 0.03);
+      gl.uniformMatrix3fv(U.uRot, false, rotm(yaw, pitch));
+      gl.uniform1f(U.uExp, e);
+      gl.uniform1f(U.uTime, time);
+      gl.uniform1f(U.uDist, dist);
+      gl.uniform2f(U.uShift, shift[0], shift[1]);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, COUNT);
+      if (useScroll) {
+        var s = p < 0.36 ? 0 : p < 0.7 ? 1 : 2;
+        if (s !== curStep) { curStep = s; steps.forEach(function (li, k) { li.classList.toggle('is-on', k === s); }); }
+      }
+    }
+    canvas.addEventListener('webglcontextlost', function (e) {
+      e.preventDefault(); lost = true;
+      section.classList.remove('gl-ready');
+    });
+    if (useScroll) { target = prog01 = progress(); scrollSubs.push(function () { target = progress(); }); }
+    else steps.forEach(function (li) { li.classList.remove('is-on'); });
+    resize();
+    section.classList.add('gl-ready');
+    var rt = null;
+    var onResize = function () { clearTimeout(rt); rt = setTimeout(resize, 120); };
+    if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(canvas);
+    else window.addEventListener('resize', onResize);
+    if (!reduce) visLoop($('.sign-pin', section) || section, draw);
+    return {};
+  })();
+
+  /* =========================================================
+     Parallax intern pe imaginile .par (imaginea e mărită 1.12 și alunecă ±6% în cadru)
+     ========================================================= */
+  var parImgs = reduce ? [] : $$('img.par');
+  function parallax() {
+    var vh = window.innerHeight;
+    for (var i = 0; i < parImgs.length; i++) {
+      var im = parImgs[i], fr = im.parentNode, r = fr.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) continue;
+      var c = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+      var py = clamp(-c, -1, 1) * r.height * 0.05;
+      im.style.setProperty('--py', py.toFixed(1) + 'px');
+      im._py = py / Math.max(1, r.height);
+    }
+  }
+  if (parImgs.length) { scrollSubs.push(parallax); parallax(); }
+
+  /* =========================================================
      Hover pe imagini: o lentilă WebGL subtilă (mărire + undă fină) care urmărește mouse-ul.
-     Un singur context, mutat peste imaginea curentă. Fallback CSS: zoom lent (.no-fxgl).
+     Un singur context, mutat peste imaginea curentă. Ține cont de zoom-ul și parallax-ul imaginii.
+     Fallback CSS: zoom lent (.no-fxgl).
      ========================================================= */
   (function () {
     var imgs = $$('img.fx');
@@ -772,30 +809,26 @@
     var cv = document.createElement('canvas');
     cv.className = 'fx-canvas';
     cv.setAttribute('aria-hidden', 'true');
-    var gl = null;
-    try { gl = cv.getContext('webgl', { alpha: false, antialias: false, depth: false, failIfMajorPerformanceCaveat: true }); } catch (e) {}
+    var gl = glContext(cv, {});
     if (!gl) { root.classList.add('no-fxgl'); return; }
     var VS = 'attribute vec2 a;varying vec2 v;void main(){v=a*0.5+0.5;gl_Position=vec4(a,0.0,1.0);}';
     var FS = [
       'precision mediump float;',
-      'varying vec2 v; uniform sampler2D uT; uniform vec2 uM; uniform float uH; uniform float uTime; uniform float uAsp; uniform vec2 uCov;',
+      'varying vec2 v; uniform sampler2D uT; uniform vec2 uM; uniform float uH; uniform float uTime; uniform float uAsp; uniform vec2 uCov; uniform vec2 uZ;',
       'void main(){',
       '  vec2 uv = v; vec2 d = uv - uM; d.x *= uAsp; float r = length(d);',
       '  float k = smoothstep(0.34, 0.0, r) * uH;',
       '  uv -= (uv - uM) * k * 0.2;',
       '  float wv = sin(r * 40.0 - uTime * 3.0) * 0.0035 * uH * smoothstep(0.5, 0.0, r);',
       '  uv += normalize(d + 0.00001) * wv * vec2(1.0 / uAsp, 1.0);',
+      '  uv = (uv - 0.5 + vec2(0.0, uZ.y)) / uZ.x + 0.5;',
       '  vec2 tuv = (uv - 0.5) * uCov + 0.5;',
-      '  vec3 c = texture2D(uT, tuv).rgb + k * 0.05;',
+      '  vec3 c = texture2D(uT, tuv).rgb + k * vec3(0.04, 0.045, 0.05);',
       '  gl_FragColor = vec4(c, 1.0);',
       '}'
     ].join('\n');
-    function compile(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; }
-    var vs = compile(gl.VERTEX_SHADER, VS), fs = compile(gl.FRAGMENT_SHADER, FS);
-    if (!vs || !fs) { root.classList.add('no-fxgl'); return; }
-    var prog = gl.createProgram();
-    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { root.classList.add('no-fxgl'); return; }
+    var prog = program(gl, VS, FS);
+    if (!prog) { root.classList.add('no-fxgl'); return; }
     gl.useProgram(prog);
     var b = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, b);
@@ -803,8 +836,7 @@
     var al = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(al);
     gl.vertexAttribPointer(al, 2, gl.FLOAT, false, 0, 0);
-    var U = {};
-    ['uT', 'uM', 'uH', 'uTime', 'uAsp', 'uCov'].forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+    var U = uniforms(gl, prog, ['uT', 'uM', 'uH', 'uTime', 'uAsp', 'uCov', 'uZ']);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
     var texs = {}, host = null, img = null, hov = 0, tgt = 0, mx = 0.5, my = 0.5, smx = 0.5, smy = 0.5, raf = null, t0 = performance.now();
 
@@ -838,6 +870,8 @@
     function loop(now) {
       hov += (tgt - hov) * 0.08;
       smx += (mx - smx) * 0.14; smy += (my - smy) * 0.14;
+      var par = img && img.classList.contains('par');
+      gl.uniform2f(U.uZ, par ? 1.12 : 1, par ? (img._py || 0) : 0);
       gl.uniform2f(U.uM, smx, smy);
       gl.uniform1f(U.uH, hov);
       gl.uniform1f(U.uTime, (now - t0) / 1000);
@@ -865,98 +899,6 @@
       });
       h.addEventListener('pointerleave', function () { if (host === h) tgt = 0; });
     });
-  })();
-
-  /* =========================================================
-     Carusel: scroll-snap nativ + săgeți, taste, drag cu mouse-ul,
-     mască (wipe) + parallax intern calculate din poziția de scroll
-     ========================================================= */
-  (function () {
-    var rail = $('#rail');
-    if (!rail) return;
-    var slides = $$('.slide', rail);
-    var n = slides.length;
-    var wrap = rail.closest('.sec-projects');
-    var curEl = $('.rail-cur', wrap), total = $('.rail-total', wrap), bar = $('.rail-bar', wrap);
-    var btns = $$('.rail-btn', wrap);
-    var live = $('.rail-live', wrap);
-    if (total) total.textContent = pad2(n);
-
-    function index() { return clamp(Math.round(rail.scrollLeft / Math.max(1, rail.clientWidth)), 0, n - 1); }
-    function go(i, announce) {
-      i = clamp(i, 0, n - 1);
-      rail.scrollTo({ left: slides[i].offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
-      if (announce && live) live.textContent = D().slideNow(i + 1, n);
-    }
-    btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        if (b.getAttribute('aria-disabled') === 'true') return;
-        go(index() + (+b.getAttribute('data-dir')), true);
-      });
-    });
-    rail.addEventListener('keydown', function (e) {
-      var k = e.key, i = index();
-      if (k === 'ArrowRight') go(i + 1, true);
-      else if (k === 'ArrowLeft') go(i - 1, true);
-      else if (k === 'Home') go(0, true);
-      else if (k === 'End') go(n - 1, true);
-      else return;
-      e.preventDefault();
-    });
-
-    /* Drag cu mouse-ul (pe touch rămâne swipe-ul nativ) */
-    var drag = null;
-    rail.addEventListener('pointerdown', function (e) {
-      if (e.pointerType !== 'mouse' || e.button !== 0) return;
-      drag = { x: e.clientX, sl: rail.scrollLeft, moved: false };
-    });
-    window.addEventListener('pointermove', function (e) {
-      if (!drag) return;
-      var dx = e.clientX - drag.x;
-      if (!drag.moved && Math.abs(dx) > 6) { drag.moved = true; rail.classList.add('is-dragging'); }
-      if (drag.moved) rail.scrollLeft = drag.sl - dx;
-    });
-    window.addEventListener('pointerup', function (e) {
-      if (!drag) return;
-      var d = drag; drag = null;
-      if (!d.moved) return;
-      var dx = e.clientX - d.x, i = Math.round(d.sl / Math.max(1, rail.clientWidth));
-      var target = Math.abs(dx) > rail.clientWidth * 0.1 ? i + (dx < 0 ? 1 : -1) : i;
-      rail.classList.remove('is-dragging');
-      var stop = function (ev) { ev.preventDefault(); ev.stopPropagation(); };
-      window.addEventListener('click', stop, true);
-      setTimeout(function () { window.removeEventListener('click', stop, true); }, 0);
-      go(target, true);
-    });
-    rail.addEventListener('dragstart', function (e) { e.preventDefault(); });
-
-    var rticking = false;
-    function sync() {
-      rticking = false;
-      var i = index(), w = Math.max(1, rail.clientWidth), sl = rail.scrollLeft;
-      if (curEl) curEl.textContent = pad2(i + 1);
-      if (bar) bar.style.transform = 'scaleX(' + Math.min(1, (sl + w) / Math.max(w, rail.scrollWidth)).toFixed(4) + ')';
-      if (btns[0]) btns[0].setAttribute('aria-disabled', String(i === 0));
-      if (btns[1]) btns[1].setAttribute('aria-disabled', String(i === n - 1));
-      if (reduce) return;
-      slides.forEach(function (s) {
-        var p = clamp((s.offsetLeft - sl) / w, -1, 1);
-        var a = Math.abs(p);
-        s.style.setProperty('--ml', (p > 0 ? p * 100 : 0).toFixed(2) + '%');
-        s.style.setProperty('--mr', (p < 0 ? -p * 100 : 0).toFixed(2) + '%');
-        s.style.setProperty('--px', (-p * 22).toFixed(2) + '%');
-        s.style.setProperty('--tx', (p * 14).toFixed(2) + '%');
-        var txt = $('.proj-text', s);
-        if (txt) txt.style.opacity = a < 0.002 ? '' : Math.max(0, 1 - a * 1.6).toFixed(3);
-      });
-    }
-    rail.addEventListener('scroll', function () {
-      if (rticking) return;
-      rticking = true;
-      requestAnimationFrame(sync);
-    }, { passive: true });
-    window.addEventListener('resize', function () { requestAnimationFrame(sync); });
-    sync();
   })();
 
   /* =========================================================
@@ -1114,7 +1056,7 @@
     var link = $('link[rel="icon"]');
     if (!link || reduce) return;
     function icon(on) {
-      return 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#000"/><path d="M44.5 21.5A15 15 0 1 0 44.5 42.5" fill="none" stroke="#fff" stroke-width="8"/><rect x="47" y="28" width="8" height="8" fill="#fff" fill-opacity="' + (on ? 1 : 0.15) + '"/></svg>');
+      return 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f3f5"/><stop offset=".48" stop-color="#8a9098"/><stop offset=".52" stop-color="#4b5057"/><stop offset="1" stop-color="#d6dade"/></linearGradient></defs><rect width="64" height="64" rx="12" fill="#0b0b0c"/><path d="M44.5 21.5A15 15 0 1 0 44.5 42.5" fill="none" stroke="url(#s)" stroke-width="8"/><rect x="47" y="28" width="8" height="8" fill="#c9ced5" fill-opacity="' + (on ? 1 : 0.15) + '"/></svg>');
     }
     var on = icon(true), off = icon(false);
     setInterval(function () {
@@ -1124,6 +1066,7 @@
     }, 3200);
   })();
 
-  /* Aplică limba (separă și titlurile pentru dezvăluire) */
+  /* Aplică limba (separă și titlurile pentru dezvăluire), apoi starea inițială a scroll-ului */
   applyLang(lang);
+  onScroll();
 })();
