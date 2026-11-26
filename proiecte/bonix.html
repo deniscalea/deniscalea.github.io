@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ro" data-base="../"
+      data-en-title="Bonix · Expense app · CALEA"
+      data-en-desc="Bonix, a Flutter app that tracks spending per product: how it turns receipt text into clean products, the local data and where it stands."
+      data-en-og="Bonix, a Flutter app that tracks spending per product, from receipt text to a weekly report.">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bonix · Aplicație de cheltuieli · CALEA</title>
+  <meta name="description" content="Bonix, o aplicație Flutter care ține cheltuielile pe fiecare produs: cum transformă textul de pe bon în produse curate, datele locale și stadiul proiectului.">
+  <meta name="author" content="Denis-Alexandru Călin">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#070708">
+  <link rel="canonical" href="https://deniscalea.github.io/proiecte/bonix.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="CALEA">
+  <meta property="og:url" content="https://deniscalea.github.io/proiecte/bonix.html">
+  <meta property="og:locale" content="ro_RO">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="Bonix, cheltuieli pe fiecare produs · CALEA">
+  <meta property="og:description" content="Bonix, o aplicație Flutter care ține cheltuielile pe fiecare produs, de la textul de pe bon la raportul pe săptămână.">
+  <meta property="og:image" content="https://deniscalea.github.io/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://deniscalea.github.io/assets/og.png">
+
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css?v=6.2">
+
+  <script>
+    (function () {
+      var root = document.documentElement, lang = null;
+      root.classList.add('js');
+      try { lang = localStorage.getItem('lang'); } catch (e) {}
+      if (lang !== 'ro' && lang !== 'en') lang = (navigator.language || 'en').toLowerCase().indexOf('ro') === 0 ? 'ro' : 'en';
+      root.setAttribute('lang', lang);
+    })();
+  </script>
+</head>
+<body class="page-case tinted" style="--tint: 158 232 92">
+  <a class="skip-link" href="#continut" data-i18n="skip">Sari la conținut</a>
+
+  <header class="site-header">
+    <nav class="nav wrap" aria-label="Navigație principală" data-i18n-aria="nav.aria">
+      <a class="brand" href="../" aria-label="CALEA, pagina principală" data-i18n-aria="cs.brand">CALEA</a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="meniu" aria-label="Deschide meniul" data-i18n-aria="menu.open">
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+        <span class="nav-toggle-bar" aria-hidden="true"></span>
+      </button>
+
+      <div class="nav-panel" id="meniu">
+        <ul class="nav-links">
+          <li><a href="../#proiecte" data-i18n="nav.projects">Proiecte</a></li>
+          <li><a href="../#despre" data-i18n="nav.about">Despre</a></li>
+          <li><a href="../#cv">CV</a></li>
+          <li><a href="../#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+        <div class="nav-tools">
+          <div class="lang-switch" role="group" aria-label="Limba site-ului" data-i18n-aria="lang.aria">
+            <span class="lang-thumb" aria-hidden="true"></span>
+            <button type="button" class="lang-btn mono" data-lang="ro" aria-pressed="true" lang="ro" aria-label="Română">RO</button>
+            <button type="button" class="lang-btn mono" data-lang="en" aria-pressed="false" lang="en" aria-label="English">EN</button>
+          </div>
+          <a class="nav-cv" href="../assets/CV_Denis_Calin_RO.pdf" download data-cv><span data-i18n="nav.cv">Descarcă CV</span> <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="continut">
+
+
+    <!-- ===== Deschidere ===== -->
+    <section class="cs-hero" aria-labelledby="cs-titlu" data-reveal="once">
+      <div class="wrap">
+        <p class="cs-kicker mono rule-b"><a class="nav-back" href="../#p-app"><span class="arrow" aria-hidden="true">←</span><span data-i18n="cs.back">Toate proiectele</span></a><span data-i18n="bx.kicker">CH 02, în lucru, 2026</span></p>
+        <h1 class="cs-title split" id="cs-titlu" data-i18n="p2.title">Bonix, cheltuieli pe fiecare produs</h1>
+        <div class="cs-intro">
+          <p class="cs-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane și cât pe piept de pui. Bonix ține cheltuielile pe telefon, pe categorii, și transformă numele scurte de pe bon (diferite la fiecare magazin) într-un produs curat.</p>
+          <ul class="cs-facts lift">
+            <li><span class="mono" data-i18n="p2.f1">Platformă</span><b>Flutter, Dart</b></li>
+            <li><span class="mono" data-i18n="p2.f2">Date</span><b data-i18n="p2.f2v">SQLite local, fără cont</b></li>
+            <li><span class="mono" data-i18n="p2.f3">Categorii</span><b>9</b></li>
+            <li><span class="mono" data-i18n="p2.f4">Ecrane</span><b data-i18n="p2.f4v">Acasă, Adaugă, Raport</b></li>
+            <li><span class="mono" data-i18n="bx.f5">Stadiu</span><b class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="bx.f5v">În lucru</span></b></li>
+          </ul>
+        </div>
+        <div class="cs-phone">
+            <span class="phone" role="img" aria-label="Machetă a aplicației Bonix: ecranul Raport, cu date de exemplu" data-i18n-aria="ph.aria">
+              <span class="phone-shell">
+                <span class="phone-screen">
+                  <span class="ph-status mono" aria-hidden="true"><span>14:32</span><span class="ph-isl"></span><span>5G ▮▮▮</span></span>
+                  <span class="ph-top"><span class="ph-app">Bonix</span><span class="ph-month mono" data-i18n="ph.month">Raport · săptămâna asta</span></span>
+                  <span class="ph-total"><span class="ph-total-k mono" data-i18n="ph.total">săptămâna asta</span><span class="ph-total-v">268<small> lei</small></span></span>
+                  <span class="ph-mix" aria-hidden="true"><i style="--w:38"></i><i style="--w:22"></i><i style="--w:16"></i><i style="--w:14"></i><i style="--w:10"></i></span>
+                  <span class="ph-list-k mono" data-i18n="ph.where">pe ce s-au dus banii</span>
+                  <span class="ph-list">
+                    <span class="ph-row" style="--w:1"><b data-i18n="ph.r1">Ieșiri</b><span class="ph-bar"><i></i></span><em>80</em></span>
+                    <span class="ph-row" style="--w:.8"><b data-i18n="ph.r2">Piept de pui</b><span class="ph-bar"><i></i></span><em>64</em></span>
+                    <span class="ph-row" style="--w:.56"><b data-i18n="ph.r3">Parcare</b><span class="ph-bar"><i></i></span><em>45</em></span>
+                    <span class="ph-row" style="--w:.38"><b data-i18n="ph.r4">Transport</b><span class="ph-bar"><i></i></span><em>30</em></span>
+                    <span class="ph-row" style="--w:.29"><b data-i18n="ph.r5">Banane</b><span class="ph-bar"><i></i></span><em>23</em></span>
+                  </span>
+                  <span class="ph-scan">
+                    <span class="ph-scan-k mono" data-i18n="ph.scan">de pe bon → produs</span>
+                    <span class="ph-scan-rows">
+                      <span class="ph-sr"><span class="mono">BANANE VRAC 1,234KG</span><b data-i18n="ph.o1">Banane</b></span>
+                      <span class="ph-sr"><span class="mono">PIEPT PUI CAS</span><b data-i18n="ph.o2">Piept de pui</b></span>
+                      <span class="ph-sr"><span class="mono">BANANE ECUADOR</span><b data-i18n="ph.o1">Banane</b></span>
+                    </span>
+                  </span>
+                  <span class="ph-tabs" aria-hidden="true"><span data-i18n="ph.t1">Acasă</span><span class="ph-add">+</span><span class="is-on" data-i18n="ph.t3">Raport</span></span>
+                </span>
+              </span>
+              <span class="phone-cap mono" data-i18n="ph.cap">Machetă, cu date de exemplu</span>
+            </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 01 Problema ===== -->
+    <section class="cs-sec" aria-labelledby="bx-problema" data-reveal="once">
+      <div class="wrap">
+        <header class="sec-head rule-t">
+          <p class="sec-label mono"><span>01</span> / <span data-i18n="cs.s1">Problema</span></p>
+          <h2 class="sec-title split" id="bx-problema" data-i18n="bx.h1">Știu cât am cheltuit, nu și pe ce</h2>
+        </header>
+        <div class="cs-body">
+          <div class="cs-col lift">
+            <p data-i18n-html="bx.p1a">Aplicațiile de buget arată categorii mari: mâncare, transport, ieșiri. Eu vreau să văd și <strong>produsele</strong>: cât am dat pe banane, cât pe piept de pui, cât pe parcare.</p>
+            <p data-i18n-html="bx.p1b">Problema e bonul. Fiecare magazin scrie același produs altfel: prescurtat, cu gramaj, cu coduri. Ca să adune corect, aplicația trebuie să știe că <code>BANANE VRAC 1,234KG</code> și <code>BANANE ECUADOR</code> sunt <strong>același lucru</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 02 Cum curăță bonul ===== -->
+    <section class="cs-sec" aria-labelledby="bx-bon" data-reveal="once">
+      <div class="wrap">
+        <header class="sec-head rule-t">
+          <p class="sec-label mono"><span>02</span> / <span data-i18n="bx.s2">Bonul</span></p>
+          <h2 class="sec-title split" id="bx-bon" data-i18n="bx.h2">Din text de bon, un produs curat</h2>
+        </header>
+        <div class="receipt lift">
+          <ol class="rc-in mono" aria-label="Text de pe bon" data-i18n-aria="p2.rcIn">
+            <li>BANANE VRAC 1,234KG</li><li>BANANE ECUADOR</li><li>PIEPT PUI CAS</li><li>LAPTE ZUZU 1,5%</li>
+          </ol>
+          <div class="rc-arrow" aria-hidden="true"><svg viewBox="0 0 120 40"><path d="M0 20H110M98 8L112 20L98 32"/></svg></div>
+          <ol class="rc-out" aria-label="Produs curat" data-i18n-aria="p2.rcOut">
+            <li><b data-i18n="ph.o1">Banane</b><span class="mono" data-i18n="bx.via2">dicționar</span></li>
+            <li><b data-i18n="ph.o1">Banane</b><span class="mono" data-i18n="bx.via2">dicționar</span></li>
+            <li><b data-i18n="ph.o2">Piept de pui</b><span class="mono" data-i18n="bx.via1">corectura ta</span></li>
+            <li><b data-i18n="bx.o3">Lapte</b><span class="mono" data-i18n="bx.via3">primul cuvânt</span></li>
+          </ol>
+        </div>
+        <div class="cs-body">
+          <div class="cs-col lift">
+            <p data-i18n-html="bx.p2a">Întâi textul e curățat: litere mici, fără diacritice, fără gramaje (<code>500g</code>, <code>1,5l</code>, <code>6x0.5l</code>, <code>10buc</code>), fără cifre și coduri. Apoi aplicația caută produsul în trei pași, în ordine:</p>
+            <ul class="cs-list">
+              <li><code>1 · aliasuri</code><span data-i18n="bx.c1">corecturile tale: îi spui o dată că „PIEPT PUI CAS” e piept de pui și ține minte</span></li>
+              <li><code>2 · dicționar</code><span data-i18n="bx.c2">cuvinte-cheie, cele mai specifice primele; prima potrivire câștigă</span></li>
+              <li><code>3 · primul cuvânt</code><span data-i18n="bx.c3">pe bonurile românești produsul e de obicei primul cuvânt: „LAPTE ZUZU 1,5%” devine Lapte</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 03 Datele ===== -->
+    <section class="cs-sec" aria-labelledby="bx-date" data-reveal="once">
+      <div class="wrap">
+        <header class="sec-head rule-t">
+          <p class="sec-label mono"><span>03</span> / <span data-i18n="bx.s3">Datele</span></p>
+          <h2 class="sec-title split" id="bx-date" data-i18n="bx.h3">Totul stă pe telefon</h2>
+        </header>
+        <div class="tech lift">
+          <article>
+            <p class="mono">db.dart</p>
+            <h3 data-i18n="bx.t1h">Tabela de cheltuieli</h3>
+            <p data-i18n-html="bx.t1">Fiecare cheltuială are dată, sumă, categorie, descriere, magazin și sursă (de mână sau de pe bon). Un <strong>index pe dată</strong> face rapoartele pe săptămână rapide.</p>
+            <p class="eq">CREATE INDEX idx_data ON cheltuieli(data)</p>
+          </article>
+          <article>
+            <p class="mono">db.dart, produse.dart</p>
+            <h3 data-i18n="bx.t2h">Ține minte corecturile</h3>
+            <p data-i18n-html="bx.t2">Corecturile stau în tabela <code>aliasuri</code>, cu textul curățat de pe bon drept cheie. Corectezi o dată, iar data viitoare aplicația recunoaște singură produsul.</p>
+            <p class="eq">aliasuri(text_bon PRIMARY KEY, produs, categorie)</p>
+          </article>
+          <article>
+            <p class="mono">models.dart</p>
+            <h3 data-i18n="bx.t3h">Nouă categorii</h3>
+            <p data-i18n="bx.t3">Mâncare, ieșiri, transport, parcare, sală, abonamente, cămin sau chirie, casă și igienă, altele. Fiecare are iconița și culoarea ei.</p>
+          </article>
+          <article>
+            <p class="mono">raport.dart</p>
+            <h3 data-i18n="bx.t4h">Raportul pe săptămână</h3>
+            <p data-i18n="bx.t4">Săptămâna începe luni la 00:00. Raportul arată cheltuielile pe categorii și lista „Pe ce s-au dus banii”, cu suma și procentul fiecărui lucru.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 04 Unde e acum ===== -->
+    <section class="cs-sec" aria-labelledby="bx-acum" data-reveal="once">
+      <div class="wrap">
+        <header class="sec-head rule-t">
+          <p class="sec-label mono"><span>04</span> / <span data-i18n="p2.s2">Unde e acum</span></p>
+          <h2 class="sec-title split" id="bx-acum" data-i18n="bx.h4">Merge de mână, urmează camera</h2>
+        </header>
+        <ul class="todo lift">
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d1">Baza de date locală (SQLite), cu index pe dată</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d2">9 categorii: mâncare, ieșiri, transport, parcare, sală, abonamente, cămin, casă, altele</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d3">Normalizarea numelor de pe bon, cu corecturile utilizatorului</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d4">Ecranele Acasă, Adaugă și Raport</span></li>
+          <li><i aria-hidden="true"></i><span data-i18n="p2.d5">Scanarea bonului cu camera (OCR pe telefon)</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== Final ===== -->
+    <section class="wrap" aria-labelledby="cs-final" data-reveal="once">
+      <div class="cs-end rule-t">
+        <h2 class="cs-end-title split" id="cs-final" data-i18n="bx.end">Codul vine pe GitHub</h2>
+        <div class="cs-end-actions lift">
+          <p class="work-note" data-i18n="p2.note">Codul ajunge pe GitHub când scanarea bonului merge.</p>
+          <a class="proj-link mono" href="../#proiecte"><span aria-hidden="true">←</span> <span data-i18n="cs.back">Toate proiectele</span></a>
+        </div>
+      </div>
+      <footer class="site-footer rule-t">
+        <p>© 2026 CALEA, Denis-Alexandru Călin</p>
+        <p class="clock mono" hidden><span data-i18n="clock.label">Ora în Cluj</span> <time class="clock-time">--:--:--</time></p>
+        <a href="#continut" class="mono to-top"><span data-i18n="footer.top">Înapoi sus</span> <span aria-hidden="true">↑</span></a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="../assets/js/i18n-bonix.js?v=6.2" defer></script>
+  <script src="../assets/js/main.js?v=6.2" defer></script>
+</body>
+</html>

@@ -46,34 +46,28 @@
     'sign.s3h': 'Apps',
     'sign.s3': 'Now: Bonix, a Flutter app that tracks spending per product.',
     'work.title': 'Selected work',
-    'work.note': 'Three channels. Pick one or scroll: every project has its own color.',
+    'work.note': 'Two channels, each with its own color. Pick one or scroll.',
     'chan.aria': 'Pick a project',
-    'chan.algo': 'Algorithms',
+    'p.open': 'Open the project',
+    'p2.s1l': 'phone app, in Dart',
+    'p2.s2l': 'data stays on the phone, no account',
+    'p2.s3l': 'categories, from food to subscriptions',
+    'ph.aria': 'Mockup of the Bonix app: the Report screen, with sample data',
+    'ph.month': 'Report · this week',
+    'ph.total': 'this week',
+    'ph.where': 'where the money went',
+    'ph.r1': 'Going out',
+    'ph.r2': 'Chicken breast',
+    'ph.r3': 'Parking',
+    'ph.r4': 'Transport',
+    'ph.r5': 'Bananas',
+    'ph.scan': 'from receipt → product',
+    'ph.o1': 'Bananas',
+    'ph.o2': 'Chicken breast',
+    'ph.t1': 'Home',
+    'ph.t3': 'Report',
+    'ph.cap': 'Mockup, with sample data',
     'chan.read': 'signal',
-    'chan.next2': 'Channel 02: Algorithms',
-    'chan.next3': 'Channel 03: Bonix',
-    'p3.kind': 'Algorithms, C++',
-    'p3.title': 'Algorithms in C++, measured piece by piece',
-    'p3.lede': 'Seven Fundamental Algorithms labs, written from scratch: sorting, heaps, Quicksort, merging k lists, hash tables and order statistics trees. Every algorithm counts its assignments and comparisons, so I can check on a chart whether the theory really shows up in the numbers.',
-    'p3.f2': 'Labs',
-    'p3.f3': 'Measured',
-    'p3.f3v': 'assignments + comparisons',
-    'p3.f4': 'Inputs',
-    'p3.f4v': 'n = 100 … 10,000, averaged over 5 runs',
-    'p3.s1': 'Experiments',
-    'p3.tabs': 'Pick an experiment',
-    'p3.e1': 'Direct sorting',
-    'p3.e2': 'Building a heap',
-    'p3.e4': 'Hybrid threshold',
-    'p3.e5': 'k lists',
-    'p3.e6': 'OS tree',
-    'p3.s2': 'Hash table',
-    'p3.h2': '99% full, still finds a key in 5 probes',
-    'p3.p2': 'Open addressing with quadratic probing, on a table of 10,007 cells. I searched for 1,500 keys that exist and 1,500 that don’t, five times over. The bar shows how many cells a search checks on average.',
-    'p3.tblAria': 'Search effort by fill factor',
-    'p3.c1': 'fill',
-    'p3.c2': 'found, average',
-    'p3.c3': 'not found, average',
     'p2.f1': 'Platform',
     'p2.f2': 'Data',
     'p2.f2v': 'local SQLite, no account',
@@ -251,7 +245,6 @@
     syncCv();
     syncMenuLabel();
     if (game) game.relabel();
-    if (typeof scope !== 'undefined' && scope) scope.relabel();
     if (typeof channels !== 'undefined' && channels) setTimeout(channels.place, 60);
   }
 
@@ -1219,157 +1212,6 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeProbe);
     update();
     return { update: update, place: placeProbe };
-  })();
-
-  /* =========================================================
-     v5 · CH 02: „osciloscopul” cu experimentele din laboratoarele de algoritmi.
-     Datele vin din assets/js/algo-data.js (măsurătorile lui Denis). Prima serie poartă culoarea canalului.
-     ========================================================= */
-  var scope = (function () {
-    var svg = $('.scope-svg'), DATA = window.CALEA_ALGO;
-    if (!svg || !DATA) return null;
-    var tabs = $$('.scope-tab'), cap = $('.scope-cap'), axis = $('.scope-axis'), tip = $('.scope-tip');
-    var NS = 'http://www.w3.org/2000/svg';
-    var TXT = {
-      ro: {
-        sort: 'Bubble face de 2,5 ori mai multe operații decât Insertion sau Selection. Toate trei cresc pătratic, O(n²), pe cazul mediu.',
-        heap: 'Bottom-up e liniar: majoritatea nodurilor stau jos și coboară puțin. Top-down plătește O(log n) la fiecare inserare, de 2,5 ori mai mult la n = 10 000.',
-        quick: 'Ambele sunt O(n log n), dar Quicksort face cu aproximativ 30% mai puține operații decât Heapsort, pe cazul mediu.',
-        hybrid: 'Sub un prag, subșirurile trec la insertion sort. Minimul iese în jur de 10–15 elemente; peste el, costul pătratic câștigă.',
-        merge: 'Pentru k fix, costul crește liniar cu n. De la k = 5 la k = 100 crește doar logaritmic: O(n log k).',
-        ostree: 'Build atinge fiecare nod o dată. n operații Select sau Delete costă O(n log n); Delete e mai scump, fiindcă își caută succesorul.',
-        axN: 'axa x: n · axa y: operații', axP: 'axa x: pragul, n = 10 000 · axa y: operații', axK: 'axa x: n total · axa y: operații', ops: 'operații'
-      },
-      en: {
-        sort: 'Bubble does 2.5× more operations than Insertion or Selection. All three grow quadratically, O(n²), in the average case.',
-        heap: 'Bottom-up is linear: most nodes sit low and sink only a little. Top-down pays O(log n) per insertion, 2.5× more at n = 10,000.',
-        quick: 'Both are O(n log n), but Quicksort does about 30% fewer operations than Heapsort in the average case.',
-        hybrid: 'Below a threshold, subarrays switch to insertion sort. The minimum lands around 10–15 elements; past it, the quadratic cost wins.',
-        merge: 'For a fixed k, the cost grows linearly in n. Going from k = 5 to k = 100 grows it only logarithmically: O(n log k).',
-        ostree: 'Build touches every node once. n Select or Delete operations cost O(n log n); Delete costs more because it looks for the successor.',
-        axN: 'x axis: n · y axis: operations', axP: 'x axis: threshold, n = 10,000 · y axis: operations', axK: 'x axis: total n · y axis: operations', ops: 'operations'
-      }
-    };
-    var W = 800, H = 380, L = 62, R = 112, T = 18, B = 34, pw = W - L - R, ph = H - T - B;
-    var cur = 'sort', geo = null;
-    function fmt(v) { if (v >= 1e6) return (+(v / 1e6).toFixed(1)) + 'M'; if (v >= 1e3) return (+(v / 1e3).toFixed(1)) + 'k'; return String(v); }
-    function num(v) { return Math.round(v).toLocaleString(lang === 'en' ? 'en-US' : 'ro-RO'); }
-    function nice(lo, hi) {
-      var span = hi - lo, p = Math.pow(10, Math.floor(Math.log10(span))), steps = [1, 2, 2.5, 5, 10], st = p;
-      for (var i = 0; i < steps.length; i++) { st = steps[i] * p / 2; if (span / st <= 6) break; }
-      return { top: Math.ceil(hi / st) * st, step: st };
-    }
-    function el(name, attrs, parent) { var e = document.createElementNS(NS, name); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
-    /* pe ecran îngust, un „ecran” mai înalt și mai îngust, ca textul să rămână lizibil */
-    var narrow = null;
-    function frame() {
-      var nw = (svg.clientWidth || 800) < 560;
-      if (nw === narrow) return false;
-      narrow = nw;
-      if (nw) { W = 420; H = 360; L = 44; R = 92; B = 30; } else { W = 800; H = 380; L = 62; R = 112; B = 34; }
-      pw = W - L - R; ph = H - T - B;
-      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
-      return true;
-    }
-    function draw() {
-      frame();
-      var d = DATA[cur], S = d.s, ymin = d.ymin || 0;
-      while (svg.firstChild) svg.removeChild(svg.firstChild);
-      var xs = S[0][1].map(function (p) { return p[0]; }), xmin = xs[0], xmax = xs[xs.length - 1];
-      var ymax = 0; S.forEach(function (s) { s[1].forEach(function (p) { if (p[1] > ymax) ymax = p[1]; }); });
-      var n = nice(ymin, ymax), top = n.top;
-      var X = function (x) { return L + (x - xmin) / (xmax - xmin) * pw; }, Y = function (y) { return T + ph - (y - ymin) / (top - ymin) * ph; };
-      for (var v = ymin; v <= top + 1e-6; v += n.step) {
-        el('line', { x1: L, x2: L + pw, y1: Y(v), y2: Y(v), 'class': v === ymin ? 'base' : 'grid' }, svg);
-        el('text', { x: L - 10, y: Y(v) + 4, 'text-anchor': 'end', 'class': 'tick' }, svg).textContent = fmt(v);
-      }
-      var xstep = xmax > 1000 ? (narrow ? 2500 : 2000) : (narrow ? 10 : 5);
-      for (var xv = Math.ceil(xmin / xstep) * xstep; xv <= xmax; xv += xstep) {
-        if (xv - xmin < xstep * 0.4 && xv !== xmin) continue;
-        el('text', { x: X(xv), y: H - 10, 'text-anchor': 'middle', 'class': 'tick' }, svg).textContent = fmt(xv);
-      }
-      var ends = [];
-      S.forEach(function (s, i) {
-        var dstr = s[1].map(function (p, k) { return (k ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }).join(' ');
-        var path = el('path', { d: dstr, 'class': 'tr tr-' + i }, svg);
-        try { path.style.setProperty('--len', Math.ceil(path.getTotalLength()) + 2); } catch (e) {}
-        var last = s[1][s[1].length - 1];
-        ends.push({ i: i, y: Y(last[1]), name: s[0] });
-      });
-      ends.sort(function (a, b) { return a.y - b.y; });
-      for (var k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 18) ends[k].y = ends[k - 1].y + 18;
-      ends.forEach(function (e) {
-        el('circle', { cx: L + pw + 10, cy: e.y, r: 4, 'class': 'dot-' + e.i }, svg);
-        el('text', { x: L + pw + 20, y: e.y + 4.5, 'class': 'lbl' }, svg).textContent = e.name;
-      });
-      var cross = el('line', { y1: T, y2: T + ph, 'class': 'cross', visibility: 'hidden' }, svg);
-      var dots = S.map(function (s, i) { return el('circle', { r: 5, 'class': 'hit dot-' + i, visibility: 'hidden' }, svg); });
-      geo = { S: S, X: X, Y: Y, xs: xs, cross: cross, dots: dots, d: d };
-      label();
-    }
-    function label() {
-      var tx = TXT[lang];
-      if (cap) cap.textContent = tx[cur];
-      if (axis) axis.textContent = cur === 'hybrid' ? tx.axP : cur === 'merge' ? tx.axK : tx.axN;
-    }
-    function hover(e) {
-      if (!geo) return;
-      var r = svg.getBoundingClientRect(), sx = (e.clientX - r.left) / r.width * W;
-      if (sx < L - 10 || sx > L + pw + 10) { leave(); return; }
-      var best = 0, bd = Infinity;
-      geo.xs.forEach(function (x, k) { var dd = Math.abs(geo.X(x) - sx); if (dd < bd) { bd = dd; best = k; } });
-      var x = geo.xs[best], px = geo.X(x);
-      geo.cross.setAttribute('x1', px); geo.cross.setAttribute('x2', px); geo.cross.setAttribute('visibility', 'visible');
-      var html = '<b>' + (cur === 'hybrid' ? (lang === 'en' ? 'threshold ' : 'prag ') : 'n = ') + num(x) + '</b>';
-      var topY = Infinity;
-      geo.S.forEach(function (s, i) {
-        var p = s[1][best]; if (!p) return;
-        var y = geo.Y(p[1]); if (y < topY) topY = y;
-        geo.dots[i].setAttribute('cx', px); geo.dots[i].setAttribute('cy', y); geo.dots[i].setAttribute('visibility', 'visible');
-        html += '<br>' + s[0] + ': <b>' + num(p[1]) + '</b>';
-      });
-      if (tip) {
-        tip.innerHTML = html; tip.hidden = false;
-        var sw = r.width / W;
-        tip.style.left = clamp(px * sw + 8, 70, r.width - 70) + 'px';
-        tip.style.top = (topY * sw + 12) + 'px';
-      }
-    }
-    function leave() {
-      if (!geo) return;
-      geo.cross.setAttribute('visibility', 'hidden');
-      geo.dots.forEach(function (d) { d.setAttribute('visibility', 'hidden'); });
-      if (tip) tip.hidden = true;
-    }
-    svg.addEventListener('pointermove', hover);
-    svg.addEventListener('pointerdown', hover);
-    svg.addEventListener('pointerleave', leave);
-    function select(btn, focus) {
-      cur = btn.getAttribute('data-exp');
-      tabs.forEach(function (b) { var on = b === btn; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
-      if (focus) btn.focus();
-      leave(); draw();
-    }
-    tabs.forEach(function (b, i) {
-      b.tabIndex = i === 0 ? 0 : -1;
-      b.addEventListener('click', function () { select(b); });
-      b.addEventListener('keydown', function (e) {
-        var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
-        if (j === null) return;
-        e.preventDefault();
-        select(tabs[(j + tabs.length) % tabs.length], true);
-      });
-    });
-    /* prima desenare când ecranul ajunge în viewport, ca trasele să se deseneze sub ochii vizitatorului */
-    var started = false;
-    function start() { if (!started) { started = true; draw(); } }
-    if ('IntersectionObserver' in window && !reduce) {
-      var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { start(); io.disconnect(); } }, { threshold: 0.35 });
-      io.observe(svg);
-    } else start();
-    var rsT = null;
-    window.addEventListener('resize', function () { clearTimeout(rsT); rsT = setTimeout(function () { if (started && frame()) { leave(); draw(); } }, 200); });
-    return { relabel: function () { if (started) label(); } };
   })();
 
   /* Aplică limba (separă și titlurile pentru dezvăluire), apoi starea inițială a scroll-ului */
