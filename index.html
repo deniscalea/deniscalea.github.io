@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=4.0">
+  <link rel="stylesheet" href="assets/css/style.css?v=5.3">
 
   <script>
     /* Limba se decide înainte de randare. Fără JS, conținutul rămâne vizibil (RO). */
@@ -118,61 +118,373 @@
           <ol class="sign-steps">
             <li class="is-on"><span class="step-n mono" aria-hidden="true">01</span><b data-i18n="sign.s1h">Hardware</b><span data-i18n="sign.s1">VHDL pe FPGA: un joc de reacție cu 14 module și un FSM.</span></li>
             <li><span class="step-n mono" aria-hidden="true">02</span><b data-i18n="sign.s2h">Cod</b><span data-i18n="sign.s2">C/C++ la facultate. Java și SQL, abia la început.</span></li>
-            <li><span class="step-n mono" aria-hidden="true">03</span><b data-i18n="sign.s3h">Aplicații</b><span data-i18n="sign.s3">Urmează o aplicație de telefon pentru cheltuieli, în Flutter.</span></li>
+            <li><span class="step-n mono" aria-hidden="true">03</span><b data-i18n="sign.s3h">Aplicații</b><span data-i18n="sign.s3">Acum: Bonix, o aplicație în Flutter care ține cheltuielile pe fiecare produs.</span></li>
           </ol>
         </div>
       </div>
     </section>
 
-    <!-- 3. PROIECTE: carduri mari cu imagine -->
-    <section class="sec sec-work" id="proiecte" aria-labelledby="proiecte-titlu">
+    <!-- 3. PROIECTE: canale. Fiecare proiect e un capitol pe pagină, cu „fosforul” lui (--ch).
+         Bara de canale e lipită sus cât ești în proiecte; culoarea se încarcă de pe magistrala din stânga, pe scroll. -->
+    <section class="chapters" id="proiecte" aria-labelledby="proiecte-titlu">
+      <div class="ch-atmos" aria-hidden="true"><span class="ch-glow"></span><span class="ch-scan"></span></div>
+      <div class="ch-bus" aria-hidden="true"><span class="ch-bus-fill"></span><span class="ch-bus-pulse"></span></div>
+
       <div class="wrap">
         <header class="sec-head" data-reveal="once">
           <h2 class="sec-title split" id="proiecte-titlu" data-i18n="work.title">Proiecte</h2>
-          <p class="sec-note lift" data-i18n="work.note">Ce am construit până acum și ce urmează.</p>
+          <p class="sec-note lift" data-i18n="work.note">Trei canale. Alege unul sau derulează: fiecare proiect are culoarea lui.</p>
         </header>
+      </div>
 
-        <div class="works">
-          <!-- P1: FPGA -->
-          <article class="work" aria-labelledby="p1-titlu" data-reveal="once">
-            <a class="work-media curtain" href="proiecte/fpga.html" tabindex="-1" aria-hidden="true">
-              <span class="frame"><img class="fx par" src="assets/img/fpga-chip.webp" width="1600" height="1200" loading="lazy" decoding="async"
-                   alt="Randare izometrică în grafit și argint a unui cip FPGA marcat TOP_GAME, cu trasee care pleacă din pini" data-i18n-alt="p1.img"></span>
-            </a>
-            <div class="work-body">
-              <p class="work-meta mono"><span>2026</span><span data-i18n="p1.kind">Hardware, VHDL</span></p>
-              <h3 class="work-title split" id="p1-titlu" data-i18n="p1.title">Joc de reacție multi-player pe FPGA</h3>
-              <p class="work-desc lift" data-i18n="p1.desc">Un joc de timp de reacție pentru până la 4 jucători și 5 runde, scris integral în VHDL: fără procesor și fără software. Placa aprinde un LED după o întârziere aleatoare și măsoară reacția în milisecunde.</p>
-              <ul class="specs lift">
-                <li><span class="spec-n"><span class="count" data-to="14">14</span></span><span class="spec-l" data-i18n="p1.s1">module VHDL</span></li>
-                <li><span class="spec-n"><span class="count" data-to="11">11</span></span><span class="spec-l" data-i18n="p1.s2">stări în FSM</span></li>
-                <li><span class="spec-n">1 ms</span><span class="spec-l" data-i18n="p1.s3">tick obținut din ceasul de 100 MHz</span></li>
+      <nav class="chan" aria-label="Alege proiectul" data-i18n-aria="chan.aria">
+        <div class="wrap chan-in">
+          <span class="chan-lbl mono" aria-hidden="true">CH</span>
+          <ol class="chan-list">
+            <li><a class="chan-tab" href="#p-fpga" data-ch="fpga" style="--c: 255 96 64">
+              <span class="chan-id mono">01</span>
+              <svg class="chan-glyph" viewBox="0 0 64 20" aria-hidden="true"><path d="M0 16 H8 V4 H18 V16 H26 V4 H36 V16 H44 V4 H54 V16 H64"/></svg>
+              <span class="chan-name">FPGA</span><span class="chan-sub mono">VHDL</span></a></li>
+            <li><a class="chan-tab" href="#p-algo" data-ch="algo" style="--c: 64 204 255">
+              <span class="chan-id mono">02</span>
+              <svg class="chan-glyph" viewBox="0 0 64 20" aria-hidden="true"><path d="M3 18V14M11 18V12M19 18V10M27 18V9M35 18V7M43 18V6M51 18V4M59 18V2"/></svg>
+              <span class="chan-name" data-i18n="chan.algo">Algoritmi</span><span class="chan-sub mono">C++</span></a></li>
+            <li><a class="chan-tab" href="#p-app" data-ch="app" style="--c: 158 232 92">
+              <span class="chan-id mono">03</span>
+              <svg class="chan-glyph" viewBox="0 0 64 20" aria-hidden="true"><path d="M2 2H62M2 2V16L8 19L14 16L20 19L26 16L32 19L38 16L44 19L50 16L56 19L62 16V2M10 8H40M10 12H30M48 8H56M48 12H56"/></svg>
+              <span class="chan-name">Bonix</span><span class="chan-sub mono">Flutter</span></a></li>
+          </ol>
+          <span class="chan-probe" aria-hidden="true"><i></i></span>
+          <span class="chan-read mono" aria-hidden="true"><span class="chan-read-k" data-i18n="chan.read">semnal</span> <b class="chan-pct">00</b>%</span>
+        </div>
+      </nav>
+
+      <!-- ===== CH 01 · FPGA ===== -->
+      <article class="ch" id="p-fpga" data-ch="fpga" aria-labelledby="p1-titlu">
+        <div class="wrap">
+          <header class="ch-head" data-reveal="once">
+            <p class="ch-kicker mono"><span>CH 01</span><span data-i18n="p1.kind">Hardware, VHDL</span><span>2026</span></p>
+            <h3 class="ch-title split" id="p1-titlu" data-i18n="p1.title">Joc de reacție multi-player pe FPGA</h3>
+            <div class="ch-intro">
+              <p class="ch-lede lift" data-i18n="cs.lede">Un joc de timp de reacție pentru până la 4 jucători, câte 5 runde fiecare, construit integral în hardware: VHDL pe o placă FPGA, fără procesor și fără software. Placa aprinde un LED după o întârziere aleatoare, măsoară reacția în milisecunde, prinde starturile false și alege câștigătorul.</p>
+              <ul class="cs-facts lift">
+                <li><span class="mono" data-i18n="cs.f1">Limbaj</span><b>VHDL</b></li>
+                <li><span class="mono" data-i18n="cs.f2">Unelte</span><b>Vivado</b></li>
+                <li><span class="mono" data-i18n="cs.f3">Module</span><b data-i18n="cs.f3v">14, în 15 instanțe</b></li>
+                <li><span class="mono" data-i18n="cs.f4">Control</span><b data-i18n="cs.f4v">FSM cu 11 stări</b></li>
+                <li><span class="mono" data-i18n="cs.f5">Ceas</span><b data-i18n="cs.f5v">100 MHz, tick de 1 ms</b></li>
               </ul>
-              <div class="work-actions lift">
-                <a class="btn btn-primary magnetic" href="proiecte/fpga.html"><span class="btn-in"><span data-i18n="p1.case">Vezi studiul de caz</span><span class="arrow arrow-r" aria-hidden="true">→</span></span></a>
-                <a class="text-link mono" href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game" target="_blank" rel="noopener noreferrer"><span data-i18n="link.code">Codul pe GitHub</span> <span aria-hidden="true">↗</span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
+            </div>
+          </header>
+
+          <!-- Încearcă: simularea plăcii, sus, ca prim contact -->
+          <div class="ch-block" data-reveal="once">
+            <p class="ch-label mono"><span>01.1</span> <span data-i18n="cs.s6">Încearcă</span></p>
+            <div class="rig lift">
+              <div class="rig-board">
+                <div class="rig-display" id="rig-display" role="img" aria-label="Afișaj"></div>
+                <div class="rig-row">
+                  <div class="rig-leds mono">
+                    <span class="rig-led" data-led="semnal"><i aria-hidden="true"></i>LED_SEMNAL</span>
+                    <span class="rig-led" data-led="fault"><i aria-hidden="true"></i>LED_FAULT</span>
+                  </div>
+                  <p class="rig-state mono"><span data-i18n="cs.state">stare</span>: <b id="rig-state">IDLE</b></p>
+                </div>
+                <button class="btn btn-primary rig-btn" id="rig-btn" type="button"><span class="btn-in">Start</span></button>
+              </div>
+              <div class="rig-side">
+                <h4 class="rig-h" data-i18n="cs.h6">Joacă cinci runde</h4>
+                <p class="rig-status" id="rig-status" aria-live="polite"></p>
+                <ul class="rig-best mono" aria-label="Timpii pe runde" data-i18n-aria="cs.rounds">
+                  <li><span>r1</span><span data-round="0">–</span></li>
+                  <li><span>r2</span><span data-round="1">–</span></li>
+                  <li><span>r3</span><span data-round="2">–</span></li>
+                  <li><span>r4</span><span data-round="3">–</span></li>
+                  <li><span>r5</span><span data-round="4">–</span></li>
+                </ul>
+                <p class="rig-note mono" data-i18n="cs.note">Simulare în browser, simplificată la un singur jucător (U1). Stările, întârzierile de 1–5 s, pauzele de 0,5 s și formatul afișajului urmează codul VHDL.</p>
               </div>
             </div>
-          </article>
+          </div>
 
-          <!-- P2: aplicația de cheltuieli. PLANIFICATĂ, nu e construită: rămâne marcată „Urmează” până există cod. -->
-          <article class="work work-next" aria-labelledby="p2-titlu" data-reveal="once">
-            <div class="work-media curtain">
-              <span class="frame"><img class="fx par" src="assets/img/next-app.webp" width="1600" height="1200" loading="lazy" decoding="async"
-                   alt="Imagine-concept: un telefon cu raportul de cheltuieli al săptămânii, pe categorii, lângă un bon de casă scanat" data-i18n-alt="p2.img"></span>
-            </div>
-            <div class="work-body">
-              <p class="work-meta mono"><span class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="p2.state">Urmează, start în noiembrie 2026</span></span><span data-i18n="p2.kind">Aplicație mobilă</span></p>
-              <h3 class="work-title split" id="p2-titlu" data-i18n="p2.title">Aplicație de cheltuieli</h3>
-              <p class="work-desc lift" data-i18n="p2.desc">Scanezi bonul de la casă, iar aplicația citește produsele și prețurile direct pe telefon, fără internet, și le pune pe categorii. Adaugi de mână parcarea, sala sau abonamentele. Apoi primești un raport cu cât ai dat pe fiecare lucru în parte: pe fiecare aliment (banane, piept de pui), pe parcare, pe sală, pe tot.</p>
-              <ul class="tags lift" aria-label="Tehnologii planificate" data-i18n-aria="p2.tags">
-                <li>Flutter</li><li>Google ML Kit</li><li data-i18n="p2.t3">OCR offline</li>
-              </ul>
-              <p class="work-note lift" data-i18n="p2.note">Încă nu e construită. Când apare codul, îl pun pe GitHub și aici.</p>
-            </div>
+          <!-- Arhitectura -->
+          <div class="ch-block" data-reveal="once">
+            <p class="ch-label mono"><span>01.2</span> <span data-i18n="cs.s2">Arhitectura</span></p>
+            <h4 class="ch-sub split" data-i18n="cs.h2">Intrări curățate, un FSM, o cale de date</h4>
+            <p class="ch-p lift" data-i18n-html="cs.p2a">Entitatea de top, <code>TOP_GAME</code>, leagă <strong>15 instanțe (U0–U14) din 14 module</strong>: <code>debouncer</code> apare de trei ori, restul câte o dată. În stânga, intrările sunt curățate; în centru, unitatea de control <code>UC</code> decide; în dreapta, calea de date numără, compară, ține minte și afișează.</p>
+        <figure class="diagram lift">
+          <div class="diagram-scroll" tabindex="0" role="region" aria-label="Diagrama de arhitectură (derulabilă)" data-i18n-aria="cs.dgScroll">
+            <svg class="dg" viewBox="0 0 1200 690" role="img" aria-labelledby="dg-t dg-d">
+              <title id="dg-t" data-i18n="cs.dgTitle">Arhitectura TOP_GAME</title>
+              <desc id="dg-d" data-i18n="cs.dgDesc">Pinii CLK, RST, BTNL, START, REACT și SKIP intră în freq_div, reset_ctrl, btn_press_ctrl și trei debouncere. Acestea alimentează unitatea de control UC. UC comandă calea de date (rand_reg, MAIN_COUNT, comparator, Scazator, records_memory, game_counters, winner_eval) și primește înapoi time_done, runda_done și game_done. display_ctrl scoate AN și SEG; UC scoate LED_SEMNAL și LED_FAULT.</desc>
+              <defs>
+                <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="arrowhead" d="M0 0L10 5L0 10z"/></marker>
+              </defs>
+
+              <!-- grupuri -->
+              <rect class="group" x="112" y="30" width="236" height="460" rx="4"/>
+              <text class="t-group" x="120" y="22" data-i18n="cs.gIn">condiționarea intrărilor</text>
+              <rect class="group" x="748" y="22" width="254" height="500" rx="4"/>
+              <text class="t-group" x="756" y="14" data-i18n="cs.gDp">calea de date</text>
+
+              <!-- pini de intrare -->
+              <g class="t-pin">
+                <circle class="pin" cx="40" cy="70" r="5"/><text x="52" y="64">CLK</text>
+                <circle class="pin" cx="40" cy="150" r="5"/><text x="52" y="144">RST</text>
+                <circle class="pin" cx="40" cy="230" r="5"/><text x="52" y="224">BTNL</text>
+                <circle class="pin" cx="40" cy="315" r="5"/><text x="52" y="309">START</text>
+                <circle class="pin" cx="40" cy="380" r="5"/><text x="52" y="374">REACT</text>
+                <circle class="pin" cx="40" cy="445" r="5"/><text x="52" y="439">SKIP</text>
+              </g>
+              <g>
+                <path class="w draw" d="M45 70H128" marker-end="url(#ah)"/>
+                <path class="w draw" d="M45 150H128" marker-end="url(#ah)"/>
+                <path class="w draw" d="M45 230H128" marker-end="url(#ah)"/>
+                <path class="w draw" d="M45 315H128" marker-end="url(#ah)"/>
+                <path class="w draw" d="M45 380H128" marker-end="url(#ah)"/>
+                <path class="w draw" d="M45 445H128" marker-end="url(#ah)"/>
+              </g>
+
+              <!-- condiționarea intrărilor -->
+              <g>
+                <rect class="box" x="130" y="46" width="200" height="48" rx="3"/><text class="t-mod" x="144" y="75">freq_div</text><text class="t-id" x="300" y="62" text-anchor="end">U2</text>
+                <rect class="box" x="130" y="126" width="200" height="48" rx="3"/><text class="t-mod" x="144" y="155">reset_ctrl</text><text class="t-id" x="316" y="142" text-anchor="end">U0</text>
+                <rect class="box" x="130" y="206" width="200" height="48" rx="3"/><text class="t-mod" x="144" y="235">btn_press_ctrl</text><text class="t-id" x="316" y="222" text-anchor="end">U1</text>
+                <rect class="box" x="130" y="296" width="200" height="38" rx="3"/><text class="t-mod" x="144" y="320">debouncer</text><text class="t-id" x="316" y="312" text-anchor="end">U3</text>
+                <rect class="box" x="130" y="361" width="200" height="38" rx="3"/><text class="t-mod" x="144" y="385">debouncer</text><text class="t-id" x="316" y="377" text-anchor="end">U4</text>
+                <rect class="box" x="130" y="426" width="200" height="38" rx="3"/><text class="t-mod" x="144" y="450">debouncer</text><text class="t-id" x="316" y="442" text-anchor="end">U5</text>
+              </g>
+              <!-- semnale spre UC -->
+              <g>
+                <path class="w draw" d="M330 140H436" marker-end="url(#ah)"/><text class="t-sig" x="340" y="134">rst_user</text>
+                <path class="w draw" d="M330 160H436" marker-end="url(#ah)"/><text class="t-sig" x="340" y="174">rst_global</text>
+                <path class="w draw" d="M330 222H436" marker-end="url(#ah)"/><text class="t-sig" x="340" y="216">btnl_short</text>
+                <path class="w draw" d="M330 240H436" marker-end="url(#ah)"/><text class="t-sig" x="340" y="254">btnl_long</text>
+                <path class="w draw" d="M330 315H436" marker-end="url(#ah)"/><text class="t-sig" x="340" y="309">start</text>
+                <path class="w draw" d="M330 380H436" marker-end="url(#ah)"/><text class="t-sig" x="340" y="374">react</text>
+                <path class="w draw" d="M330 445H436" marker-end="url(#ah)"/><text class="t-sig" x="340" y="439">skip</text>
+                <!-- clk_1ms ocolește pe sus, spre MAIN_COUNT -->
+                <path class="w draw" d="M330 70H690V128H758" marker-end="url(#ah)"/><text class="t-sig" x="340" y="64">clk_1ms</text>
+              </g>
+
+              <!-- UC -->
+              <rect class="box box-uc" x="440" y="120" width="200" height="360" rx="4"/>
+              <text class="t-mod t-uc" x="460" y="160" style="font-size:30px">UC</text>
+              <text class="t-id t-uc-id" x="460" y="182" data-i18n="cs.ucSub">unitatea de control, FSM</text>
+              <text class="t-id t-uc-id" x="620" y="142" text-anchor="end">U14</text>
+              <text class="t-id t-uc-id" x="460" y="456" data-i18n="cs.ucStates">11 stări</text>
+
+              <!-- magistrala de control UC → calea de date -->
+              <path class="w-bus draw" d="M640 300H718"/>
+              <path class="w-bus draw" d="M718 60V600"/>
+              <g>
+                <path class="w draw" d="M718 60H758" marker-end="url(#ah)"/>
+                <path class="w draw" d="M718 140H758" marker-end="url(#ah)"/>
+                <path class="w draw" d="M718 344H758" marker-end="url(#ah)"/>
+                <path class="w draw" d="M718 414H758" marker-end="url(#ah)"/>
+                <path class="w draw" d="M718 484H758" marker-end="url(#ah)"/>
+                <path class="w draw" d="M718 578H758" marker-end="url(#ah)"/>
+              </g>
+              <text class="t-sig" x="648" y="292" data-i18n="cs.bus">control</text>
+              <!-- semnale de stare înapoi spre UC -->
+              <path class="w-ctl draw" d="M758 200H686V420H644" marker-end="url(#ah)"/>
+              <path class="w-ctl draw" d="M758 430H700V440H644" marker-end="url(#ah)"/>
+              <text class="t-sig" x="648" y="412">time_done</text>
+              <text class="t-sig" x="648" y="458">runda_done, game_done</text>
+
+              <!-- calea de date -->
+              <g>
+                <rect class="box" x="760" y="36" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="65">rand_reg</text><text class="t-id" x="976" y="52" text-anchor="end">U6 LFSR</text>
+                <rect class="box" x="760" y="106" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="135">MAIN_COUNT</text><text class="t-id" x="976" y="122" text-anchor="end">U7</text>
+                <rect class="box" x="760" y="176" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="205">comparator</text><text class="t-id" x="976" y="192" text-anchor="end">U8</text>
+                <rect class="box" x="760" y="246" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="275">Scazator</text><text class="t-id" x="976" y="262" text-anchor="end">U9</text>
+                <rect class="box" x="760" y="320" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="349">records_memory</text><text class="t-id" x="976" y="336" text-anchor="end">U10</text>
+                <rect class="box" x="760" y="390" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="419">game_counters</text><text class="t-id" x="976" y="406" text-anchor="end">U11</text>
+                <rect class="box" x="760" y="460" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="489">winner_eval</text><text class="t-id" x="976" y="476" text-anchor="end">U12</text>
+              </g>
+              <!-- legături interne -->
+              <g>
+                <path class="w draw" d="M990 60H1012V190H994" marker-end="url(#ah)"/><text class="t-sig" x="1018" y="64">t_random</text>
+                <path class="w draw" d="M990 130H1030V264H994" marker-end="url(#ah)"/><text class="t-sig" x="1036" y="134">t_total</text>
+                <path class="w draw" d="M1012 190V250H994" marker-end="url(#ah)"/>
+                <path class="w draw" d="M1030 210H994" marker-end="url(#ah)"/>
+                <path class="w draw" d="M990 280H1048V334H994" marker-end="url(#ah)"/><text class="t-sig" x="1054" y="284">t_reactie</text>
+                <path class="w draw" d="M990 356H1066V476H994" marker-end="url(#ah)"/><text class="t-sig" x="1072" y="360">rec_u1…u4</text>
+              </g>
+              <!-- date spre afișaj -->
+              <path class="w-bus draw" d="M1100 300V570H994"/>
+              <path class="w draw" d="M1048 300H1100"/>
+              <path class="w draw" d="M1066 420H1100"/>
+              <path class="w draw" d="M990 496H1100"/>
+              <text class="t-sig" x="1108" y="296" data-i18n="cs.toDisp">spre afișaj</text>
+
+              <rect class="box" x="760" y="554" width="230" height="48" rx="3"/><text class="t-mod" x="774" y="583">display_ctrl</text><text class="t-id" x="976" y="570" text-anchor="end">U13</text>
+
+              <!-- ieșiri -->
+              <g class="t-pin">
+                <path class="w draw" d="M875 602V634H1152" marker-end="url(#ah)"/>
+                <circle class="pin" cx="1160" cy="634" r="5"/><text x="1150" y="626" text-anchor="end">AN[7:0], SEG[6:0]</text>
+                <path class="w draw" d="M520 480V662H1152" marker-end="url(#ah)"/>
+                <circle class="pin" cx="1160" cy="662" r="5"/><text x="1150" y="680" text-anchor="end">LED_SEMNAL, LED_FAULT</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption class="mono fig-cap"><span data-i18n="cs.dgCap">Modulele și semnalele reale din TOPMODULE.vhd. Ceasul CLK ajunge la toate modulele; nu e desenat peste tot.</span><span>fig. 02</span></figcaption>
+          <p class="diagram-hint mono" data-i18n="cs.swipe">Glisează diagrama în lateral.</p>
+        </figure>
+          </div>
+
+          <!-- Detalii -->
+          <div class="ch-block" data-reveal="once">
+            <p class="ch-label mono"><span>01.3</span> <span data-i18n="cs.s4">Detalii</span></p>
+            <h4 class="ch-sub split" data-i18n="cs.h4">Patru piese mici care fac jocul corect</h4>
+        <div class="tech lift">
+          <article>
+            <p class="mono">rand_reg.vhd</p>
+            <h3>LFSR</h3>
+            <p data-i18n-html="cs.t1">Un registru de 16 biți pornit de la <code>x"ACE1"</code> se deplasează la fiecare ceas, iar bitul nou e XOR între biții 15, 13, 12 și 10. Cât timp FSM-ul ține <code>en_random</code> activ, ultimii 3 biți aleg întârzierea: <strong>1, 2, 3, 4 sau 5 secunde</strong>. Jucătorul nu are cum să știe când apare semnalul.</p>
+            <p class="eq">r ← r(14:0) &amp; (r15 ⊕ r13 ⊕ r12 ⊕ r10)</p>
+          </article>
+          <article>
+            <p class="mono">DISPLAY_CTRL.vhd</p>
+            <h3>Double Dabble</h3>
+            <p data-i18n-html="cs.t2">Timpul e un număr binar, dar afișajul are nevoie de cifre zecimale. Conversia în BCD trece prin 14 pași: orice cifră mai mare decât 4 primește +3, apoi totul se deplasează cu un bit la stânga. La final rămân <strong>patru cifre BCD</strong>, gata pentru decodorul de segmente.</p>
+            <p class="eq">if bcd(3:0) &gt; 4 then bcd(3:0) := bcd(3:0) + 3</p>
+          </article>
+          <article>
+            <p class="mono">debouncer.vhd, btn_press_ctrl.vhd</p>
+            <h3 data-i18n="cs.t3h">Debouncing și apăsări lungi</h3>
+            <p data-i18n-html="cs.t3">Un buton real oscilează când e apăsat. Debouncerul acceptă o schimbare abia după <strong>1 000 000 de cicluri stabile (10 ms)</strong> și scoate un singur impuls, pe frontul crescător. Pentru BTNL, un numărător separă apăsarea scurtă de cea lungă: peste <strong>100 000 000 de cicluri (1 s)</strong> e lungă.</p>
+            <p class="eq">count = x"F4240" → btn_state ← btn_in</p>
+          </article>
+          <article>
+            <p class="mono">FREQ_DIV.vhd, DISPLAY_CTRL.vhd</p>
+            <h3 data-i18n="cs.t4h">Divizor de ceas și multiplexare</h3>
+            <p data-i18n-html="cs.t4">Ceasul de 100 MHz e prea rapid pentru oameni. Divizorul numără până la 99 999 și dă un impuls la fiecare <strong>100 000 de cicluri</strong>: tick-ul de 1 ms cu care <code>MAIN_COUNT</code> măsoară. Afișajul folosește biții 15–13 ai unui contor ca să aprindă pe rând cele <strong>8 cifre</strong>, destul de repede ca ochiul să le vadă pe toate deodată.</p>
+            <p class="eq">nr = 99999 → clk_1ms ← '1'</p>
           </article>
         </div>
-      </div>
+          </div>
+
+          <div class="ch-end lift" data-reveal="once">
+            <a class="btn btn-primary magnetic" href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game" target="_blank" rel="noopener noreferrer"><span class="btn-in"><span data-i18n="link.code">Codul pe GitHub</span><span class="arrow" aria-hidden="true">↗</span></span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
+            <a class="text-link mono ch-next" href="#p-algo"><span data-i18n="chan.next2">Canalul 02: Algoritmi</span> <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== CH 02 · ALGORITMI ===== -->
+      <article class="ch" id="p-algo" data-ch="algo" aria-labelledby="p3-titlu">
+        <div class="wrap">
+          <header class="ch-head" data-reveal="once">
+            <p class="ch-kicker mono"><span>CH 02</span><span data-i18n="p3.kind">Algoritmi, C++</span><span>2026</span></p>
+            <h3 class="ch-title split" id="p3-titlu" data-i18n="p3.title">Algoritmi în C++, măsurați pe bucăți</h3>
+            <div class="ch-intro">
+              <p class="ch-lede lift" data-i18n="p3.lede">Șapte laboratoare de la Algoritmi fundamentali, scrise de la zero: sortări, heap-uri, Quicksort, interclasarea a k liste, tabele de dispersie și arbori de statistici de ordine. Fiecare algoritm numără atribuirile și comparațiile, ca să verific pe grafic dacă teoria chiar se vede în cifre.</p>
+              <ul class="cs-facts lift">
+                <li><span class="mono" data-i18n="cs.f1">Limbaj</span><b>C++</b></li>
+                <li><span class="mono" data-i18n="p3.f2">Laboratoare</span><b>7</b></li>
+                <li><span class="mono" data-i18n="p3.f3">Măsurat</span><b data-i18n="p3.f3v">atribuiri + comparații</b></li>
+                <li><span class="mono" data-i18n="p3.f4">Intrări</span><b data-i18n="p3.f4v">n = 100 … 10 000, media pe 5 rulări</b></li>
+              </ul>
+            </div>
+          </header>
+
+          <!-- Osciloscopul de experimente: alegi experimentul, curba se redesenează -->
+          <div class="ch-block" data-reveal="once">
+            <p class="ch-label mono"><span>02.1</span> <span data-i18n="p3.s1">Experimente</span></p>
+            <div class="scope lift">
+              <div class="scope-tabs" role="tablist" aria-label="Alege experimentul" data-i18n-aria="p3.tabs">
+                <button type="button" role="tab" class="scope-tab mono" data-exp="sort" aria-selected="true">L01 <span data-i18n="p3.e1">Sortări directe</span></button>
+                <button type="button" role="tab" class="scope-tab mono" data-exp="heap" aria-selected="false">L02 <span data-i18n="p3.e2">Construire heap</span></button>
+                <button type="button" role="tab" class="scope-tab mono" data-exp="quick" aria-selected="false">L03 <span>Quick vs Heap</span></button>
+                <button type="button" role="tab" class="scope-tab mono" data-exp="hybrid" aria-selected="false">L03 <span data-i18n="p3.e4">Pragul hibrid</span></button>
+                <button type="button" role="tab" class="scope-tab mono" data-exp="merge" aria-selected="false">L04 <span data-i18n="p3.e5">k liste</span></button>
+                <button type="button" role="tab" class="scope-tab mono" data-exp="ostree" aria-selected="false">L07 <span data-i18n="p3.e6">Arbore OS</span></button>
+              </div>
+              <div class="scope-screen" role="tabpanel">
+                <svg class="scope-svg" viewBox="0 0 800 380" role="img" aria-labelledby="scope-cap"></svg>
+                <div class="scope-tip mono" hidden></div>
+              </div>
+              <div class="scope-read">
+                <p class="scope-cap" id="scope-cap" aria-live="polite"></p>
+                <p class="scope-axis mono"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabela de dispersie -->
+          <div class="ch-block" data-reveal="once">
+            <p class="ch-label mono"><span>02.2</span> <span data-i18n="p3.s2">Tabela de dispersie</span></p>
+            <h4 class="ch-sub split" data-i18n="p3.h2">Plină 99%, încă găsește din 5 încercări</h4>
+            <p class="ch-p lift" data-i18n="p3.p2">Adresare deschisă cu verificare pătratică, pe o tabelă de 10 007 celule. Am căutat 1 500 de chei care există și 1 500 care nu există, de cinci ori. Bara arată câte celule verifică în medie o căutare.</p>
+            <div class="fill lift" role="table" aria-label="Efortul de căutare după factorul de umplere" data-i18n-aria="p3.tblAria">
+              <div class="fill-row fill-headrow mono" role="row"><span role="columnheader" data-i18n="p3.c1">umplere</span><span role="columnheader" data-i18n="p3.c2">găsite, medie</span><span role="columnheader" data-i18n="p3.c3">negăsite, medie</span></div>
+              <div class="fill-row" role="row" style="--wa:0.230;--wb:0.422"><span role="cell" class="mono">0,80</span><span role="cell"><i></i><b>1,95</b></span><span role="cell"><i></i><b>6,31</b></span></div>
+              <div class="fill-row" role="row" style="--wa:0.244;--wb:0.499"><span role="cell" class="mono">0,85</span><span role="cell"><i></i><b>2,15</b></span><span role="cell"><i></i><b>9,51</b></span></div>
+              <div class="fill-row" role="row" style="--wa:0.268;--wb:0.595"><span role="cell" class="mono">0,90</span><span role="cell"><i></i><b>2,53</b></span><span role="cell"><i></i><b>15,46</b></span></div>
+              <div class="fill-row" role="row" style="--wa:0.321;--wb:0.758"><span role="cell" class="mono">0,95</span><span role="cell"><i></i><b>3,53</b></span><span role="cell"><i></i><b>34,49</b></span></div>
+              <div class="fill-row" role="row" style="--wa:0.392;--wb:1.000"><span role="cell" class="mono">0,99</span><span role="cell"><i></i><b>5,35</b></span><span role="cell"><i></i><b>110,06</b></span></div>
+            </div>
+          </div>
+
+          <div class="ch-end lift" data-reveal="once">
+            <!-- TODO Denis: repo-ul deniscalea/algorithms-cpp nu e încă pe GitHub. Când există, scoate comentariul de mai jos.
+            <a class="btn btn-primary magnetic" href="https://github.com/deniscalea/algorithms-cpp" target="_blank" rel="noopener noreferrer"><span class="btn-in"><span data-i18n="link.code">Codul pe GitHub</span><span class="arrow" aria-hidden="true">↗</span></span><span class="visually-hidden" data-i18n="link.newtab"> (se deschide într-un tab nou)</span></a>
+            -->
+            <a class="text-link mono ch-next" href="#p-app"><span data-i18n="chan.next3">Canalul 03: Bonix</span> <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ===== CH 03 · BONIX (aplicația de cheltuieli). ÎN LUCRU: doar ce există în cod. ===== -->
+      <article class="ch" id="p-app" data-ch="app" aria-labelledby="p2-titlu">
+        <div class="wrap">
+          <header class="ch-head" data-reveal="once">
+            <p class="ch-kicker mono"><span>CH 03</span><span class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="p2.state">În lucru, din noiembrie 2026</span></span><span data-i18n="p2.kind">Aplicație mobilă</span></p>
+            <h3 class="ch-title split" id="p2-titlu" data-i18n="p2.title">Bonix, cheltuieli pe fiecare produs</h3>
+            <div class="ch-intro">
+              <p class="ch-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane și cât pe piept de pui. Bonix ține cheltuielile pe telefon, pe categorii, și transformă numele scurte de pe bon (diferite la fiecare magazin) într-un produs curat.</p>
+              <ul class="cs-facts lift">
+                <li><span class="mono" data-i18n="p2.f1">Platformă</span><b>Flutter, Dart</b></li>
+                <li><span class="mono" data-i18n="p2.f2">Date</span><b data-i18n="p2.f2v">SQLite local, fără cont</b></li>
+                <li><span class="mono" data-i18n="p2.f3">Categorii</span><b>9</b></li>
+                <li><span class="mono" data-i18n="p2.f4">Ecrane</span><b data-i18n="p2.f4v">Acasă, Adaugă, Raport</b></li>
+              </ul>
+            </div>
+          </header>
+
+          <div class="ch-block" data-reveal="once">
+            <p class="ch-label mono"><span>03.1</span> <span data-i18n="p2.s1">Cum curăță bonul</span></p>
+            <h4 class="ch-sub split" data-i18n="p2.h1">Aceeași banană, trei magazine</h4>
+            <div class="receipt lift">
+              <ol class="rc-in mono" aria-label="Text de pe bon" data-i18n-aria="p2.rcIn">
+                <li>BANANE VRAC 1,234KG</li><li>BANANE ECUADOR</li><li>BANANE KG</li><li>PIEPT PUI CAS</li>
+              </ol>
+              <div class="rc-arrow" aria-hidden="true"><svg viewBox="0 0 120 40"><path d="M0 20H110M98 8L112 20L98 32"/></svg></div>
+              <ol class="rc-out" aria-label="Produs curat" data-i18n-aria="p2.rcOut">
+                <li><b data-i18n="p2.o1">Banane</b><span class="mono" data-i18n="p2.cat">Mâncare</span></li>
+                <li><b data-i18n="p2.o1">Banane</b><span class="mono" data-i18n="p2.cat">Mâncare</span></li>
+                <li><b data-i18n="p2.o1">Banane</b><span class="mono" data-i18n="p2.cat">Mâncare</span></li>
+                <li><b data-i18n="p2.o2">Piept de pui</b><span class="mono" data-i18n="p2.cat">Mâncare</span></li>
+              </ol>
+            </div>
+            <p class="ch-p lift" data-i18n-html="p2.p1">În ordine: întâi <strong>corecturile tale</strong> (îi spui o dată că „PIEPT PUI CAS” e piept de pui și ține minte), apoi un <strong>dicționar de cuvinte-cheie</strong>, iar la final textul curățat de gramaje și coduri.</p>
+          </div>
+
+          <div class="ch-block" data-reveal="once">
+            <p class="ch-label mono"><span>03.2</span> <span data-i18n="p2.s2">Unde e acum</span></p>
+            <ul class="todo lift">
+              <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d1">Baza de date locală (SQLite), cu index pe dată</span></li>
+              <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d2">9 categorii: mâncare, ieșiri, transport, parcare, sală, abonamente, cămin, casă, altele</span></li>
+              <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d3">Normalizarea numelor de pe bon, cu corecturile utilizatorului</span></li>
+              <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d4">Ecranele Acasă, Adaugă și Raport</span></li>
+              <li><i aria-hidden="true"></i><span data-i18n="p2.d5">Scanarea bonului cu camera (OCR pe telefon)</span></li>
+            </ul>
+            <p class="work-note lift" data-i18n="p2.note">Codul ajunge pe GitHub când scanarea bonului merge.</p>
+          </div>
+        </div>
+      </article>
     </section>
 
     <!-- 4. DESPRE + STUDII -->
@@ -254,6 +566,8 @@
     </section>
   </main>
 
-  <script src="assets/js/main.js?v=4.2" defer></script>
+  <script src="assets/js/i18n-fpga.js?v=5.3" defer></script>
+  <script src="assets/js/algo-data.js?v=5.3" defer></script>
+  <script src="assets/js/main.js?v=5.3" defer></script>
 </body>
 </html>

@@ -951,3 +951,196 @@ html:not(.js) .rig { display: none; }
   .js .curtain { clip-path: none !important; }
   .js .curtain img { transform: none !important; }
 }
+
+/* =========================================================
+   v5 · Proiectele ca CANALE pe pagina principală
+   Fiecare capitol are „fosforul” lui; JS scrie pe .chapters:
+   --tint (r g b, amestecat în OKLab între canale), --charge (0…1, cât e „încărcată” pagina),
+   --prog (0…1, progresul pe toată magistrala), --cp (progresul în canalul curent).
+   În afara proiectelor totul rămâne grafit: culoarea există doar aici.
+   ========================================================= */
+.chapters { --tint: 200 210 225; --charge: 0; --prog: 0; --cp: 0; position: relative; isolation: isolate; padding-top: clamp(96px, 16vh, 180px); }
+
+/* Atmosfera: lumina pleacă de pe magistrala din stânga și crește cu --charge; linii fine ca pe un ecran cu fosfor */
+.ch-atmos { position: sticky; top: 0; height: 100vh; height: 100svh; margin-bottom: -100vh; margin-bottom: -100svh; z-index: -1; overflow: hidden; pointer-events: none; }
+.ch-glow {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(calc(18% + var(--charge) * 52%) calc(26% + var(--charge) * 46%) at 0% 46%, rgb(var(--tint) / calc(0.24 * var(--charge))), transparent 72%),
+    radial-gradient(55% 45% at 100% 100%, rgb(var(--tint) / calc(0.09 * var(--charge))), transparent 70%);
+}
+.ch-glow::after {
+  content: ""; position: absolute; inset: 0;
+  background: repeating-linear-gradient(180deg, rgb(var(--tint) / calc(0.035 * var(--charge))) 0 1px, transparent 1px 4px);
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent 70%);
+  mask-image: linear-gradient(90deg, #000, transparent 70%);
+}
+/* Cursa de „trigger”: la schimbarea canalului, o linie trece peste ecran în culoarea noului canal */
+.ch-scan { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: rgb(var(--tint)); box-shadow: 0 0 24px 6px rgb(var(--tint) / 0.5); opacity: 0; }
+.chapters.is-trigger .ch-scan { animation: chScan 0.9s var(--ease-io) both; }
+@keyframes chScan { 0% { opacity: 0; transform: translateY(0); } 12% { opacity: 1; } 100% { opacity: 0; transform: translateY(100vh); } }
+
+/* Magistrala: o linie verticală în marginea din stânga, umplută până la poziția curentă */
+.ch-bus { position: absolute; top: 0; bottom: 0; left: max(10px, calc(var(--gutter) * 0.42)); width: 1px; background: var(--line); z-index: 1; pointer-events: none; }
+.ch-bus-fill { position: absolute; left: 0; top: 0; width: 1px; height: calc(var(--prog) * 100%); background: linear-gradient(180deg, transparent, rgb(var(--tint)) 70%); box-shadow: 0 0 10px 1px rgb(var(--tint) / 0.55); }
+.ch-bus-pulse { position: absolute; left: -3px; top: calc(var(--prog) * 100%); width: 7px; height: 7px; border-radius: 50%; background: rgb(var(--tint)); box-shadow: 0 0 0 4px rgb(var(--tint) / 0.18), 0 0 18px 4px rgb(var(--tint) / 0.6); transform: translateY(-50%); }
+
+/* Bara de canale: lipită sus cât ești în proiecte (coboară sub header când headerul e vizibil) */
+.chan { position: sticky; top: 0; z-index: 45; margin-top: calc(clamp(48px, 9vh, 112px) * -0.5); margin-bottom: clamp(24px, 5vh, 56px); transition: top 0.6s var(--ease); }
+body.header-shown .chan { top: var(--header-h); }
+.chan::before { content: ""; position: absolute; inset: 0; background: rgba(var(--bg-rgb), 0.78); border-block: 1px solid var(--line); z-index: -1; }
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .chan::before { background: rgba(var(--bg-rgb), 0.55); -webkit-backdrop-filter: blur(16px) saturate(0.8); backdrop-filter: blur(16px) saturate(0.8); }
+}
+.chan-in { position: relative; display: flex; align-items: center; gap: clamp(12px, 2vw, 28px); min-height: 64px; }
+.chan-lbl { color: var(--fg-3); }
+.chan-list { display: flex; gap: clamp(4px, 1vw, 12px); flex: 1 1 auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+.chan-list::-webkit-scrollbar { display: none; }
+.chan-tab {
+  display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  min-height: 48px; padding: 6px 14px 6px 10px; border-radius: 6px;
+  color: var(--fg-2); transition: color 0.4s ease, background-color 0.4s ease;
+}
+.chan-id { color: var(--fg-3); font-size: 0.7rem; transition: color 0.4s ease; }
+.chan-glyph { width: 46px; height: 15px; flex: none; fill: none; stroke: var(--steel); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.4s ease, filter 0.4s ease; }
+.chan-name { font-weight: 700; font-stretch: 108%; letter-spacing: -0.01em; font-size: 1rem; }
+.chan-sub { color: var(--fg-3); font-size: 0.66rem; }
+@media (hover: hover) { .chan-tab:hover { color: var(--fg); background: rgba(255, 255, 255, 0.04); } .chan-tab:hover .chan-glyph { stroke: rgb(var(--c)); } }
+.chan-tab[aria-current="true"] { color: var(--fg); background: rgb(var(--c) / 0.08); }
+.chan-tab[aria-current="true"] .chan-id { color: rgb(var(--c)); }
+.chan-tab[aria-current="true"] .chan-glyph { stroke: rgb(var(--c)); filter: drop-shadow(0 0 4px rgb(var(--c) / 0.7)); stroke-dasharray: 10 4; animation: chanLive 1.2s linear infinite; }
+@keyframes chanLive { to { stroke-dashoffset: -28; } }
+.chan-tab:focus-visible { outline: 2px solid rgb(var(--c)); outline-offset: 2px; }
+/* Sonda: o linie sub canalul activ, care se umple cu progresul din canal */
+.chan-probe { position: absolute; bottom: -1px; left: 0; width: 0; height: 2px; background: var(--line-2); transition: left 0.7s var(--ease), width 0.7s var(--ease); pointer-events: none; }
+.chan-probe i { position: absolute; inset: 0; background: rgb(var(--tint)); box-shadow: 0 0 10px rgb(var(--tint) / 0.8); transform-origin: 0 50%; transform: scaleX(var(--cp)); }
+.chan-read { color: var(--fg-3); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.chan-read b { color: rgb(var(--tint)); font-weight: 500; }
+
+/* Capitolele */
+.ch { position: relative; padding-block: clamp(56px, 10vh, 120px) clamp(72px, 12vh, 140px); scroll-margin-top: calc(var(--header-h) + 72px); }
+.ch + .ch { border-top: 1px solid var(--line); }
+.ch-kicker { display: flex; flex-wrap: wrap; gap: 8px 28px; color: var(--fg-2); padding-bottom: 14px; margin-bottom: clamp(20px, 4vh, 40px); border-bottom: 1px solid var(--line); }
+.ch-kicker > span:first-child { color: rgb(var(--tint)); }
+.ch-title { font-size: clamp(2.5rem, 1rem + 5.8vw, 7.4rem); font-weight: 800; font-stretch: 112%; line-height: 0.9; letter-spacing: -0.05em; max-width: 15ch; }
+/* oțelul titlului prinde culoarea canalului: aceeași linie de orizont, alt fosfor */
+.ch-title .wi {
+  background: linear-gradient(180deg, #f6f7f8 0%, rgb(var(--tint) / 0.95) 36%, rgb(var(--tint) / 0.55) 49%, #2f3238 51%, rgb(var(--tint) / 0.8) 66%, #eef0f2 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 0.08em;
+}
+.ch-intro { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px var(--gutter); margin-top: clamp(28px, 5vh, 56px); align-items: end; }
+.ch-lede { grid-column: 1 / span 7; font-size: var(--step-1); line-height: 1.45; color: var(--fg-2); max-width: 46ch; }
+.ch-intro .cs-facts { grid-column: 9 / -1; }
+.ch-block { margin-top: clamp(64px, 12vh, 132px); }
+.ch-label { display: flex; gap: 10px; color: var(--fg-2); padding-top: 12px; margin-bottom: clamp(18px, 3vh, 32px); border-top: 1px solid var(--line-2); }
+.ch-label span:first-child { color: rgb(var(--tint)); }
+.ch-sub { font-size: clamp(1.9rem, 1rem + 3vw, 4rem); font-weight: 800; font-stretch: 110%; line-height: 0.95; letter-spacing: -0.04em; max-width: 20ch; margin-bottom: 20px; }
+.ch-p { color: var(--fg-2); max-width: 62ch; margin-bottom: 24px; }
+.ch-p strong { color: var(--fg); font-weight: 650; }
+.ch code, .tech code { font-family: var(--mono); font-stretch: 87.5%; font-size: 0.86em; color: var(--fg); }
+.ch-end { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; margin-top: clamp(56px, 10vh, 112px); padding-top: 24px; border-top: 1px solid var(--line); }
+
+/* Piesele vechi ale studiului de caz, acum în culoarea canalului */
+.ch .seg.on { fill: rgb(var(--tint)); filter: drop-shadow(0 0 4px rgb(var(--tint) / 0.75)); }
+.ch .rig-led.on i { background: rgb(var(--tint)); border-color: rgb(var(--tint)); box-shadow: 0 0 12px 2px rgb(var(--tint) / 0.6); }
+.ch .rig-led[data-led="fault"].on i { background: repeating-linear-gradient(45deg, rgb(var(--tint)) 0 2px, transparent 2px 4px); }
+.ch .rig-board { box-shadow: 0 40px 80px -50px rgb(var(--tint) / calc(0.5 * var(--charge))); }
+.rig-h { font-size: var(--step-2); font-weight: 750; font-stretch: 108%; letter-spacing: -0.03em; line-height: 1; }
+.ch .dg .w-bus { stroke: rgb(var(--tint)); }
+.ch .dg .box-uc { fill: rgb(var(--tint)); stroke: rgb(var(--tint)); }
+.ch .tech .eq { border-left: 2px solid rgb(var(--tint)); }
+.ch .state-dot { border-color: rgb(var(--tint)); }
+.ch .state-dot::after { background: rgb(var(--tint)); }
+.ch .text-link { background-image: linear-gradient(rgb(var(--tint)), rgb(var(--tint))); }
+
+/* CH 02 · osciloscopul de experimente */
+.scope { display: grid; border: 1px solid var(--line-2); border-radius: 6px; background: linear-gradient(180deg, rgba(17, 18, 21, 0.85), rgba(7, 7, 8, 0.9)); overflow: hidden; }
+.scope-tabs { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--line); padding: 6px; }
+.scope-tabs::-webkit-scrollbar { display: none; }
+.scope-tab { flex: none; min-height: 44px; padding: 0 14px; border: 0; border-radius: 4px; background: none; color: var(--fg-3); font: inherit; font-size: 0.7rem; cursor: pointer; transition: color 0.3s ease, background-color 0.3s ease; }
+.scope-tab span { color: var(--fg-2); margin-left: 6px; font-family: var(--font); font-size: 0.86rem; font-weight: 600; }
+.scope-tab[aria-selected="true"] { background: rgb(var(--tint) / 0.12); color: rgb(var(--tint)); }
+.scope-tab[aria-selected="true"] span { color: var(--fg); }
+.scope-tab:focus-visible { outline: 2px solid rgb(var(--tint)); outline-offset: -2px; }
+@media (hover: hover) { .scope-tab:hover { color: var(--fg); } }
+.scope-screen { position: relative; padding: 12px 8px 0; }
+.scope-svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.scope-svg .grid { stroke: rgba(200, 210, 225, 0.07); stroke-width: 1; }
+.scope-svg .base { stroke: rgba(200, 210, 225, 0.28); stroke-width: 1; }
+.scope-svg .tick { font-family: var(--mono); font-stretch: 87.5%; font-size: 10.5px; fill: var(--fg-3); }
+.scope-svg .tr { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.scope-svg .tr-0 { stroke: rgb(var(--tint)); filter: drop-shadow(0 0 5px rgb(var(--tint) / 0.6)); }
+.scope-svg .tr-1 { stroke: var(--silver); }
+.scope-svg .tr-2 { stroke: var(--steel); stroke-dasharray: 5 4; }
+.scope-svg .lbl { font-family: var(--font); font-size: 13px; font-weight: 600; fill: var(--fg); }
+.scope-svg .dot-0 { fill: rgb(var(--tint)); } .scope-svg .dot-1 { fill: var(--silver); } .scope-svg .dot-2 { fill: var(--steel); }
+.scope-svg .cross { stroke: rgba(200, 210, 225, 0.35); stroke-width: 1; }
+.scope-svg .hit { stroke: var(--bg); stroke-width: 2; }
+.js .scope-svg .tr-0, .js .scope-svg .tr-1 { stroke-dasharray: var(--len, 3000); stroke-dashoffset: var(--len, 3000); animation: trDraw 1.4s var(--ease-io) forwards; }
+.js .scope-svg .tr-2 { opacity: 0; animation: trFade 1.2s ease 0.3s forwards; }
+@keyframes trDraw { to { stroke-dashoffset: 0; } }
+@keyframes trFade { to { opacity: 1; } }
+.scope-tip { position: absolute; z-index: 2; pointer-events: none; padding: 8px 10px; border-radius: 4px; background: rgba(7, 7, 8, 0.92); border: 1px solid var(--line-2); font-size: 0.7rem; line-height: 1.6; color: var(--fg-2); white-space: nowrap; transform: translate(-50%, calc(-100% - 12px)); }
+.scope-tip b { color: var(--fg); font-weight: 500; }
+.scope-read { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; align-items: baseline; padding: 14px clamp(14px, 2vw, 24px) 18px; border-top: 1px solid var(--line); }
+.scope-cap { color: var(--fg); max-width: 70ch; line-height: 1.45; }
+.scope-axis { color: var(--fg-3); }
+
+/* CH 02 · tabela de dispersie: bare pe scară logaritmică */
+.fill { display: grid; border-top: 1px solid var(--line-2); max-width: 980px; }
+.fill-row { display: grid; grid-template-columns: 90px minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.fill-headrow { color: var(--fg-3); padding-block: 10px; }
+.fill-row > span[role="cell"]:not(.mono) { position: relative; display: flex; align-items: center; gap: 10px; }
+.fill-row i { display: block; height: 10px; border-radius: 2px; background: var(--silver); width: 0; transition: width 1.4s var(--ease) 0.3s; }
+.fill-row > span:nth-child(3) i { background: rgb(var(--tint)); box-shadow: 0 0 10px rgb(var(--tint) / 0.5); }
+.is-active .fill-row > span:nth-child(2) i { width: calc(var(--wa) * 72%); }
+.is-active .fill-row > span:nth-child(3) i { width: calc(var(--wb) * 72%); }
+html:not(.js) .fill-row > span:nth-child(2) i { width: calc(var(--wa) * 72%); }
+html:not(.js) .fill-row > span:nth-child(3) i { width: calc(var(--wb) * 72%); }
+.fill-row b { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* CH 03 · bonul curățat */
+.receipt { display: grid; grid-template-columns: minmax(0, 1fr) clamp(60px, 10vw, 140px) minmax(0, 1fr); gap: 16px; align-items: center; margin-block: 8px 28px; max-width: 980px; }
+.rc-in { display: grid; gap: 6px; padding: 18px 20px 26px; background: #e9e7e1; color: #1b1b1b; font-size: 0.76rem; border-radius: 2px; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), 95% 100%, 90% calc(100% - 6px), 85% 100%, 80% calc(100% - 6px), 75% 100%, 70% calc(100% - 6px), 65% 100%, 60% calc(100% - 6px), 55% 100%, 50% calc(100% - 6px), 45% 100%, 40% calc(100% - 6px), 35% 100%, 30% calc(100% - 6px), 25% 100%, 20% calc(100% - 6px), 15% 100%, 10% calc(100% - 6px), 5% 100%, 0 calc(100% - 6px)); }
+.rc-arrow svg { display: block; width: 100%; height: auto; fill: none; stroke: rgb(var(--tint)); stroke-width: 2; filter: drop-shadow(0 0 6px rgb(var(--tint) / 0.6)); }
+.js .rc-arrow svg { opacity: 0; transform: translateX(-12px); transition: opacity 0.8s ease 0.6s, transform 1s var(--ease) 0.6s; }
+.js .is-active .rc-arrow svg { opacity: 1; transform: none; }
+.rc-out { display: grid; gap: 6px; }
+.rc-out li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 12px; border: 1px solid var(--line-2); border-radius: 4px; background: rgb(var(--tint) / 0.06); }
+.rc-out b { font-weight: 650; }
+.rc-out .mono { color: rgb(var(--tint)); font-size: 0.68rem; }
+.todo { display: grid; border-top: 1px solid var(--line); max-width: 760px; margin-bottom: 20px; }
+.todo li { display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--fg-2); }
+.todo i { width: 14px; height: 14px; border-radius: 3px; border: 1.5px solid var(--steel); }
+.todo .is-done { color: var(--fg); }
+.todo .is-done i { background: rgb(var(--tint)); border-color: rgb(var(--tint)); box-shadow: 0 0 8px rgb(var(--tint) / 0.55); }
+
+@media (max-width: 1100px) {
+  .ch-lede, .ch-intro .cs-facts { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  .ch-bus { display: none; }
+  .chan-read, .chan-lbl { display: none; }
+}
+@media (max-width: 760px) {
+  .chan-in { min-height: 56px; }
+  .chan-sub { display: none; }
+  .chan-glyph { width: 30px; }
+  .chan-tab { padding: 6px 10px 6px 8px; gap: 7px; }
+  .chan-name { font-size: 0.92rem; }
+  .scope-read { grid-template-columns: 1fr; }
+  .fill-row { grid-template-columns: 52px minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+  .receipt { grid-template-columns: 1fr; }
+  .rc-arrow { width: 56px; justify-self: center; transform: rotate(90deg); }
+  .ch-end .btn { width: 100%; justify-content: center; }
+}
+@media (max-width: 420px) {
+  .chan-id { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chan-tab[aria-current="true"] .chan-glyph { animation: none; stroke-dasharray: none; }
+  .chapters.is-trigger .ch-scan { animation: none; }
+  .js .scope-svg .tr-0, .js .scope-svg .tr-1, .js .scope-svg .tr-2 { stroke-dashoffset: 0; animation: none; opacity: 1; }
+  .fill-row i { transition: none; }
+}
+@media print { .chan, .ch-atmos, .ch-bus { display: none !important; } }

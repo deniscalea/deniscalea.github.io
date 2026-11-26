@@ -44,9 +44,56 @@
     'sign.s2h': 'Code',
     'sign.s2': 'C/C++ at university. Java and SQL, just getting started.',
     'sign.s3h': 'Apps',
-    'sign.s3': 'Next up: a phone app for tracking expenses, in Flutter.',
+    'sign.s3': 'Now: Bonix, a Flutter app that tracks spending per product.',
     'work.title': 'Selected work',
-    'work.note': 'What I have built so far, and what comes next.',
+    'work.note': 'Three channels. Pick one or scroll: every project has its own color.',
+    'chan.aria': 'Pick a project',
+    'chan.algo': 'Algorithms',
+    'chan.read': 'signal',
+    'chan.next2': 'Channel 02: Algorithms',
+    'chan.next3': 'Channel 03: Bonix',
+    'p3.kind': 'Algorithms, C++',
+    'p3.title': 'Algorithms in C++, measured piece by piece',
+    'p3.lede': 'Seven Fundamental Algorithms labs, written from scratch: sorting, heaps, Quicksort, merging k lists, hash tables and order statistics trees. Every algorithm counts its assignments and comparisons, so I can check on a chart whether the theory really shows up in the numbers.',
+    'p3.f2': 'Labs',
+    'p3.f3': 'Measured',
+    'p3.f3v': 'assignments + comparisons',
+    'p3.f4': 'Inputs',
+    'p3.f4v': 'n = 100 … 10,000, averaged over 5 runs',
+    'p3.s1': 'Experiments',
+    'p3.tabs': 'Pick an experiment',
+    'p3.e1': 'Direct sorting',
+    'p3.e2': 'Building a heap',
+    'p3.e4': 'Hybrid threshold',
+    'p3.e5': 'k lists',
+    'p3.e6': 'OS tree',
+    'p3.s2': 'Hash table',
+    'p3.h2': '99% full, still finds a key in 5 probes',
+    'p3.p2': 'Open addressing with quadratic probing, on a table of 10,007 cells. I searched for 1,500 keys that exist and 1,500 that don’t, five times over. The bar shows how many cells a search checks on average.',
+    'p3.tblAria': 'Search effort by fill factor',
+    'p3.c1': 'fill',
+    'p3.c2': 'found, average',
+    'p3.c3': 'not found, average',
+    'p2.f1': 'Platform',
+    'p2.f2': 'Data',
+    'p2.f2v': 'local SQLite, no account',
+    'p2.f3': 'Categories',
+    'p2.f4': 'Screens',
+    'p2.f4v': 'Home, Add, Report',
+    'p2.s1': 'How it cleans a receipt',
+    'p2.h1': 'The same banana, three stores',
+    'p2.rcIn': 'Receipt text',
+    'p2.rcOut': 'Clean product',
+    'p2.o1': 'Bananas',
+    'p2.o2': 'Chicken breast',
+    'p2.cat': 'Food',
+    'p2.p1': 'In order: first <strong>your corrections</strong> (tell it once that “PIEPT PUI CAS” is chicken breast and it remembers), then a <strong>keyword dictionary</strong>, and finally the text stripped of weights and codes.',
+    'p2.s2': 'Where it stands',
+    'p2.d1': 'Local database (SQLite), indexed by date',
+    'p2.d2': '9 categories: food, going out, transport, parking, gym, subscriptions, dorm, home, other',
+    'p2.d3': 'Normalizing receipt names, with the user’s corrections',
+    'p2.d4': 'The Home, Add and Report screens',
+    'p2.d5': 'Scanning the receipt with the camera (on-device OCR)',
     'p1.kind': 'Hardware, VHDL',
     'p1.title': 'FPGA Multi-Player Reaction Time Game',
     'p1.img': 'Isometric render in graphite and silver of an FPGA chip marked TOP_GAME, with traces fanning out from its pins',
@@ -59,13 +106,13 @@
     'link.newtab': ' (opens in a new tab)',
     'tags.aria': 'Technologies',
     'p2.img': 'Concept image: a phone showing this week’s spending by category, next to a scanned store receipt',
-    'p2.state': 'Next, starting November 2026',
+    'p2.state': 'In progress, since November 2026',
     'p2.kind': 'Mobile app',
-    'p2.title': 'Expense tracking app',
-    'p2.desc': 'You scan a store receipt and the app reads the products and prices right on the phone, offline, and sorts them into categories. You add parking, the gym or subscriptions by hand. Then you get a report of how much you spent on each thing: every food item (bananas, chicken breast), parking, the gym, everything.',
+    'p2.title': 'Bonix, spending per product',
+    'p2.desc': 'I want to know not just how much I spent on food, but how much on bananas and how much on chicken breast. Bonix keeps expenses on the phone, by category, and turns the short names on a receipt (different in every store) into a clean product.',
     'p2.tags': 'Planned technologies',
     'p2.t3': 'Offline OCR',
-    'p2.note': 'Not built yet. When the code exists, it goes on GitHub and here.',
+    'p2.note': 'The code goes on GitHub once receipt scanning works.',
     'about.title': 'About me',
     'about.photo': 'Photo coming soon',
     'about.img': 'Denis-Alexandru Călin',
@@ -204,6 +251,8 @@
     syncCv();
     syncMenuLabel();
     if (game) game.relabel();
+    if (typeof scope !== 'undefined' && scope) scope.relabel();
+    if (typeof channels !== 'undefined' && channels) setTimeout(channels.place, 60);
   }
 
   /* Comutatorul de limbă: cursorul se întinde, textul trece printr-un blur scurt */
@@ -259,6 +308,7 @@
       else if (down) header.classList.add('is-hidden');
       else if (up) header.classList.remove('is-hidden');
       if (down || up) lastY = y;
+      body.classList.toggle('header-shown', !header.classList.contains('is-hidden'));
     }
     for (var i = 0; i < scrollSubs.length; i++) scrollSubs[i]();
   }
@@ -1064,6 +1114,262 @@
       link.setAttribute('href', off);
       setTimeout(function () { link.setAttribute('href', on); }, 260);
     }, 3200);
+  })();
+
+  /* =========================================================
+     v5 · Canalele: fiecare proiect are „fosforul” lui. Pe scroll, culoarea se amestecă în OKLab
+     între canalele vecine, se „încarcă” la intrarea în proiecte și se descarcă la ieșire.
+     Bara de canale arată canalul curent; sonda se umple cu progresul din el.
+     ========================================================= */
+  var channels = (function () {
+    var sec = $('.chapters');
+    if (!sec) return null;
+    var chs = $$('.ch', sec), tabs = $$('.chan-tab', sec), probe = $('.chan-probe', sec), pct = $('.chan-pct', sec);
+    var inner = $('.chan-in', sec);
+    if (!chs.length) return null;
+
+    function parse(s) { return s.trim().split(/\s+/).map(Number); }
+    var COL = chs.map(function (ch) {
+      var tab = $('.chan-tab[data-ch="' + ch.getAttribute('data-ch') + '"]', sec);
+      var m = tab && /--c:\s*([\d\s]+)/.exec(tab.getAttribute('style') || '');
+      return m ? parse(m[1]) : [200, 210, 225];
+    });
+    var NEUTRAL = [200, 210, 225];
+
+    /* sRGB ↔ OKLab, ca amestecul dintre roșu și cyan să nu treacă printr-un gri murdar */
+    function lin(c) { c /= 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+    function unlin(c) { c = c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055; return clamp(Math.round(c * 255), 0, 255); }
+    function toLab(rgb) {
+      var r = lin(rgb[0]), g = lin(rgb[1]), b = lin(rgb[2]);
+      var l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+      var m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+      var s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+      return [0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s, 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s];
+    }
+    function fromLab(L) {
+      var l = Math.pow(L[0] + 0.3963377774 * L[1] + 0.2158037573 * L[2], 3);
+      var m = Math.pow(L[0] - 0.1055613458 * L[1] - 0.0638541728 * L[2], 3);
+      var s = Math.pow(L[0] - 0.0894841775 * L[1] - 1.291485548 * L[2], 3);
+      return [unlin(4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s), unlin(-1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s), unlin(-0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s)];
+    }
+    var LAB = COL.map(toLab), NLAB = toLab(NEUTRAL);
+    function mix(a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; }
+
+    var active = -1, lastKey = '';
+    function setActive(i) {
+      if (i === active) return;
+      var first = active === -1;
+      active = i;
+      tabs.forEach(function (t) { if (t.getAttribute('data-ch') === chs[i].getAttribute('data-ch')) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current'); });
+      placeProbe();
+      if (!first && !reduce) {                     // „trigger”: o linie trece peste ecran în culoarea noului canal
+        sec.classList.remove('is-trigger');
+        void sec.offsetWidth;
+        sec.classList.add('is-trigger');
+      }
+    }
+    function placeProbe() {
+      if (!probe || !inner || active < 0) return;
+      var tab = tabs[active]; if (!tab) return;
+      var a = inner.getBoundingClientRect(), r = tab.getBoundingClientRect();
+      probe.style.left = (r.left - a.left) + 'px';
+      probe.style.width = r.width + 'px';
+      /* pe telefon, canalul activ intră în ecran în bara derulabilă */
+      var list = tab.parentNode.parentNode;
+      if (list && list.scrollWidth > list.clientWidth + 2) {
+        var lr = list.getBoundingClientRect();
+        if (r.left < lr.left || r.right > lr.right) list.scrollTo({ left: list.scrollLeft + (r.left - lr.left) - 12, behavior: reduce ? 'auto' : 'smooth' });
+      }
+    }
+
+    function update() {
+      var vh = window.innerHeight, mid = vh * 0.5;
+      var sr = sec.getBoundingClientRect();
+      if (sr.bottom < -vh || sr.top > vh * 2) return;
+      var rects = chs.map(function (c) { return c.getBoundingClientRect(); });
+      var i = 0;
+      for (var k = 0; k < rects.length; k++) if (rects[k].top <= mid) i = k;
+      var r = rects[i], cp = clamp((mid - r.top) / Math.max(1, r.height), 0, 1);
+
+      /* culoarea: în mijlocul canalului e a lui; la granițe se amestecă cu vecinul (0,5 fix pe linie) */
+      var EDGE = Math.min(0.22, (vh * 0.35) / Math.max(1, r.height));
+      var lab = LAB[i];
+      if (cp < EDGE && i > 0) lab = mix(LAB[i - 1], LAB[i], 0.5 + 0.5 * smooth(0, 1, cp / EDGE));
+      else if (cp > 1 - EDGE && i < LAB.length - 1) lab = mix(LAB[i], LAB[i + 1], 0.5 * smooth(0, 1, (cp - (1 - EDGE)) / EDGE));
+
+      /* încărcarea: crește când primul canal urcă în ecran, scade după ultimul */
+      var charge = smooth(vh * 0.95, vh * 0.25, rects[0].top) * smooth(vh * 0.05, vh * 0.65, rects[rects.length - 1].bottom);
+      lab = mix(NLAB, lab, 0.35 + 0.65 * charge);
+      var rgb = fromLab(lab);
+      var prog = clamp((mid - rects[0].top) / Math.max(1, rects[rects.length - 1].bottom - rects[0].top), 0, 1);
+
+      var key = rgb.join(' ') + '|' + charge.toFixed(3) + '|' + prog.toFixed(4) + '|' + cp.toFixed(3);
+      if (key !== lastKey) {
+        lastKey = key;
+        sec.style.setProperty('--tint', rgb.join(' '));
+        sec.style.setProperty('--charge', charge.toFixed(3));
+        sec.style.setProperty('--prog', prog.toFixed(4));
+        sec.style.setProperty('--cp', cp.toFixed(3));
+        if (pct) { var p = Math.round(cp * 100); pct.textContent = (p < 10 ? '0' : '') + p; }
+      }
+      setActive(i);
+    }
+    scrollSubs.push(update);
+    window.addEventListener('resize', function () { lastKey = ''; placeProbe(); update(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeProbe);
+    update();
+    return { update: update, place: placeProbe };
+  })();
+
+  /* =========================================================
+     v5 · CH 02: „osciloscopul” cu experimentele din laboratoarele de algoritmi.
+     Datele vin din assets/js/algo-data.js (măsurătorile lui Denis). Prima serie poartă culoarea canalului.
+     ========================================================= */
+  var scope = (function () {
+    var svg = $('.scope-svg'), DATA = window.CALEA_ALGO;
+    if (!svg || !DATA) return null;
+    var tabs = $$('.scope-tab'), cap = $('.scope-cap'), axis = $('.scope-axis'), tip = $('.scope-tip');
+    var NS = 'http://www.w3.org/2000/svg';
+    var TXT = {
+      ro: {
+        sort: 'Bubble face de 2,5 ori mai multe operații decât Insertion sau Selection. Toate trei cresc pătratic, O(n²), pe cazul mediu.',
+        heap: 'Bottom-up e liniar: majoritatea nodurilor stau jos și coboară puțin. Top-down plătește O(log n) la fiecare inserare, de 2,5 ori mai mult la n = 10 000.',
+        quick: 'Ambele sunt O(n log n), dar Quicksort face cu aproximativ 30% mai puține operații decât Heapsort, pe cazul mediu.',
+        hybrid: 'Sub un prag, subșirurile trec la insertion sort. Minimul iese în jur de 10–15 elemente; peste el, costul pătratic câștigă.',
+        merge: 'Pentru k fix, costul crește liniar cu n. De la k = 5 la k = 100 crește doar logaritmic: O(n log k).',
+        ostree: 'Build atinge fiecare nod o dată. n operații Select sau Delete costă O(n log n); Delete e mai scump, fiindcă își caută succesorul.',
+        axN: 'axa x: n · axa y: operații', axP: 'axa x: pragul, n = 10 000 · axa y: operații', axK: 'axa x: n total · axa y: operații', ops: 'operații'
+      },
+      en: {
+        sort: 'Bubble does 2.5× more operations than Insertion or Selection. All three grow quadratically, O(n²), in the average case.',
+        heap: 'Bottom-up is linear: most nodes sit low and sink only a little. Top-down pays O(log n) per insertion, 2.5× more at n = 10,000.',
+        quick: 'Both are O(n log n), but Quicksort does about 30% fewer operations than Heapsort in the average case.',
+        hybrid: 'Below a threshold, subarrays switch to insertion sort. The minimum lands around 10–15 elements; past it, the quadratic cost wins.',
+        merge: 'For a fixed k, the cost grows linearly in n. Going from k = 5 to k = 100 grows it only logarithmically: O(n log k).',
+        ostree: 'Build touches every node once. n Select or Delete operations cost O(n log n); Delete costs more because it looks for the successor.',
+        axN: 'x axis: n · y axis: operations', axP: 'x axis: threshold, n = 10,000 · y axis: operations', axK: 'x axis: total n · y axis: operations', ops: 'operations'
+      }
+    };
+    var W = 800, H = 380, L = 62, R = 112, T = 18, B = 34, pw = W - L - R, ph = H - T - B;
+    var cur = 'sort', geo = null;
+    function fmt(v) { if (v >= 1e6) return (+(v / 1e6).toFixed(1)) + 'M'; if (v >= 1e3) return (+(v / 1e3).toFixed(1)) + 'k'; return String(v); }
+    function num(v) { return Math.round(v).toLocaleString(lang === 'en' ? 'en-US' : 'ro-RO'); }
+    function nice(lo, hi) {
+      var span = hi - lo, p = Math.pow(10, Math.floor(Math.log10(span))), steps = [1, 2, 2.5, 5, 10], st = p;
+      for (var i = 0; i < steps.length; i++) { st = steps[i] * p / 2; if (span / st <= 6) break; }
+      return { top: Math.ceil(hi / st) * st, step: st };
+    }
+    function el(name, attrs, parent) { var e = document.createElementNS(NS, name); for (var k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+    /* pe ecran îngust, un „ecran” mai înalt și mai îngust, ca textul să rămână lizibil */
+    var narrow = null;
+    function frame() {
+      var nw = (svg.clientWidth || 800) < 560;
+      if (nw === narrow) return false;
+      narrow = nw;
+      if (nw) { W = 420; H = 360; L = 44; R = 92; B = 30; } else { W = 800; H = 380; L = 62; R = 112; B = 34; }
+      pw = W - L - R; ph = H - T - B;
+      svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+      return true;
+    }
+    function draw() {
+      frame();
+      var d = DATA[cur], S = d.s, ymin = d.ymin || 0;
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      var xs = S[0][1].map(function (p) { return p[0]; }), xmin = xs[0], xmax = xs[xs.length - 1];
+      var ymax = 0; S.forEach(function (s) { s[1].forEach(function (p) { if (p[1] > ymax) ymax = p[1]; }); });
+      var n = nice(ymin, ymax), top = n.top;
+      var X = function (x) { return L + (x - xmin) / (xmax - xmin) * pw; }, Y = function (y) { return T + ph - (y - ymin) / (top - ymin) * ph; };
+      for (var v = ymin; v <= top + 1e-6; v += n.step) {
+        el('line', { x1: L, x2: L + pw, y1: Y(v), y2: Y(v), 'class': v === ymin ? 'base' : 'grid' }, svg);
+        el('text', { x: L - 10, y: Y(v) + 4, 'text-anchor': 'end', 'class': 'tick' }, svg).textContent = fmt(v);
+      }
+      var xstep = xmax > 1000 ? (narrow ? 2500 : 2000) : (narrow ? 10 : 5);
+      for (var xv = Math.ceil(xmin / xstep) * xstep; xv <= xmax; xv += xstep) {
+        if (xv - xmin < xstep * 0.4 && xv !== xmin) continue;
+        el('text', { x: X(xv), y: H - 10, 'text-anchor': 'middle', 'class': 'tick' }, svg).textContent = fmt(xv);
+      }
+      var ends = [];
+      S.forEach(function (s, i) {
+        var dstr = s[1].map(function (p, k) { return (k ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }).join(' ');
+        var path = el('path', { d: dstr, 'class': 'tr tr-' + i }, svg);
+        try { path.style.setProperty('--len', Math.ceil(path.getTotalLength()) + 2); } catch (e) {}
+        var last = s[1][s[1].length - 1];
+        ends.push({ i: i, y: Y(last[1]), name: s[0] });
+      });
+      ends.sort(function (a, b) { return a.y - b.y; });
+      for (var k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 18) ends[k].y = ends[k - 1].y + 18;
+      ends.forEach(function (e) {
+        el('circle', { cx: L + pw + 10, cy: e.y, r: 4, 'class': 'dot-' + e.i }, svg);
+        el('text', { x: L + pw + 20, y: e.y + 4.5, 'class': 'lbl' }, svg).textContent = e.name;
+      });
+      var cross = el('line', { y1: T, y2: T + ph, 'class': 'cross', visibility: 'hidden' }, svg);
+      var dots = S.map(function (s, i) { return el('circle', { r: 5, 'class': 'hit dot-' + i, visibility: 'hidden' }, svg); });
+      geo = { S: S, X: X, Y: Y, xs: xs, cross: cross, dots: dots, d: d };
+      label();
+    }
+    function label() {
+      var tx = TXT[lang];
+      if (cap) cap.textContent = tx[cur];
+      if (axis) axis.textContent = cur === 'hybrid' ? tx.axP : cur === 'merge' ? tx.axK : tx.axN;
+    }
+    function hover(e) {
+      if (!geo) return;
+      var r = svg.getBoundingClientRect(), sx = (e.clientX - r.left) / r.width * W;
+      if (sx < L - 10 || sx > L + pw + 10) { leave(); return; }
+      var best = 0, bd = Infinity;
+      geo.xs.forEach(function (x, k) { var dd = Math.abs(geo.X(x) - sx); if (dd < bd) { bd = dd; best = k; } });
+      var x = geo.xs[best], px = geo.X(x);
+      geo.cross.setAttribute('x1', px); geo.cross.setAttribute('x2', px); geo.cross.setAttribute('visibility', 'visible');
+      var html = '<b>' + (cur === 'hybrid' ? (lang === 'en' ? 'threshold ' : 'prag ') : 'n = ') + num(x) + '</b>';
+      var topY = Infinity;
+      geo.S.forEach(function (s, i) {
+        var p = s[1][best]; if (!p) return;
+        var y = geo.Y(p[1]); if (y < topY) topY = y;
+        geo.dots[i].setAttribute('cx', px); geo.dots[i].setAttribute('cy', y); geo.dots[i].setAttribute('visibility', 'visible');
+        html += '<br>' + s[0] + ': <b>' + num(p[1]) + '</b>';
+      });
+      if (tip) {
+        tip.innerHTML = html; tip.hidden = false;
+        var sw = r.width / W;
+        tip.style.left = clamp(px * sw + 8, 70, r.width - 70) + 'px';
+        tip.style.top = (topY * sw + 12) + 'px';
+      }
+    }
+    function leave() {
+      if (!geo) return;
+      geo.cross.setAttribute('visibility', 'hidden');
+      geo.dots.forEach(function (d) { d.setAttribute('visibility', 'hidden'); });
+      if (tip) tip.hidden = true;
+    }
+    svg.addEventListener('pointermove', hover);
+    svg.addEventListener('pointerdown', hover);
+    svg.addEventListener('pointerleave', leave);
+    function select(btn, focus) {
+      cur = btn.getAttribute('data-exp');
+      tabs.forEach(function (b) { var on = b === btn; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+      if (focus) btn.focus();
+      leave(); draw();
+    }
+    tabs.forEach(function (b, i) {
+      b.tabIndex = i === 0 ? 0 : -1;
+      b.addEventListener('click', function () { select(b); });
+      b.addEventListener('keydown', function (e) {
+        var j = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length - 1 : null;
+        if (j === null) return;
+        e.preventDefault();
+        select(tabs[(j + tabs.length) % tabs.length], true);
+      });
+    });
+    /* prima desenare când ecranul ajunge în viewport, ca trasele să se deseneze sub ochii vizitatorului */
+    var started = false;
+    function start() { if (!started) { started = true; draw(); } }
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { start(); io.disconnect(); } }, { threshold: 0.35 });
+      io.observe(svg);
+    } else start();
+    var rsT = null;
+    window.addEventListener('resize', function () { clearTimeout(rsT); rsT = setTimeout(function () { if (started && frame()) { leave(); draw(); } }, 200); });
+    return { relabel: function () { if (started) label(); } };
   })();
 
   /* Aplică limba (separă și titlurile pentru dezvăluire), apoi starea inițială a scroll-ului */
