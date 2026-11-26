@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=6.2">
+  <link rel="stylesheet" href="assets/css/style.css?v=7">
 
   <script>
     /* Limba se decide înainte de randare. Fără JS, conținutul rămâne vizibil (RO). */
@@ -146,7 +146,7 @@
               <span class="chan-id mono">01</span>
               <svg class="chan-glyph" viewBox="0 0 64 20" aria-hidden="true"><path d="M0 16 H8 V4 H18 V16 H26 V4 H36 V16 H44 V4 H54 V16 H64"/></svg>
               <span class="chan-name">FPGA</span><span class="chan-sub mono">VHDL</span></a></li>
-            <li><a class="chan-tab" href="#p-app" data-ch="app" style="--c: 158 232 92">
+            <li><a class="chan-tab" href="#p-app" data-ch="app" style="--c: 22 201 149">
               <span class="chan-id mono">02</span>
               <svg class="chan-glyph" viewBox="0 0 64 20" aria-hidden="true"><path d="M2 2H62M2 2V16L8 19L14 16L20 19L26 16L32 19L38 16L44 19L50 16L56 19L62 16V2M10 8H40M10 12H30M48 8H56M48 12H56"/></svg>
               <span class="chan-name">Bonix</span><span class="chan-sub mono">Flutter</span></a></li>
@@ -182,50 +182,28 @@
         </div>
       </article>
 
-      <!-- ===== CH 02 · BONIX (aplicația de cheltuieli). ÎN LUCRU: doar ce există în cod; telefonul e o machetă. ===== -->
+      <!-- ===== CH 02 · BONIX (aplicația de cheltuieli). ÎN LUCRU: doar ce există în cod; capturile sunt reale, cu datele demo din aplicație. ===== -->
       <article class="ch ch-teaser" id="p-app" data-ch="app" aria-labelledby="p2-titlu" data-reveal="once">
         <div class="wrap teaser teaser-flip">
           <div class="teaser-body">
             <p class="ch-kicker mono"><span>CH 02</span><span class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="p2.state">În lucru, din noiembrie 2026</span></span><span data-i18n="p2.kind">Aplicație mobilă</span></p>
             <h3 class="ch-title split" id="p2-titlu" data-i18n="p2.title">Bonix, cheltuieli pe fiecare produs</h3>
-            <p class="ch-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane și cât pe piept de pui. Bonix ține cheltuielile pe telefon, pe categorii, și transformă numele scurte de pe bon (diferite la fiecare magazin) într-un produs curat.</p>
+            <p class="ch-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane. Bonix citește bonul, recunoaște fiecare produs (bananele de la Lidl și cele de la Kaufland ajung în același loc) și arată unde se duc banii, pe săptămână și pe lună. Totul stă pe telefon.</p>
             <ul class="specs lift">
-              <li><span class="spec-n">Flutter</span><span class="spec-l" data-i18n="p2.s1l">aplicație de telefon, în Dart</span></li>
-              <li><span class="spec-n">SQLite</span><span class="spec-l" data-i18n="p2.s2l">datele stau pe telefon, fără cont</span></li>
-              <li><span class="spec-n"><span class="count" data-to="9">9</span></span><span class="spec-l" data-i18n="p2.s3l">categorii, de la mâncare la abonamente</span></li>
+              <li><span class="spec-n">Flutter</span><span class="spec-l" data-i18n="p2.s1l">aplicație Android, în Dart, cu SQLite</span></li>
+              <li><span class="spec-n"><span class="count" data-to="5">5</span></span><span class="spec-l" data-i18n="p2.s2l">ecrane, cu swipe între ele</span></li>
+              <li><span class="spec-n"><span class="count" data-to="31">31</span></span><span class="spec-l" data-i18n="p2.s3l">categorii, de la fructe la abonamente</span></li>
             </ul>
             <div class="teaser-actions lift">
               <a class="btn btn-primary magnetic" href="proiecte/bonix.html"><span class="btn-in"><span data-i18n="p.open">Accesează proiectul</span><span class="arrow arrow-r" aria-hidden="true">→</span></span></a>
             </div>
           </div>
           <a class="teaser-media teaser-phone" href="proiecte/bonix.html" tabindex="-1" aria-hidden="true">
-            <span class="phone" role="img" aria-label="Machetă a aplicației Bonix: ecranul Raport, cu date de exemplu" data-i18n-aria="ph.aria">
-              <span class="phone-shell">
-                <span class="phone-screen">
-                  <span class="ph-status mono" aria-hidden="true"><span>14:32</span><span class="ph-isl"></span><span>5G ▮▮▮</span></span>
-                  <span class="ph-top"><span class="ph-app">Bonix</span><span class="ph-month mono" data-i18n="ph.month">Raport · săptămâna asta</span></span>
-                  <span class="ph-total"><span class="ph-total-k mono" data-i18n="ph.total">săptămâna asta</span><span class="ph-total-v">268<small> lei</small></span></span>
-                  <span class="ph-mix" aria-hidden="true"><i style="--w:38"></i><i style="--w:22"></i><i style="--w:16"></i><i style="--w:14"></i><i style="--w:10"></i></span>
-                  <span class="ph-list-k mono" data-i18n="ph.where">pe ce s-au dus banii</span>
-                  <span class="ph-list">
-                    <span class="ph-row" style="--w:1"><b data-i18n="ph.r1">Ieșiri</b><span class="ph-bar"><i></i></span><em>80</em></span>
-                    <span class="ph-row" style="--w:.8"><b data-i18n="ph.r2">Piept de pui</b><span class="ph-bar"><i></i></span><em>64</em></span>
-                    <span class="ph-row" style="--w:.56"><b data-i18n="ph.r3">Parcare</b><span class="ph-bar"><i></i></span><em>45</em></span>
-                    <span class="ph-row" style="--w:.38"><b data-i18n="ph.r4">Transport</b><span class="ph-bar"><i></i></span><em>30</em></span>
-                    <span class="ph-row" style="--w:.29"><b data-i18n="ph.r5">Banane</b><span class="ph-bar"><i></i></span><em>23</em></span>
-                  </span>
-                  <span class="ph-scan">
-                    <span class="ph-scan-k mono" data-i18n="ph.scan">de pe bon → produs</span>
-                    <span class="ph-scan-rows">
-                      <span class="ph-sr"><span class="mono">BANANE VRAC 1,234KG</span><b data-i18n="ph.o1">Banane</b></span>
-                      <span class="ph-sr"><span class="mono">PIEPT PUI CAS</span><b data-i18n="ph.o2">Piept de pui</b></span>
-                      <span class="ph-sr"><span class="mono">BANANE ECUADOR</span><b data-i18n="ph.o1">Banane</b></span>
-                    </span>
-                  </span>
-                  <span class="ph-tabs" aria-hidden="true"><span data-i18n="ph.t1">Acasă</span><span class="ph-add">+</span><span class="is-on" data-i18n="ph.t3">Raport</span></span>
-                </span>
-              </span>
-              <span class="phone-cap mono" data-i18n="ph.cap">Machetă, cu date de exemplu</span>
+            <span class="phone phone-duo">
+              <span class="phone-shell phone-back"><img class="phone-shot" src="assets/img/bonix-produse.webp" width="600" height="1333" loading="lazy" decoding="async" alt=""></span>
+              <span class="phone-shell"><img class="phone-shot" src="assets/img/bonix-acasa.webp" width="600" height="1333" loading="lazy" decoding="async"
+                   alt="Bonix, ecranul Acasă: 1.726 lei cheltuiți în noiembrie, graficul lunii și categoriile" data-i18n-alt="ph.alt"></span>
+              <span class="phone-cap mono" data-i18n="ph.cap">Capturi din aplicație, cu datele demo</span>
             </span>
           </a>
         </div>
@@ -311,7 +289,7 @@
     </section>
   </main>
 
-  <script src="assets/js/i18n-fpga.js?v=6.2" defer></script>
-  <script src="assets/js/main.js?v=6.2" defer></script>
+  <script src="assets/js/i18n-fpga.js?v=7" defer></script>
+  <script src="assets/js/main.js?v=7" defer></script>
 </body>
 </html>

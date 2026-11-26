@@ -1117,7 +1117,7 @@ body.header-shown .chan { top: var(--header-h); }
 .teaser-inset img { filter: sepia(1) saturate(4) hue-rotate(-28deg) brightness(0.95); }
 @media (hover: hover) { .teaser-media:hover .teaser-main img.par { scale: 1.03; transition: scale 1.4s var(--ease); } }
 
-/* Telefonul: machetă HTML a ecranului „Raport” din Bonix (date de exemplu), în culoarea canalului */
+/* Telefonul: capturi reale din Bonix (cu datele demo din aplicație), într-o ramă CSS */
 .teaser-phone { display: grid; place-items: center; padding-block: 12px 28px; }
 .phone { position: relative; display: grid; justify-items: center; gap: 16px; perspective: 1600px; }
 .phone-shell {
@@ -1130,45 +1130,7 @@ body.header-shown .chan { top: var(--header-h); }
 @media (hover: hover) { .teaser-media:hover .phone-shell { transform: rotateY(0) rotateX(0) rotateZ(0); } }
 .js [data-reveal]:not(.is-active) .phone-shell { transform: translateY(60px) rotateY(-24deg) rotateX(12deg); opacity: 0; }
 .js .phone-shell { transition: transform 1.6s var(--ease), opacity 1s ease; }
-.phone-screen {
-  position: relative; display: flex; flex-direction: column; gap: 10px; height: 100%; overflow: hidden; border-radius: 36px; padding: 12px 14px 10px;
-  background: radial-gradient(120% 60% at 50% 0%, rgb(var(--tint) / 0.12), transparent 60%), #08090a; color: var(--fg); font-size: 11px; line-height: 1.25;
-}
-.ph-status { display: flex; justify-content: space-between; align-items: center; font-size: 8.5px; color: var(--fg-2); padding: 0 6px; }
-.ph-isl { width: 72px; height: 20px; border-radius: 999px; background: #000; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05); }
-.ph-top { display: flex; justify-content: space-between; align-items: baseline; padding-top: 4px; }
-.ph-app { font-weight: 800; font-stretch: 112%; font-size: 15px; letter-spacing: -0.02em; color: rgb(var(--tint)); }
-.ph-month { font-size: 8px; color: var(--fg-3); }
-.ph-total { display: grid; gap: 2px; padding: 10px 12px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); border: 1px solid var(--line); }
-.ph-total-k { font-size: 7.5px; color: var(--fg-3); }
-.ph-total-v { font-weight: 800; font-stretch: 110%; font-size: 26px; letter-spacing: -0.04em; line-height: 1; }
-.ph-total-v small { font-size: 11px; font-weight: 600; color: var(--fg-2); letter-spacing: 0; }
-.ph-mix { display: flex; gap: 2px; height: 6px; border-radius: 3px; overflow: hidden; }
-.ph-mix i { flex: var(--w) 1 0; background: rgb(var(--tint)); }
-.ph-mix i:nth-child(2) { opacity: 0.72; } .ph-mix i:nth-child(3) { opacity: 0.5; } .ph-mix i:nth-child(4) { opacity: 0.34; } .ph-mix i:nth-child(5) { opacity: 0.22; }
-.ph-list { display: grid; gap: 7px; }
-.ph-row { display: grid; grid-template-columns: 74px minmax(0, 1fr) 28px; gap: 8px; align-items: center; }
-.ph-row b { font-weight: 600; font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ph-row em { font-style: normal; font-size: 10px; text-align: right; color: var(--fg-2); font-variant-numeric: tabular-nums; }
-.ph-bar { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.06); overflow: hidden; }
-.ph-bar i { display: block; height: 100%; width: calc(var(--w) * 100%); border-radius: 3px; background: rgb(var(--tint)); transform-origin: 0 50%; transition: transform 1.3s var(--ease) 0.8s; }
-.js [data-reveal]:not(.is-active) .ph-bar i { transform: scaleX(0); }
-.ph-row:nth-child(2) .ph-bar i { transition-delay: 0.9s; } .ph-row:nth-child(3) .ph-bar i { transition-delay: 1s; } .ph-row:nth-child(4) .ph-bar i { transition-delay: 1.1s; } .ph-row:nth-child(5) .ph-bar i { transition-delay: 1.2s; }
 /* cardul care „curăță” bonul: textul de pe bon trece prin scanare și devine produs */
-.ph-scan { position: relative; margin-top: auto; display: grid; gap: 6px; padding: 10px 12px; border-radius: 14px; background: #e9e7e1; color: #1b1b1b; overflow: hidden; }
-.ph-scan::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: rgb(var(--tint)); box-shadow: 0 0 12px 3px rgb(var(--tint) / 0.7); animation: phScan 3s var(--ease-io) infinite; }
-@keyframes phScan { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 60% { transform: translateY(64px); opacity: 1; } 70%, 100% { transform: translateY(64px); opacity: 0; } }
-.ph-scan-k { font-size: 7.5px; color: #6b6a66; }
-.ph-scan-rows { position: relative; height: 34px; }
-.ph-sr { position: absolute; inset: 0; display: grid; gap: 2px; opacity: 0; animation: phRow 9s infinite; }
-.ph-sr:nth-child(2) { animation-delay: 3s; } .ph-sr:nth-child(3) { animation-delay: 6s; }
-.ph-sr .mono { font-size: 8.5px; }
-.ph-sr b { font-size: 13px; font-weight: 800; letter-spacing: -0.01em; color: #0b0b0c; }
-.ph-sr b::after { content: " ✓"; color: rgb(var(--tint)); filter: brightness(0.7); }
-@keyframes phRow { 0% { opacity: 0; transform: translateY(6px); } 6%, 30% { opacity: 1; transform: none; } 36%, 100% { opacity: 0; transform: translateY(-6px); } }
-.ph-tabs { display: flex; justify-content: space-around; align-items: center; padding: 8px 4px 4px; border-top: 1px solid var(--line); font-size: 9px; color: var(--fg-3); }
-.ph-tabs .is-on { color: rgb(var(--tint)); font-weight: 600; }
-.ph-add { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: rgb(var(--tint)); color: #08090a; font-weight: 800; font-size: 16px; }
 .phone-cap { color: var(--fg-3); font-size: 0.66rem; }
 
 /* Paginile proiectelor: aceeași culoare, fixă */
@@ -1208,13 +1170,37 @@ body.header-shown .chan { top: var(--header-h); }
   .phone-shell, .teaser-flip .phone-shell { width: min(68vw, 270px); transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ph-scan::after { animation: none; opacity: 0; }
-  .ph-sr { animation: none; } .ph-sr:first-child { opacity: 1; }
   .js [data-reveal]:not(.is-active) .phone-shell { transform: none; opacity: 1; }
-  .js [data-reveal]:not(.is-active) .ph-bar i { transform: none; }
 }
-.ph-list-k { font-size: 7.5px; color: var(--fg-3); margin-bottom: -3px; }
 .ch-teaser .ch-lede { grid-column: auto; }
 .ch-teaser .ch-title { font-size: clamp(2.2rem, 1rem + 3vw, 4.4rem); max-width: 14ch; }
 .ch-teaser .teaser-body { gap: 18px; }
 .ch-teaser .specs li { padding: 7px 0; }
+
+/* v7: telefonul arată capturi reale; înălțimea o dă captura */
+.phone-shell { aspect-ratio: auto; padding: 10px; }
+.phone-shot { display: block; width: 100%; height: auto; border-radius: 37px; background: #070809; }
+.phone-duo { grid-template: "p" auto "c" auto / auto; }
+.phone-duo > .phone-shell { grid-area: p; z-index: 1; }
+.phone-duo > .phone-cap { grid-area: c; }
+.phone-duo > .phone-back { z-index: 0; opacity: 0.5; filter: saturate(0.8) brightness(0.75); transform: translateX(-44%) translateY(-5%) rotateY(-10deg) rotateX(6deg) rotateZ(-5deg) scale(0.86); }
+@media (hover: hover) { .teaser-media:hover .phone-duo > .phone-back { opacity: 0.7; transform: translateX(-52%) translateY(-4%) rotateZ(-7deg) scale(0.86); } }
+/* pagina Bonix: galeria cu ecranele */
+.shots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(18px, 2.6vw, 40px); margin-top: clamp(28px, 5vh, 56px); }
+.shot { display: grid; gap: 16px; align-content: start; margin: 0; }
+.shot .phone-shell, .tinted .shot .phone-shell { width: 100%; transform: none; border-radius: 40px; padding: 8px; }
+.shot .phone-shot { border-radius: 32px; }
+.shot:nth-child(2) .phone-shell { transition-delay: 0.12s; } .shot:nth-child(3) .phone-shell { transition-delay: 0.24s; } .shot:nth-child(4) .phone-shell { transition-delay: 0.36s; }
+.shot figcaption { display: grid; gap: 4px; }
+.shot figcaption .mono { color: rgb(var(--tint)); font-size: 0.7rem; }
+.shot figcaption b { font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; }
+.shot figcaption span:last-child { color: var(--fg-2); font-size: 0.9rem; line-height: 1.45; }
+.shots-note { margin-top: 20px; color: var(--fg-3); font-size: 0.72rem; }
+@media (max-width: 960px) {
+  .shots { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(64vw, 260px); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 14px; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+  .shot { scroll-snap-align: start; }
+}
+@media (max-width: 760px) {
+  .phone-duo > .phone-back { transform: translateX(-24%) translateY(-3%) rotateZ(-5deg) scale(0.86); }
+}
+@media (min-width: 761px) { .teaser-phone .phone-shell { width: clamp(220px, 20vw, 290px); } }

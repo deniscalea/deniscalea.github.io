@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="ro" data-base="../"
       data-en-title="Bonix · Expense app · CALEA"
-      data-en-desc="Bonix, a Flutter app that tracks spending per product: how it turns receipt text into clean products, the local data and where it stands."
-      data-en-og="Bonix, a Flutter app that tracks spending per product, from receipt text to a weekly report.">
+      data-en-desc="Bonix, a Flutter app that tracks spending per product: what it looks like now, how it reads a receipt, what is under the hood and where it stands."
+      data-en-og="Bonix, a Flutter app that tracks spending per product: screens, receipt parsing and where it stands.">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bonix · Aplicație de cheltuieli · CALEA</title>
-  <meta name="description" content="Bonix, o aplicație Flutter care ține cheltuielile pe fiecare produs: cum transformă textul de pe bon în produse curate, datele locale și stadiul proiectului.">
+  <meta name="description" content="Bonix, o aplicație Flutter care ține cheltuielile pe fiecare produs: cum arată acum, cum citește bonul, ce e sub capotă și stadiul proiectului.">
   <meta name="author" content="Denis-Alexandru Călin">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#070708">
@@ -19,7 +19,7 @@
   <meta property="og:locale" content="ro_RO">
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Bonix, cheltuieli pe fiecare produs · CALEA">
-  <meta property="og:description" content="Bonix, o aplicație Flutter care ține cheltuielile pe fiecare produs, de la textul de pe bon la raportul pe săptămână.">
+  <meta property="og:description" content="Bonix, o aplicație Flutter care ține cheltuielile pe fiecare produs, ecranele, citirea bonului și stadiul proiectului.">
   <meta property="og:image" content="https://deniscalea.github.io/assets/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css?v=6.2">
+  <link rel="stylesheet" href="../assets/css/style.css?v=7">
 
   <script>
     (function () {
@@ -42,7 +42,7 @@
     })();
   </script>
 </head>
-<body class="page-case tinted" style="--tint: 158 232 92">
+<body class="page-case tinted" style="--tint: 22 201 149">
   <a class="skip-link" href="#continut" data-i18n="skip">Sari la conținut</a>
 
   <header class="site-header">
@@ -82,143 +82,161 @@
         <p class="cs-kicker mono rule-b"><a class="nav-back" href="../#p-app"><span class="arrow" aria-hidden="true">←</span><span data-i18n="cs.back">Toate proiectele</span></a><span data-i18n="bx.kicker">CH 02, în lucru, 2026</span></p>
         <h1 class="cs-title split" id="cs-titlu" data-i18n="p2.title">Bonix, cheltuieli pe fiecare produs</h1>
         <div class="cs-intro">
-          <p class="cs-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane și cât pe piept de pui. Bonix ține cheltuielile pe telefon, pe categorii, și transformă numele scurte de pe bon (diferite la fiecare magazin) într-un produs curat.</p>
+          <p class="cs-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane. Bonix citește bonul, recunoaște fiecare produs (bananele de la Lidl și cele de la Kaufland ajung în același loc) și arată unde se duc banii, pe săptămână și pe lună. Totul stă pe telefon.</p>
           <ul class="cs-facts lift">
-            <li><span class="mono" data-i18n="p2.f1">Platformă</span><b>Flutter, Dart</b></li>
+            <li><span class="mono" data-i18n="p2.f1">Platformă</span><b>Flutter, Dart, Android</b></li>
             <li><span class="mono" data-i18n="p2.f2">Date</span><b data-i18n="p2.f2v">SQLite local, fără cont</b></li>
-            <li><span class="mono" data-i18n="p2.f3">Categorii</span><b>9</b></li>
-            <li><span class="mono" data-i18n="p2.f4">Ecrane</span><b data-i18n="p2.f4v">Acasă, Adaugă, Raport</b></li>
-            <li><span class="mono" data-i18n="bx.f5">Stadiu</span><b class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="bx.f5v">În lucru</span></b></li>
+            <li><span class="mono" data-i18n="p2.f4">Ecrane</span><b data-i18n="p2.f4v">Acasă, Analize, Scanează, Produse, Profil</b></li>
+            <li><span class="mono" data-i18n="bx.f6">Teste</span><b data-i18n="bx.f6v">15, cu bonuri Lidl și Kaufland</b></li>
+            <li><span class="mono" data-i18n="bx.f5">Stadiu</span><b class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="bx.f5v">În lucru, v0.4</span></b></li>
           </ul>
         </div>
         <div class="cs-phone">
-            <span class="phone" role="img" aria-label="Machetă a aplicației Bonix: ecranul Raport, cu date de exemplu" data-i18n-aria="ph.aria">
-              <span class="phone-shell">
-                <span class="phone-screen">
-                  <span class="ph-status mono" aria-hidden="true"><span>14:32</span><span class="ph-isl"></span><span>5G ▮▮▮</span></span>
-                  <span class="ph-top"><span class="ph-app">Bonix</span><span class="ph-month mono" data-i18n="ph.month">Raport · săptămâna asta</span></span>
-                  <span class="ph-total"><span class="ph-total-k mono" data-i18n="ph.total">săptămâna asta</span><span class="ph-total-v">268<small> lei</small></span></span>
-                  <span class="ph-mix" aria-hidden="true"><i style="--w:38"></i><i style="--w:22"></i><i style="--w:16"></i><i style="--w:14"></i><i style="--w:10"></i></span>
-                  <span class="ph-list-k mono" data-i18n="ph.where">pe ce s-au dus banii</span>
-                  <span class="ph-list">
-                    <span class="ph-row" style="--w:1"><b data-i18n="ph.r1">Ieșiri</b><span class="ph-bar"><i></i></span><em>80</em></span>
-                    <span class="ph-row" style="--w:.8"><b data-i18n="ph.r2">Piept de pui</b><span class="ph-bar"><i></i></span><em>64</em></span>
-                    <span class="ph-row" style="--w:.56"><b data-i18n="ph.r3">Parcare</b><span class="ph-bar"><i></i></span><em>45</em></span>
-                    <span class="ph-row" style="--w:.38"><b data-i18n="ph.r4">Transport</b><span class="ph-bar"><i></i></span><em>30</em></span>
-                    <span class="ph-row" style="--w:.29"><b data-i18n="ph.r5">Banane</b><span class="ph-bar"><i></i></span><em>23</em></span>
-                  </span>
-                  <span class="ph-scan">
-                    <span class="ph-scan-k mono" data-i18n="ph.scan">de pe bon → produs</span>
-                    <span class="ph-scan-rows">
-                      <span class="ph-sr"><span class="mono">BANANE VRAC 1,234KG</span><b data-i18n="ph.o1">Banane</b></span>
-                      <span class="ph-sr"><span class="mono">PIEPT PUI CAS</span><b data-i18n="ph.o2">Piept de pui</b></span>
-                      <span class="ph-sr"><span class="mono">BANANE ECUADOR</span><b data-i18n="ph.o1">Banane</b></span>
-                    </span>
-                  </span>
-                  <span class="ph-tabs" aria-hidden="true"><span data-i18n="ph.t1">Acasă</span><span class="ph-add">+</span><span class="is-on" data-i18n="ph.t3">Raport</span></span>
-                </span>
-              </span>
-              <span class="phone-cap mono" data-i18n="ph.cap">Machetă, cu date de exemplu</span>
-            </span>
+          <span class="phone">
+            <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-acasa.webp" width="600" height="1333" decoding="async"
+                 alt="Bonix, ecranul Acasă: 1.726 lei cheltuiți în noiembrie, graficul lunii și categoriile" data-i18n-alt="ph.alt"></span>
+            <span class="phone-cap mono" data-i18n="ph.cap">Capturi din aplicație, cu datele demo</span>
+          </span>
         </div>
       </div>
     </section>
 
-    <!-- ===== 01 Problema ===== -->
+    <!-- ===== 01 Ecranele (capturi reale, emulator Android, datele demo din aplicație) ===== -->
+    <section class="cs-sec" aria-labelledby="bx-ecrane" data-reveal="once">
+      <div class="wrap">
+        <header class="sec-head rule-t">
+          <p class="sec-label mono"><span>01</span> / <span data-i18n="bx.s0">Ecranele</span></p>
+          <h2 class="sec-title split" id="bx-ecrane" data-i18n="bx.h0">Cum arată acum</h2>
+        </header>
+        <div class="shots">
+          <figure class="shot">
+            <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-analize.webp" width="600" height="1333" loading="lazy" decoding="async"
+                 alt="Ecranul Analize: 237,30 lei săptămâna asta, cu 19% mai puțin decât săptămâna trecută, și bare pe zile" data-i18n-alt="bx.g1a"></span>
+            <figcaption><span class="mono">02 / Analize</span><b data-i18n="bx.g1h">Săptămâna și luna</b><span data-i18n="bx.g1">Glisezi între perioade. Bare pe zile față de săptămâna dinainte, distribuția pe categorii și o prognoză pentru final de lună.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-scan.webp" width="600" height="1333" loading="lazy" decoding="async"
+                 alt="Ecranul Scanează bonul: un bon Lidl citit rând cu rând, cu butonul pentru textul bonului și poza marcată „în curând”" data-i18n-alt="bx.g3a"></span>
+            <figcaption><span class="mono">03 / Scanează</span><b data-i18n="bx.g3h">Bonul, rând cu rând</b><span data-i18n="bx.g3">Acum lipești textul bonului și îl confirmi. Poza cu camera e marcată „în curând”: încă nu merge.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-produse.webp" width="600" height="1333" loading="lazy" decoding="async"
+                 alt="Ecranul Produse: 21 de produse din 4 magazine, primul fiind Banane, cumpărate de 13 ori, 104,24 lei" data-i18n-alt="bx.g2a"></span>
+            <figcaption><span class="mono">04 / Produse</span><b data-i18n="bx.g2h">Fiecare produs, din toate magazinele</b><span data-i18n="bx.g2">De câte ori l-ai cumpărat, cât ai dat pe el, prețul mediu și din ce magazine.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-profil.webp" width="600" height="1333" loading="lazy" decoding="async"
+                 alt="Ecranul Profil: 54 de tranzacții, 17 bonuri, 21 de produse, bugetul lunar și cheltuielile recurente" data-i18n-alt="bx.g4a"></span>
+            <figcaption><span class="mono">05 / Profil</span><b data-i18n="bx.g4h">Buget și plăți fixe</b><span data-i18n="bx.g4">Bugetul pe lună, plățile recurente (cămin, sală, Spotify) care se adaugă singure la scadență și copierea datelor ca CSV.</span></figcaption>
+          </figure>
+        </div>
+        <p class="shots-note mono" data-i18n="bx.gnote">Capturi din aplicație pe un emulator Android, cu datele demo din aplicație (5 săptămâni de bonuri inventate, marcate „DATE DEMO”).</p>
+      </div>
+    </section>
+
+    <!-- ===== 02 Problema ===== -->
     <section class="cs-sec" aria-labelledby="bx-problema" data-reveal="once">
       <div class="wrap">
         <header class="sec-head rule-t">
-          <p class="sec-label mono"><span>01</span> / <span data-i18n="cs.s1">Problema</span></p>
+          <p class="sec-label mono"><span>02</span> / <span data-i18n="cs.s1">Problema</span></p>
           <h2 class="sec-title split" id="bx-problema" data-i18n="bx.h1">Știu cât am cheltuit, nu și pe ce</h2>
         </header>
         <div class="cs-body">
           <div class="cs-col lift">
             <p data-i18n-html="bx.p1a">Aplicațiile de buget arată categorii mari: mâncare, transport, ieșiri. Eu vreau să văd și <strong>produsele</strong>: cât am dat pe banane, cât pe piept de pui, cât pe parcare.</p>
-            <p data-i18n-html="bx.p1b">Problema e bonul. Fiecare magazin scrie același produs altfel: prescurtat, cu gramaj, cu coduri. Ca să adune corect, aplicația trebuie să știe că <code>BANANE VRAC 1,234KG</code> și <code>BANANE ECUADOR</code> sunt <strong>același lucru</strong>.</p>
+            <p data-i18n-html="bx.p1b">Problema e bonul. Fiecare magazin scrie același produs altfel: prescurtat, cu gramaj, cu coduri. Ca să adune corect, aplicația trebuie să știe că <code>BANANE KG</code> de la Lidl și <code>BANANE VRAC</code> de la Kaufland sunt <strong>același lucru</strong>.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== 02 Cum curăță bonul ===== -->
+    <!-- ===== 03 Cum citește bonul ===== -->
     <section class="cs-sec" aria-labelledby="bx-bon" data-reveal="once">
       <div class="wrap">
         <header class="sec-head rule-t">
-          <p class="sec-label mono"><span>02</span> / <span data-i18n="bx.s2">Bonul</span></p>
+          <p class="sec-label mono"><span>03</span> / <span data-i18n="bx.s2">Bonul</span></p>
           <h2 class="sec-title split" id="bx-bon" data-i18n="bx.h2">Din text de bon, un produs curat</h2>
         </header>
         <div class="receipt lift">
           <ol class="rc-in mono" aria-label="Text de pe bon" data-i18n-aria="p2.rcIn">
-            <li>BANANE VRAC 1,234KG</li><li>BANANE ECUADOR</li><li>PIEPT PUI CAS</li><li>LAPTE ZUZU 1,5%</li>
+            <li>BANANE KG</li><li>BANANE VRAC</li><li>ZACUSCA BUNICA 300G</li><li>ZUZU LAPTE 1.5% 1L</li>
           </ol>
           <div class="rc-arrow" aria-hidden="true"><svg viewBox="0 0 120 40"><path d="M0 20H110M98 8L112 20L98 32"/></svg></div>
           <ol class="rc-out" aria-label="Produs curat" data-i18n-aria="p2.rcOut">
             <li><b data-i18n="ph.o1">Banane</b><span class="mono" data-i18n="bx.via2">dicționar</span></li>
             <li><b data-i18n="ph.o1">Banane</b><span class="mono" data-i18n="bx.via2">dicționar</span></li>
-            <li><b data-i18n="ph.o2">Piept de pui</b><span class="mono" data-i18n="bx.via1">corectura ta</span></li>
-            <li><b data-i18n="bx.o3">Lapte</b><span class="mono" data-i18n="bx.via3">primul cuvânt</span></li>
+            <li><b data-i18n="bx.o4">Zacusca</b><span class="mono" data-i18n="bx.via3">primul cuvânt, de verificat</span></li>
+            <li><b data-i18n="bx.o3">Lapte</b><span class="mono" data-i18n="bx.via1">corectura ta</span></li>
           </ol>
         </div>
         <div class="cs-body">
           <div class="cs-col lift">
-            <p data-i18n-html="bx.p2a">Întâi textul e curățat: litere mici, fără diacritice, fără gramaje (<code>500g</code>, <code>1,5l</code>, <code>6x0.5l</code>, <code>10buc</code>), fără cifre și coduri. Apoi aplicația caută produsul în trei pași, în ordine:</p>
+            <p data-i18n-html="bx.p2a">Întâi parserul citește bonul: <strong>magazinul</strong>, rândurile cu preț, cantitățile (<code>1,234 KG x 6,99</code>), reducerile și linia <code>TOTAL</code>. Apoi verifică dacă rândurile adună cât totalul, ca să nu se piardă nimic. Ce nu are un preț clar e ignorat: nu inventează nimic.</p>
+            <p data-i18n="bx.p2b">Pe urmă fiecare rând devine un produs, în trei pași, în ordine:</p>
             <ul class="cs-list">
-              <li><code>1 · aliasuri</code><span data-i18n="bx.c1">corecturile tale: îi spui o dată că „PIEPT PUI CAS” e piept de pui și ține minte</span></li>
-              <li><code>2 · dicționar</code><span data-i18n="bx.c2">cuvinte-cheie, cele mai specifice primele; prima potrivire câștigă</span></li>
-              <li><code>3 · primul cuvânt</code><span data-i18n="bx.c3">pe bonurile românești produsul e de obicei primul cuvânt: „LAPTE ZUZU 1,5%” devine Lapte</span></li>
+              <li><code>1 · aliasuri</code><span data-i18n="bx.c1">corecturile tale: îi spui o dată ce e un rând și ține minte pentru bonurile viitoare</span></li>
+              <li><code>2 · dicționar</code><span data-i18n="bx.c2">115 reguli cu cuvinte-cheie, cele mai specifice primele (un „suc portocale” e suc, nu portocale)</span></li>
+              <li><code>3 · primul cuvânt</code><span data-i18n="bx.c3">dacă nu știe produsul, ia primul cuvânt și îl marchează „verifică”, ca să-l confirmi tu</span></li>
             </ul>
+            <p data-i18n-html="bx.p2c">Același bon scanat de două ori e blocat: fiecare bon are o <strong>amprentă</strong> din magazin, dată, total și rânduri.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== 03 Datele ===== -->
+    <!-- ===== 04 Sub capotă ===== -->
     <section class="cs-sec" aria-labelledby="bx-date" data-reveal="once">
       <div class="wrap">
         <header class="sec-head rule-t">
-          <p class="sec-label mono"><span>03</span> / <span data-i18n="bx.s3">Datele</span></p>
+          <p class="sec-label mono"><span>04</span> / <span data-i18n="bx.s3">Sub capotă</span></p>
           <h2 class="sec-title split" id="bx-date" data-i18n="bx.h3">Totul stă pe telefon</h2>
         </header>
         <div class="tech lift">
           <article>
+            <p class="mono">bani.dart</p>
+            <h3 data-i18n="bx.t1h">Sume în bani, nu în zecimale</h3>
+            <p data-i18n-html="bx.t1">Toate sumele sunt numere întregi, în bani: 12,50 lei e <code>1250</code>. Așa nu apar erori de rotunjire când aduni sute de bonuri.</p>
+            <p class="eq">12,50 lei → 1250</p>
+          </article>
+          <article>
             <p class="mono">db.dart</p>
-            <h3 data-i18n="bx.t1h">Tabela de cheltuieli</h3>
-            <p data-i18n-html="bx.t1">Fiecare cheltuială are dată, sumă, categorie, descriere, magazin și sursă (de mână sau de pe bon). Un <strong>index pe dată</strong> face rapoartele pe săptămână rapide.</p>
-            <p class="eq">CREATE INDEX idx_data ON cheltuieli(data)</p>
+            <h3 data-i18n="bx.t2h">Șapte tabele în SQLite</h3>
+            <p data-i18n-html="bx.t2">Produsele sunt comune tuturor magazinelor; fiecare rând de bon păstrează și <strong>textul original</strong>. Corecturile stau în <code>aliasuri</code>, iar indexurile pe dată și pe produs țin analizele rapide.</p>
+            <p class="eq">aliasuri(text_bon PRIMARY KEY, produs_id)</p>
           </article>
           <article>
-            <p class="mono">db.dart, produse.dart</p>
-            <h3 data-i18n="bx.t2h">Ține minte corecturile</h3>
-            <p data-i18n-html="bx.t2">Corecturile stau în tabela <code>aliasuri</code>, cu textul curățat de pe bon drept cheie. Corectezi o dată, iar data viitoare aplicația recunoaște singură produsul.</p>
-            <p class="eq">aliasuri(text_bon PRIMARY KEY, produs, categorie)</p>
+            <p class="mono">analiza.dart</p>
+            <h3 data-i18n="bx.t3h">Prognoza pe lună</h3>
+            <p data-i18n="bx.t3">Ia ritmul zilnic din ultimele 4 săptămâni, fără plățile fixe, și adaugă plățile recurente care mai urmează luna asta. Spune și cât de sigură e: sub 2 săptămâni de date, încrederea e scăzută.</p>
+            <p class="eq">până acum + ritm × zile rămase + fixe</p>
           </article>
           <article>
-            <p class="mono">models.dart</p>
-            <h3 data-i18n="bx.t3h">Nouă categorii</h3>
-            <p data-i18n="bx.t3">Mâncare, ieșiri, transport, parcare, sală, abonamente, cămin sau chirie, casă și igienă, altele. Fiecare are iconița și culoarea ei.</p>
-          </article>
-          <article>
-            <p class="mono">raport.dart</p>
-            <h3 data-i18n="bx.t4h">Raportul pe săptămână</h3>
-            <p data-i18n="bx.t4">Săptămâna începe luni la 00:00. Raportul arată cheltuielile pe categorii și lista „Pe ce s-au dus banii”, cu suma și procentul fiecărui lucru.</p>
+            <p class="mono">main.dart</p>
+            <h3 data-i18n="bx.t4h">Fluidă la 120 Hz</h3>
+            <p data-i18n="bx.t4">Am măsurat timpii de cadru pe telefon, cu un build de test care îi scrie în log. Paginile se construiesc dinainte, sub ecranul de încărcare, și animațiile ascunse sunt oprite: pe Acasă, în repaus, nu se desenează niciun cadru.</p>
+            <p class="eq">8,3 ms / cadru</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- ===== 04 Unde e acum ===== -->
+    <!-- ===== 05 Unde e acum ===== -->
     <section class="cs-sec" aria-labelledby="bx-acum" data-reveal="once">
       <div class="wrap">
         <header class="sec-head rule-t">
-          <p class="sec-label mono"><span>04</span> / <span data-i18n="p2.s2">Unde e acum</span></p>
-          <h2 class="sec-title split" id="bx-acum" data-i18n="bx.h4">Merge de mână, urmează camera</h2>
+          <p class="sec-label mono"><span>05</span> / <span data-i18n="p2.s2">Unde e acum</span></p>
+          <h2 class="sec-title split" id="bx-acum" data-i18n="bx.h4">Merge cu textul bonului, urmează camera</h2>
         </header>
         <ul class="todo lift">
-          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d1">Baza de date locală (SQLite), cu index pe dată</span></li>
-          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d2">9 categorii: mâncare, ieșiri, transport, parcare, sală, abonamente, cămin, casă, altele</span></li>
-          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d3">Normalizarea numelor de pe bon, cu corecturile utilizatorului</span></li>
-          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d4">Ecranele Acasă, Adaugă și Raport</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d1">Baza de date locală, cu sumele în bani</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d2">Citirea textului de pe bon: magazin, cantități, reduceri, total</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d3">Recunoașterea produselor, cu corecturile tale</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d4">Livrări, restaurante și plăți recurente, separat de cumpărături</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d5">Analize pe săptămână și lună, cu prognoză</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d6">Cele 5 ecrane, cu design propriu și logo</span></li>
           <li><i aria-hidden="true"></i><span data-i18n="p2.d5">Scanarea bonului cu camera (OCR pe telefon)</span></li>
+          <li><i aria-hidden="true"></i><span data-i18n="bx.d7">Alerte de buget și raportul de duminică</span></li>
+          <li><i aria-hidden="true"></i><span data-i18n="bx.d8">Temă luminoasă și limba engleză</span></li>
         </ul>
       </div>
     </section>
@@ -240,7 +258,7 @@
     </section>
   </main>
 
-  <script src="../assets/js/i18n-bonix.js?v=6.2" defer></script>
-  <script src="../assets/js/main.js?v=6.2" defer></script>
+  <script src="../assets/js/i18n-bonix.js?v=7" defer></script>
+  <script src="../assets/js/main.js?v=7" defer></script>
 </body>
 </html>
