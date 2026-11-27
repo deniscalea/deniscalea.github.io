@@ -723,7 +723,8 @@
     var W = 1, H = 1, aspect = 1, dist = 40, shift = [0, 0], t0 = performance.now(), lost = false;
     var target = reduce ? 0.45 : 0, prog01 = target, curStep = -1;
     var FOV = 32 * Math.PI / 180, TANF = Math.tan(FOV / 2);
-    var useScroll = !reduce;
+    /* fără secvență blocată la scroll: pagina curge direct în jos, iar semnul se rotește singur, lent */
+    var useScroll = false;
     if (useScroll) section.classList.add('sign-scroll');
 
     function persp(a) {
@@ -763,6 +764,7 @@
     function draw(now) {
       if (lost) return;
       var time = reduce ? 6 : (now - t0) / 1000;
+      if (!reduce && !useScroll) target = 0.42 + 0.3 * Math.sin(time * 0.22);
       if (!reduce) prog01 += (target - prog01) * 0.1;
       var p = prog01;
       var e = smooth(0.2, 0.62, p) * (1 - 0.6 * smooth(0.82, 1.0, p));
