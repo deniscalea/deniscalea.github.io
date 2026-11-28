@@ -1204,3 +1204,32 @@ body.header-shown .chan { top: var(--header-h); }
   .phone-duo > .phone-back { transform: translateX(-24%) translateY(-3%) rotateZ(-5deg) scale(0.86); }
 }
 @media (min-width: 761px) { .teaser-phone .phone-shell { width: clamp(220px, 20vw, 290px); } }
+
+/* Simularea plăcii FPGA (v9): 5 butoane, LED de semnal verde și LED de fault roșu, jurnalul 4 × 5 */
+.rig-pad { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.rig-key { position: relative; overflow: hidden; display: grid; gap: 4px; align-content: center; justify-items: center; min-height: 72px; padding: 10px 6px; border: 1px solid var(--line-2); border-radius: 4px; background: rgba(255, 255, 255, 0.03); color: var(--fg); text-align: center; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.08s ease; }
+.rig-key b { font-weight: 600; font-size: 0.95rem; letter-spacing: 0.02em; }
+.rig-key span { font-size: 0.72rem; line-height: 1.25; color: var(--fg-3); }
+.rig-key:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+@media (hover: hover) { .rig-key:hover { border-color: var(--silver); background: rgba(255, 255, 255, 0.06); } }
+.rig-key.is-down { transform: translateY(1px); background: rgba(255, 255, 255, 0.1); }
+.rig-key-main { border-color: var(--silver); }
+.rig-key-main.is-go { border-color: #3ad17a; background: rgba(58, 209, 122, 0.12); }
+.rig-hold { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--silver); transform: scaleX(0); transform-origin: 0 50%; }
+.rig-key.is-long .rig-hold { background: rgb(var(--tint, 230 232 235)); }
+.rig-led[data-led="semnal"].on i, .tinted .rig-led[data-led="semnal"].on i { background: #3ad17a; border-color: #3ad17a; box-shadow: 0 0 12px 2px rgba(58, 209, 122, 0.6); }
+.rig-led[data-led="fault"].on i, .tinted .rig-led[data-led="fault"].on i { background: #ff3b30; border-color: #ff3b30; box-shadow: 0 0 12px 2px rgba(255, 59, 48, 0.6); }
+.rig-log { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: 0.78rem; table-layout: fixed; }
+.rig-log th, .rig-log td { padding: 7px 2px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+.rig-log thead th { color: var(--fg-3); font-weight: 400; }
+.rig-log th[scope="row"] { text-align: left; color: var(--fg-3); font-weight: 400; width: 2.6em; }
+.rig-log td { color: var(--fg-2); }
+.rig-log td[data-best] { color: var(--fg); font-weight: 600; }
+.rig-log tr.is-cur th[scope="row"] { color: var(--fg); }
+.rig-log tr.is-cur td, .rig-log tr.is-cur th { background: rgba(255, 255, 255, 0.04); }
+.rig-log tr.is-off td, .rig-log tr.is-off th { text-decoration: line-through; opacity: 0.45; }
+@media (max-width: 760px) {
+  .rig-pad { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .rig-key { grid-column: span 3; min-height: 64px; }
+  .rig-key-main { grid-column: span 6; order: -1; min-height: 72px; }
+}

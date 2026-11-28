@@ -40,10 +40,10 @@
         <span class="meta">2026 · <a href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">github</a></span>
       </div>
       <ul class="points">
-        <li>Un joc de timp de reacție pentru până la 4 jucători și 5 runde, scris integral în VHDL: fără procesor, fără software.</li>
-        <li>14 module VHDL (15 instanțe) în jurul unei unități de control: un FSM cu 11 stări și o cale de date care numără, compară și păstrează cel mai bun timp al fiecărui jucător.</li>
-        <li>Întârziere aleatoare de 1–5 s dintr-un LFSR pe 16 biți, detectarea startului fals și butoane cu debouncing (10 ms), cu apăsare scurtă și lungă.</li>
-        <li>Ceasul de 100 MHz e divizat la un tick de 1 ms; timpii apar pe 8 cifre de 7 segmente multiplexate, convertiți în BCD cu Double Dabble.</li>
+        <li>Un joc de timp de reacție pentru 4 jucători × 5 runde, scris integral în VHDL pe o placă FPGA Nexys A7: fără procesor, fără software.</li>
+        <li>O unitate de control FSM cu 11 stări și o cale de date care măsoară reacția în ms, păstrează cel mai bun timp al fiecărui jucător și arată la final cel mai rapid jucător.</li>
+        <li>Întârziere aleatoare de 1–5 s dintr-un LFSR pe 16 biți, LED de fault la apăsarea prea devreme și butoane pentru skip, resetul unui jucător (apăsare scurtă) sau al întregului joc (ținut 2 s).</li>
+        <li>Ceasul de 100 MHz divizat la un tick de 1 ms, debouncere de 10 ms, Double Dabble în BCD pe 8 cifre de 7 segmente multiplexate; 14 fișiere VHDL, 15 instanțe.</li>
       </ul>
     </div>
     <div class="item">

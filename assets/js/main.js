@@ -40,7 +40,7 @@
     'sign.title': 'What I do',
     'sign.lede': 'I study Computer Engineering at UTCN and work on projects alongside university. Mostly hardware so far, apps from now on.',
     'sign.s1h': 'Hardware',
-    'sign.s1': 'VHDL on an FPGA: a reaction game with 14 modules and an FSM.',
+    'sign.s1': 'VHDL on an FPGA: a reaction game for 4 players, 14 VHDL files and an FSM.',
     'sign.s2h': 'Code',
     'sign.s2': 'C/C++ at university. Java and SQL, just getting started.',
     'sign.s3h': 'Apps',
@@ -68,8 +68,8 @@
     'p1.kind': 'Hardware, VHDL',
     'p1.title': 'FPGA Multi-Player Reaction Time Game',
     'p1.img': 'Isometric render in graphite and silver of an FPGA chip marked TOP_GAME, with traces fanning out from its pins',
-    'p1.desc': 'A reaction time game for up to 4 players and 5 rounds, written entirely in VHDL: no processor and no software. The board lights an LED after a random delay and measures the reaction in milliseconds.',
-    'p1.s1': 'VHDL modules',
+    'p1.desc': 'A reaction time game for 4 players × 5 rounds, written entirely in VHDL: no processor and no software. After a random 1–5 s delay the board lights an LED and measures the reaction in milliseconds; pressing early is a fault. At the end it shows the player with the lowest time.',
+    'p1.s1': 'VHDL files',
     'p1.s2': 'FSM states',
     'p1.s3': 'tick derived from the 100 MHz clock',
     'p1.case': 'Read the case study',
@@ -108,30 +108,34 @@
       title: document.title,
       menuOpen: 'Deschide meniul', menuClose: 'Închide meniul',
       rig: {
-        start: 'Start', react: 'Reacționează', wait: 'Așteaptă…', again: 'Joc nou', fault: 'start fals',
-        IDLE: 'Apasă Start. Placa alege o întârziere de 1–5 secunde, apoi aprinde LED_SEMNAL.',
-        WAIT_RANDOM: function (r) { return 'Runda ' + r + ' din 5. Așteaptă LED_SEMNAL, nu apăsa înainte.'; },
-        PLAY: 'LED_SEMNAL e aprins: apasă!',
-        FAULT: 'Start fals: ai apăsat înainte de LED_SEMNAL. Afișajul arată 0, recordul nu se schimbă.',
-        EVAL: function (ms) { return 'Timpul tău: ' + ms + ' ms.'; },
-        WINNER: function (b) { return b == null ? 'Gata, 5 runde fără niciun timp valid.' : 'Gata, 5 runde. Cel mai bun timp: ' + b + ' ms.'; },
+        IDLE: function (u) { return 'IDLE. Apasă START: U' + u + ' începe runda, iar placa alege o întârziere de 1, 2, 3, 4 sau 5 s. BTNL scurt: recordurile.'; },
+        WAIT_RANDOM: function (u, r) { return 'U' + u + ', runda ' + r + ' din 5. Așteaptă LED_SEMNAL. Dacă apeși REACT acum, e fault.'; },
+        PLAY: 'LED_SEMNAL e aprins: apasă REACT!',
+        FAULT: 'Fault: ai apăsat înainte de LED_SEMNAL. Se aprinde LED_FAULT, afișajul arată 0, runda se pierde.',
+        SKIP: 'Runda sărită: niciun timp salvat, trece la runda următoare.',
+        EVAL: function (ms) { return 'Timpul tău: ' + ms + ' ms. Runda următoare pornește singură.'; },
+        WINNER: function (w, ms) { return 'Gata, toate rundele s-au jucat. Cel mai mic timp: U' + w + ', ' + ms + ' ms. BTNL scurt: best-ul fiecărui jucător. START: înapoi în IDLE.'; },
+        WINNER0: 'Gata, dar niciun jucător n-are un timp valid, așa că afișajul arată 0.',
+        VIEW: function (u, on) { return 'Recorduri: best-ul lui U' + u + (on ? '' : ' (șters)') + '. BTNL scurt: următorul jucător; BTNL ținut 1 s: îl șterge. START: IDLE.'; },
         disp: function (s) { return 'Afișaj: ' + s; },
-        none: '–'
+        none: '–', f: 'F', s: 'skip'
       }
     },
     en: {
       title: document.title,
       menuOpen: 'Open menu', menuClose: 'Close menu',
       rig: {
-        start: 'Start', react: 'React', wait: 'Wait…', again: 'New game', fault: 'false start',
-        IDLE: 'Press Start. The board picks a 1–5 second delay, then lights LED_SEMNAL.',
-        WAIT_RANDOM: function (r) { return 'Round ' + r + ' of 5. Wait for LED_SEMNAL, don’t press early.'; },
-        PLAY: 'LED_SEMNAL is on: press!',
-        FAULT: 'False start: you pressed before LED_SEMNAL. The display shows 0 and the record stays the same.',
-        EVAL: function (ms) { return 'Your time: ' + ms + ' ms.'; },
-        WINNER: function (b) { return b == null ? 'Done, 5 rounds with no valid time.' : 'Done, 5 rounds. Best time: ' + b + ' ms.'; },
+        IDLE: function (u) { return 'IDLE. Press START: U' + u + ' starts the round and the board picks a 1, 2, 3, 4 or 5 s delay. Short BTNL: the records.'; },
+        WAIT_RANDOM: function (u, r) { return 'U' + u + ', round ' + r + ' of 5. Wait for LED_SEMNAL. Pressing REACT now is a fault.'; },
+        PLAY: 'LED_SEMNAL is on: press REACT!',
+        FAULT: 'Fault: you pressed before LED_SEMNAL. LED_FAULT lights up, the display shows 0 and the round is lost.',
+        SKIP: 'Round skipped: no time saved, on to the next round.',
+        EVAL: function (ms) { return 'Your time: ' + ms + ' ms. The next round starts on its own.'; },
+        WINNER: function (w, ms) { return 'Done, every round has been played. Lowest time: U' + w + ', ' + ms + ' ms. Short BTNL: each player’s best. START: back to IDLE.'; },
+        WINNER0: 'Done, but no player has a valid time, so the display shows 0.',
+        VIEW: function (u, on) { return 'Records: U' + u + '’s best' + (on ? '' : ' (deleted)') + '. Short BTNL: next player; hold BTNL 1 s: delete them. START: IDLE.'; },
         disp: function (s) { return 'Display: ' + s; },
-        none: '–'
+        none: '–', f: 'F', s: 'skip'
       }
     }
   };
@@ -921,19 +925,21 @@
   })();
 
   /* =========================================================
-     Simularea plăcii (studiul de caz): urmează stările din UC.vhd pentru un singur jucător,
-     cu întârzierea aleasă ca în rand_reg.vhd (LFSR pe 16 biți, 1–5 s) și afișajul din DISPLAY_CTRL.vhd.
+     Simularea plăcii (studiul de caz): un port în JS al logicii din repo.
+     UC.vhd (stările și tranzițiile), game_counters.vhd (4 jucători × 5 runde, jucători activi),
+     records_memory.vhd (cel mai bun timp per jucător, FFFF = fără scor), winner_eval.vhd,
+     reset_ctrl.vhd (RST: scurt = rst_user, ținut 2 s = reset total), btn_press_ctrl.vhd (BTNL: scurt / ținut 1 s),
+     rand_reg.vhd (LFSR, 1–5 s) și DISPLAY_CTRL.vhd (ce arată afișajul în fiecare fază).
      ========================================================= */
   var fsmNodes = $$('.fsm [data-state]');
   function fsmSet(name) { fsmNodes.forEach(function (g) { g.classList.toggle('is-now', g.getAttribute('data-state') === name); }); }
 
   var game = (function () {
-    var display = $('#rig-display'), btn = $('#rig-btn'), status = $('#rig-status');
-    if (!display || !btn || !status) return null;
-    var btnLabel = $('.btn-in', btn) || btn;
+    var display = $('#rig-display'), status = $('#rig-status'), keys = $$('.rig-key');
+    if (!display || !status || !keys.length) return null;
     var stateEl = $('#rig-state');
     var ledS = $('[data-led="semnal"]'), ledF = $('[data-led="fault"]');
-    var bestEls = $$('[data-round]');
+    var logRows = $$('.rig-log [data-u]');
 
     var NS = 'http://www.w3.org/2000/svg';
     var T = 9, L = 38;
@@ -961,8 +967,9 @@
       digits.push(segs);
     }
 
-    var state = 'IDLE', round = 1, held = 0, live = 0, best = null, startedAt = 0, timer = null, raf = null, lastMs = null;
-    var rounds = [null, null, null, null, null];
+    var NONE = 0xFFFF;
+    /* registrele: UC (state), game_counters (u, r, active), records_memory (rec), DISPLAY_CTRL (held) */
+    var state, u, r, active, rec, held, live, startedAt, lastMs, log, timer = null, raf = null, flashT = null;
 
     /* rand_reg.vhd: registru de 16 biți, seed x"ACE1", reacție din biții 15, 13, 12, 10; biții 2..0 aleg întârzierea */
     var lfsr = 0xACE1;
@@ -979,71 +986,184 @@
       }
     }
 
+    /* game_counters.vhd */
+    function nextActive(from) {                      // inc_user: sare peste jucătorii șterși
+      if (!active.some(Boolean)) return from;
+      var n = (from + 1) & 3;
+      for (var s = 0; s < 3 && !active[n]; s++) n = (n + 1) & 3;
+      return n;
+    }
+    function gameDone() {                            // runda 5 a ultimului jucător activ
+      if (r !== 5) return false;
+      for (var j = u + 1; j < 4; j++) if (active[j]) return false;
+      return true;
+    }
+    /* winner_eval.vhd: minimul din rec_u1..u4, la egalitate câștigă jucătorul cu numărul mai mic */
+    function winner() {
+      var id = 0;
+      for (var j = 1; j < 4; j++) if (rec[j] < rec[id]) id = j;
+      return id;
+    }
+
+    function clearTimers() { clearTimeout(timer); clearTimeout(flashT); cancelAnimationFrame(raf); timer = flashT = raf = null; }
     function pad4(n) { var s = String(clamp(Math.round(n), 0, 9999)); while (s.length < 4) s = '0' + s; return s; }
-    function text() { return 'U1r' + Math.min(round, 5) + pad4(state === 'PLAY' ? live : (state === 'WINNER' ? (best == null ? 0 : best) : held)); }
+    /* DISPLAY_CTRL.vhd: view_mode → best-ul jucătorului curent; WINNER → câștigătorul; altfel timpul live sau held_score */
+    function screen() {
+      if (state === 'VIEW_RECORDS' || state === 'WAIT_RELEASE' || state === 'FORCE_JUMP') return { id: u, t: rec[u] === NONE ? 0 : rec[u] };
+      if (state === 'WINNER') { var w = winner(); return { id: w, t: rec[w] === NONE ? 0 : rec[w] }; }
+      return { id: u, t: state === 'PLAY' ? live : held };
+    }
     function draw() {
-      var s = text();
+      var sc = screen(), s = 'U' + (sc.id + 1) + 'r' + r + pad4(sc.t);
       for (var d = 0; d < 8; d++) {
         var on = GLYPH[s.charAt(d)] || '';
         for (var key in digits[d]) digits[d][key].classList.toggle('on', on.indexOf(key) !== -1);
       }
-      display.setAttribute('aria-label', D().rig.disp('U1 r' + Math.min(round, 5) + ' ' + s.slice(4)));
+      display.setAttribute('aria-label', D().rig.disp('U' + (sc.id + 1) + ' r' + r + ' ' + s.slice(4)));
     }
     function setLed(el, on) { if (el) el.classList.toggle('on', !!on); }
     function relabel() {
-      var r = D().rig;
-      btnLabel.textContent = state === 'IDLE' ? r.start : state === 'WINNER' ? r.again : state === 'PLAY' ? r.react : state === 'WAIT_RANDOM' ? r.react : r.wait;
-      var st = r[state];
-      if (state === 'WAIT_RANDOM') st = r.WAIT_RANDOM(round);
-      else if (state === 'EVAL' || state === 'RESTART_ROUND') st = lastMs == null ? r.FAULT : r.EVAL(lastMs);
-      else if (state === 'WINNER') st = r.WINNER(best);
-      if (typeof st === 'string') status.textContent = st;
-      bestEls.forEach(function (el) { var v = rounds[+el.getAttribute('data-round')]; el.textContent = v == null ? r.none : v < 0 ? r.fault : v + ' ms'; });
+      var t = D().rig, st;
+      if (state === 'IDLE') st = t.IDLE(u + 1);
+      else if (state === 'WAIT_RANDOM' || state === 'AUTO_START') st = t.WAIT_RANDOM(u + 1, r);
+      else if (state === 'PLAY') st = t.PLAY;
+      else if (state === 'FAULT') st = t.FAULT;
+      else if (state === 'EVAL' || state === 'RESTART_ROUND') st = lastMs == null ? (state === 'EVAL' ? t.FAULT : t.SKIP) : t.EVAL(lastMs);
+      else if (state === 'WINNER') { var w = winner(); st = rec[w] === NONE ? t.WINNER0 : t.WINNER(w + 1, rec[w]); }
+      else st = t.VIEW(u + 1, active[u]);
+      status.textContent = st;
+      logRows.forEach(function (row) {
+        var j = +row.getAttribute('data-u');
+        row.classList.toggle('is-cur', j === u && state !== 'WINNER');
+        row.classList.toggle('is-off', !active[j]);
+        $$('[data-r]', row).forEach(function (c) { var v = log[j][+c.getAttribute('data-r')]; c.textContent = v == null ? t.none : v === 'F' ? t.f : v === 'S' ? t.s : v; });
+        var b = $('[data-best]', row); if (b) b.textContent = rec[j] === NONE ? t.none : rec[j];
+      });
     }
     function go(next) {
       state = next;
       if (stateEl) stateEl.textContent = next;
       fsmSet(next);
-      btn.classList.toggle('is-go', next === 'PLAY');
-      btn.setAttribute('aria-disabled', String(next === 'FAULT' || next === 'EVAL' || next === 'RESTART_ROUND'));
       setLed(ledS, next === 'PLAY');
       setLed(ledF, next === 'FAULT');
+      keys.forEach(function (b) { if (b.getAttribute('data-key') === 'REACT') b.classList.toggle('is-go', next === 'PLAY'); });
       draw();
       relabel();
     }
-    function waitRandom() {
+    /* stările de un singur ciclu (AUTO_START, RESTART_ROUND, WAIT_RELEASE, FORCE_JUMP) se văd scurt în diagramă */
+    function flash(name, then) { go(name); flashT = setTimeout(function () { flashT = null; then(); }, 160); }
+
+    function waitRandom() {                          // en_random a ales t_random; MAIN_COUNT numără de la 0
+      lastMs = null;
+      var delay = pickDelay();
       go('WAIT_RANDOM');
-      timer = setTimeout(function () {                 // comparator: t_total ≥ t_random → time_done
+      timer = setTimeout(function () {               // comparator: t_total ≥ t_random → time_done
         startedAt = performance.now(); live = 0;
         go('PLAY');
         var tick = function () { live = performance.now() - startedAt; draw(); raf = requestAnimationFrame(tick); };
         raf = requestAnimationFrame(tick);
-      }, pickDelay());
+      }, delay);
     }
     function restartRound() {
-      go('RESTART_ROUND');
-      if (round >= 5) { go('WINNER'); return; }      // game_done
-      round++;
-      waitRandom();
+      flash('RESTART_ROUND', function () {
+        if (gameDone()) { go('WINNER'); return; }
+        if (r === 5) { r = 1; u = nextActive(u); } else r++;   // inc_round, iar după runda 5 și inc_user
+        waitRandom();
+      });
     }
-    function press() {
-      if (state === 'IDLE') { round = 1; held = 0; best = null; lastMs = null; rounds = [null, null, null, null, null]; waitRandom(); }
-      else if (state === 'WAIT_RANDOM') {             // react înainte de time_done → FAULT
-        clearTimeout(timer);
-        held = 0; lastMs = null; rounds[round - 1] = -1;
-        go('FAULT');
-        timer = setTimeout(function () { go('EVAL'); timer = setTimeout(restartRound, 500); }, 500);   // 50 000 000 de cicluri = 0,5 s
-      } else if (state === 'PLAY') {                   // save_if_best
-        cancelAnimationFrame(raf);
-        var ms = Math.round(performance.now() - startedAt);
-        held = ms; lastMs = ms; rounds[round - 1] = ms;
-        if (best === null || ms < best) best = ms;
-        go('EVAL');
-        timer = setTimeout(restartRound, 500);
-      } else if (state === 'WINNER') { round = 1; held = 0; go('IDLE'); }
+    function busy() { return flashT !== null; }
+
+    var press = {
+      START: function () {
+        if (busy()) return;
+        if (state === 'IDLE') waitRandom();
+        else if (state === 'WINNER' || state === 'VIEW_RECORDS') { clearTimers(); go('IDLE'); }
+      },
+      REACT: function () {
+        if (busy()) return;
+        if (state === 'WAIT_RANDOM') {               // react înainte de time_done → FAULT
+          clearTimers();
+          held = 0; lastMs = null; log[u][r - 1] = 'F';
+          go('FAULT');
+          timer = setTimeout(function () { go('EVAL'); timer = setTimeout(restartRound, 500); }, 500);   // 50 000 000 de cicluri = 0,5 s, de două ori
+        } else if (state === 'PLAY') {               // save_if_best
+          clearTimers();
+          var ms = Math.round(performance.now() - startedAt);
+          held = ms; lastMs = ms; log[u][r - 1] = ms;
+          if (ms < rec[u]) rec[u] = ms;
+          go('EVAL');
+          timer = setTimeout(restartRound, 500);
+        }
+      },
+      SKIP: function () {                            // UC: skip → RESTART_ROUND, fără save_if_best
+        if (busy()) return;
+        if (state === 'WAIT_RANDOM' || state === 'PLAY') { clearTimers(); lastMs = null; log[u][r - 1] = 'S'; restartRound(); }
+      },
+      RST_SHORT: function () {                       // rst_user: records_memory șterge best-ul jucătorului, game_counters pune runda 1
+        rec[u] = NONE; r = 1; log[u] = [null, null, null, null, null];
+        if (state === 'WINNER' || state === 'VIEW_RECORDS') { draw(); relabel(); return; }
+        clearTimers();
+        flash('AUTO_START', waitRandom);             // UC: AUTO_START → WAIT_RANDOM, fără START
+      },
+      RST_LONG: function () { clearTimers(); reset(); },   // rst_global
+      BTNL_SHORT: function () {
+        if (busy()) return;
+        if (state === 'IDLE') go('VIEW_RECORDS');
+        else if (state === 'WINNER' || state === 'VIEW_RECORDS') {
+          u = nextActive(u);                         // inc_user (din WINNER sare de la U4 la U1)
+          if (state === 'VIEW_RECORDS') flash('WAIT_RELEASE', function () { go('VIEW_RECORDS'); }); else go('VIEW_RECORDS');
+        }
+      },
+      BTNL_LONG: function () {                       // del_user: jucătorul curent iese din joc, best-ul lui se șterge
+        if (busy()) return;
+        active[u] = false; rec[u] = NONE;
+        if (state === 'WAIT_RANDOM' || state === 'PLAY') { clearTimers(); go('IDLE'); }
+        else if (state === 'VIEW_RECORDS') { u = nextActive(u); flash('FORCE_JUMP', function () { go('VIEW_RECORDS'); }); }
+        else { draw(); relabel(); }
+      }
+    };
+
+    function reset() {
+      state = 'IDLE'; u = 0; r = 1; active = [true, true, true, true]; rec = [NONE, NONE, NONE, NONE];
+      held = 0; live = 0; lastMs = null;
+      log = [0, 1, 2, 3].map(function () { return [null, null, null, null, null]; });
+      go('IDLE');
     }
-    btn.addEventListener('click', press);
-    go('IDLE');
+
+    /* butoanele: START, REACT, SKIP pe apăsare (debouncer = un impuls pe front);
+       RST și BTNL măsoară cât timp sunt ținute, ca reset_ctrl.vhd și btn_press_ctrl.vhd */
+    keys.forEach(function (b) {
+      var name = b.getAttribute('data-key'), hold = +b.getAttribute('data-hold') || 0, bar = $('.rig-hold', b);
+      var downAt = 0, longT = null, fired = false, isDown = false;
+      function down(e) {
+        if (isDown) return;
+        if (e && e.type === 'pointerdown') { if (e.button !== 0) return; try { b.setPointerCapture(e.pointerId); } catch (x) {} }
+        isDown = true;
+        b.classList.add('is-down');
+        if (!hold) { press[name](); return; }
+        downAt = performance.now(); fired = false;
+        if (bar) { bar.style.transition = 'none'; bar.style.transform = 'scaleX(0)'; void bar.offsetWidth; bar.style.transition = 'transform ' + hold + 'ms linear'; bar.style.transform = 'scaleX(1)'; }
+        longT = setTimeout(function () { fired = true; b.classList.add('is-long'); press[name + '_LONG'](); }, hold);
+      }
+      function up() {
+        if (!isDown) return;
+        isDown = false;
+        b.classList.remove('is-down', 'is-long');
+        if (!hold) return;
+        clearTimeout(longT);
+        if (bar) { bar.style.transition = 'none'; bar.style.transform = 'scaleX(0)'; }
+        if (!fired && performance.now() - downAt > 10) press[name + '_SHORT']();   // sub 10 ms nu contează, ca în cod
+      }
+      b.addEventListener('pointerdown', down);
+      b.addEventListener('pointerup', up);
+      b.addEventListener('pointercancel', up);
+      b.addEventListener('keydown', function (e) { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) { e.preventDefault(); down(e); } });
+      b.addEventListener('keyup', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); up(); } });
+      b.addEventListener('blur', up);
+      b.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    });
+
+    reset();
     return { relabel: relabel };
   })();
 

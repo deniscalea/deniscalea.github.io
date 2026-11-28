@@ -2,7 +2,7 @@
 <html lang="ro" data-base="../"
       data-en-title="FPGA Reaction Time Game · Case study · CALEA"
       data-en-desc="Case study: a multi-player reaction time game written entirely in VHDL on FPGA. Architecture, FSM, LFSR, Double Dabble, debouncing and a playable simulation."
-      data-en-og="A reaction time game for up to 4 players, written entirely in VHDL on FPGA: architecture, FSM and a playable simulation.">
+      data-en-og="A reaction time game for 4 players × 5 rounds, written entirely in VHDL on FPGA: architecture, FSM and a playable simulation.">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +19,7 @@
   <meta property="og:locale" content="ro_RO">
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:title" content="Joc de reacție multi-player pe FPGA · CALEA">
-  <meta property="og:description" content="Un joc de timp de reacție pentru până la 4 jucători, scris integral în VHDL pe FPGA: arhitectura, FSM-ul și o simulare jucabilă.">
+  <meta property="og:description" content="Un joc de timp de reacție pentru 4 jucători × 5 runde, scris integral în VHDL pe FPGA: arhitectura, FSM-ul și o simulare jucabilă.">
   <meta property="og:image" content="https://deniscalea.github.io/assets/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css?v=8">
+  <link rel="stylesheet" href="../assets/css/style.css?v=9">
 
   <script>
     (function () {
@@ -81,19 +81,19 @@
         <p class="cs-kicker mono rule-b"><a class="nav-back" href="../#proiecte"><span class="arrow" aria-hidden="true">←</span><span data-i18n="cs.back">Toate proiectele</span></a><span data-i18n="cs.kicker">P.01, studiu de caz, 2026</span></p>
         <h1 class="cs-title split" id="cs-titlu" data-i18n="p1.title">Joc de reacție multi-player pe FPGA</h1>
         <div class="cs-intro">
-          <p class="cs-lede lift" data-i18n="cs.lede">Un joc de timp de reacție pentru până la 4 jucători, câte 5 runde fiecare, construit integral în hardware: VHDL pe o placă FPGA, fără procesor și fără software. Placa aprinde un LED după o întârziere aleatoare, măsoară reacția în milisecunde, prinde starturile false și alege câștigătorul.</p>
+          <p class="cs-lede lift" data-i18n="cs.lede">Un joc de timp de reacție pentru 4 jucători, câte 5 runde fiecare, construit integral în hardware: VHDL pe o placă FPGA, fără procesor și fără software. Placa aprinde LED-ul de semnal după o întârziere aleatoare și măsoară reacția în milisecunde. Dacă apeși prea devreme, se aprinde LED-ul de fault. La final, afișajul arată jucătorul cu cel mai mic timp.</p>
           <ul class="cs-facts lift">
             <li><span class="mono" data-i18n="cs.f1">Limbaj</span><b>VHDL</b></li>
-            <li><span class="mono" data-i18n="cs.f2">Unelte</span><b>Vivado</b></li>
-            <li><span class="mono" data-i18n="cs.f3">Module</span><b data-i18n="cs.f3v">14, în 15 instanțe</b></li>
+            <li><span class="mono" data-i18n="cs.f2">Placă, unelte</span><b>Nexys A7-100T, Vivado</b></li>
+            <li><span class="mono" data-i18n="cs.f3">Module</span><b data-i18n="cs.f3v">14 fișiere VHDL, 15 instanțe</b></li>
             <li><span class="mono" data-i18n="cs.f4">Control</span><b data-i18n="cs.f4v">FSM cu 11 stări</b></li>
             <li><span class="mono" data-i18n="cs.f5">Ceas</span><b data-i18n="cs.f5v">100 MHz, tick de 1 ms</b></li>
           </ul>
         </div>
         <figure class="cs-cover">
           <span class="curtain"><span class="frame"><img class="fx" src="../assets/img/seg7.webp" width="1600" height="1000" decoding="async"
-               alt="Afișajul cu 8 cifre pe 7 segmente în prim-plan, arătând U1 r3 0247: jucătorul 1, runda 3, 247 de milisecunde" data-i18n-alt="cs.coverAlt"></span></span>
-          <figcaption class="mono fig-cap"><span data-i18n="cs.coverCap">Formatul afișajului din DISPLAY_CTRL.vhd: U, jucătorul, r, runda, apoi timpul în ms</span><span>fig. 01</span></figcaption>
+               alt="Afișajul cu 8 cifre pe 7 segmente în prim-plan, arătând U1 r3 0247: jucătorul 1, runda 3, 247 de milisecunde (valori de exemplu)" data-i18n-alt="cs.coverAlt"></span></span>
+          <figcaption class="mono fig-cap"><span data-i18n="cs.coverCap">Formatul afișajului din DISPLAY_CTRL.vhd în timpul jocului: U, jucătorul, r, runda, apoi timpul în ms (aici, un exemplu)</span><span>fig. 01</span></figcaption>
         </figure>
       </div>
     </section>
@@ -110,12 +110,16 @@
             <p data-i18n-html="cs.p1a">Timpul de reacție se măsoară în sute de milisecunde, deci jocul trebuie să numere exact și să nu poată fi anticipat. Asta înseamnă <strong>o întârziere aleatoare</strong> înainte de semnal, <strong>un ceas precis</strong>, <strong>detectarea apăsărilor premature</strong> și <strong>o memorie</strong> care păstrează cel mai bun timp al fiecărui jucător.</p>
             <p data-i18n="cs.p1b">Totul e logică digitală: niciun microcontroler, niciun program care rulează pe un procesor. Doar module VHDL legate între ele și o unitate de control. Comenzile sunt butoanele plăcii:</p>
             <ul class="cs-list">
-              <li><code>START</code><span data-i18n="cs.c1">pornește așteptarea aleatoare pentru runda curentă</span></li>
-              <li><code>REACT</code><span data-i18n="cs.c2">butonul de reacție, apăsat cât mai repede după LED_SEMNAL</span></li>
-              <li><code>SKIP</code><span data-i18n="cs.c3">sare peste jucătorul curent și trece la următorul</span></li>
-              <li><code>RST</code><span data-i18n="cs.c4">scurt: reia jucătorul curent de la runda 1; lung: reset global</span></li>
-              <li><code>BTNL</code><span data-i18n="cs.c5">scurt: răsfoiește recordurile; lung (1 s): șterge jucătorul selectat</span></li>
+              <li><code>START</code><span data-i18n="cs.c1">pornește jocul din IDLE; după aceea rundele pornesc singure, una după alta</span></li>
+              <li><code>REACT</code><span data-i18n="cs.c2">butonul de reacție, apăsat cât mai repede după ce se aprinde LED_SEMNAL; apăsat înainte, e fault</span></li>
+              <li><code>SKIP</code><span data-i18n="cs.c3">sare peste runda curentă: nu se salvează niciun timp și jocul trece la runda următoare</span></li>
+              <li><code>RST</code><span data-i18n="cs.c4">apăsare scurtă: resetează doar jucătorul curent (best-ul lui se șterge, reia de la runda 1); ținut 2 s: reset total</span></li>
+              <li><code>BTNL</code><span data-i18n="cs.c5">la final (sau din IDLE): trece prin jucători și arată best time-ul fiecăruia; ținut 1 s: șterge jucătorul selectat</span></li>
             </ul>
+          </div>
+          <div class="cs-col lift">
+            <p data-i18n-html="cs.p1c"><strong>Cum se joacă.</strong> Afișajul arată <code>U</code>, jucătorul, <code>r</code>, runda, apoi un timp în ms. După START, placa alege în secret o întârziere de 1–5 s. Când se termină, se aprinde <code>LED_SEMNAL</code> și afișajul numără milisecundele până apeși REACT. Timpul rămâne pe ecran 0,5 s, apoi începe singură runda următoare. Dacă apeși înainte de semnal, se aprinde <code>LED_FAULT</code> pentru 0,5 s, afișajul arată 0 și runda se pierde, fără timp.</p>
+            <p data-i18n-html="cs.p1d"><strong>Finalul.</strong> După runda 5 a lui U4, jocul se oprește în <code>WINNER</code>: afișajul arată jucătorul cu cel mai mic timp și timpul lui. Placa ține minte doar cel mai bun timp al fiecărui jucător, nu și runda în care l-a făcut. Cu BTNL treci prin U1…U4 și vezi best time-ul fiecăruia. Un joc nou începe după reset total.</p>
           </div>
         </div>
       </div>
@@ -130,7 +134,7 @@
         </header>
         <div class="cs-body">
           <div class="cs-col lift">
-            <p data-i18n-html="cs.p2a">Entitatea de top, <code>TOP_GAME</code>, leagă <strong>15 instanțe (U0–U14) din 14 module</strong>: <code>debouncer</code> apare de trei ori, restul câte o dată. În stânga, intrările sunt curățate; în centru, unitatea de control <code>UC</code> decide; în dreapta, calea de date numără, compară, ține minte și afișează.</p>
+            <p data-i18n-html="cs.p2a">Entitatea de top, <code>TOP_GAME</code>, leagă <strong>15 instanțe (U0–U14) din 13 module</strong>: <code>debouncer</code> apare de trei ori (START, REACT, SKIP), restul câte o dată. <code>rst_user</code>, <code>rst_global</code> și apăsarea lungă pe BTNL ajung și direct în memoria de recorduri și în contoare. În stânga, intrările sunt curățate; în centru, unitatea de control <code>UC</code> decide; în dreapta, calea de date numără, compară, ține minte și afișează.</p>
           </div>
         </div>
         <figure class="diagram lift">
@@ -147,6 +151,7 @@
               <text class="t-group" x="120" y="22" data-i18n="cs.gIn">condiționarea intrărilor</text>
               <rect class="group" x="748" y="22" width="254" height="500" rx="4"/>
               <text class="t-group" x="756" y="14" data-i18n="cs.gDp">calea de date</text>
+              <text class="t-sig" x="120" y="484" data-i18n="cs.dgBypass">rst_user, rst_global, btnl_long: și în U10, U11</text>
 
               <!-- pini de intrare -->
               <g class="t-pin">
@@ -250,7 +255,7 @@
               </g>
             </svg>
           </div>
-          <figcaption class="mono fig-cap"><span data-i18n="cs.dgCap">Modulele și semnalele reale din TOPMODULE.vhd. Ceasul CLK ajunge la toate modulele; nu e desenat peste tot.</span><span>fig. 02</span></figcaption>
+          <figcaption class="mono fig-cap"><span data-i18n="cs.dgCap">Modulele și semnalele reale din TOPMODULE.vhd. Ceasul CLK ajunge la toate modulele, iar resetul global la aproape toate; nu sunt desenate peste tot.</span><span>fig. 02</span></figcaption>
           <p class="diagram-hint mono" data-i18n="cs.swipe">Glisează diagrama în lateral.</p>
         </figure>
       </div>
@@ -265,14 +270,14 @@
         </header>
         <div class="cs-body">
           <div class="cs-col lift">
-            <p data-i18n-html="cs.p3a"><code>UC.vhd</code> e un automat cu stări finite în stil cu două procese: unul registrează starea la fiecare front de ceas, celălalt calculează ieșirile și starea următoare. În <code>FAULT</code> și <code>EVAL</code>, automatul așteaptă <strong>50 000 000 de cicluri (0,5 s)</strong>, ca rezultatul să rămână vizibil. O apăsare scurtă pe RST (<code>rst_user</code>) trimite jocul în <code>AUTO_START</code> din orice stare de joc.</p>
+            <p data-i18n-html="cs.p3a"><code>UC.vhd</code> e un automat cu stări finite în stil cu două procese: unul registrează starea la fiecare front de ceas, celălalt calculează ieșirile și starea următoare. În <code>FAULT</code> și <code>EVAL</code>, automatul așteaptă <strong>50 000 000 de cicluri (0,5 s)</strong>, ca rezultatul să rămână vizibil. O apăsare scurtă pe RST (<code>rst_user</code>) trimite jocul în <code>AUTO_START</code> din orice stare de joc, iar runda 1 a jucătorului pornește fără START. SKIP, în <code>WAIT_RANDOM</code> sau <code>PLAY</code>, sare direct în <code>RESTART_ROUND</code>, fără să salveze timpul. <code>RESTART_ROUND</code> trece la runda următoare, după runda 5 la jucătorul următor, iar după ultimul jucător duce în <code>WINNER</code>.</p>
           </div>
         </div>
         <figure class="diagram lift">
           <div class="diagram-scroll" tabindex="0" role="region" aria-label="Diagrama FSM (derulabilă)" data-i18n-aria="cs.fsmScroll">
             <svg class="dg fsm" viewBox="0 0 1200 720" role="img" aria-labelledby="fsm-t fsm-d">
               <title id="fsm-t" data-i18n="cs.fsmTitle">Diagrama de stări a UC</title>
-              <desc id="fsm-d" data-i18n="cs.fsmDesc">IDLE trece în WAIT_RANDOM la start. WAIT_RANDOM trece în PLAY la time_done sau în FAULT la react. PLAY trece în EVAL la react. FAULT și EVAL așteaptă 0,5 s. EVAL trece în RESTART_ROUND, care revine în WAIT_RANDOM sau, la game_done, trece în WINNER. Din WINNER și IDLE, btnl_short duce în VIEW_RECORDS, care comunică cu WAIT_RELEASE și FORCE_JUMP; start revine în IDLE. rst_user duce în AUTO_START, care trece direct în WAIT_RANDOM.</desc>
+              <desc id="fsm-d" data-i18n="cs.fsmDesc">IDLE trece în WAIT_RANDOM la start. WAIT_RANDOM trece în PLAY la time_done sau în FAULT la react. PLAY trece în EVAL la react. Din WAIT_RANDOM și PLAY, skip duce în RESTART_ROUND, iar apăsarea lungă pe BTNL în IDLE. FAULT și EVAL așteaptă 0,5 s. EVAL trece în RESTART_ROUND, care revine în WAIT_RANDOM sau, la game_done, trece în WINNER. Din WINNER și IDLE, btnl_short duce în VIEW_RECORDS, care comunică cu WAIT_RELEASE și FORCE_JUMP; start revine în IDLE. rst_user duce în AUTO_START, care trece direct în WAIT_RANDOM.</desc>
               <defs>
                 <marker id="fa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker>
                 <marker id="fb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah-main" d="M0 0L10 5L0 10z"/></marker>
@@ -358,7 +363,7 @@
           <article>
             <p class="mono">rand_reg.vhd</p>
             <h3>LFSR</h3>
-            <p data-i18n-html="cs.t1">Un registru de 16 biți pornit de la <code>x"ACE1"</code> se deplasează la fiecare ceas, iar bitul nou e XOR între biții 15, 13, 12 și 10. Cât timp FSM-ul ține <code>en_random</code> activ, ultimii 3 biți aleg întârzierea: <strong>1, 2, 3, 4 sau 5 secunde</strong>. Jucătorul nu are cum să știe când apare semnalul.</p>
+            <p data-i18n-html="cs.t1">Un registru de 16 biți pornit de la <code>x"ACE1"</code> se deplasează la fiecare ceas, iar bitul nou e XOR între biții 15, 13, 12 și 10. Cât timp FSM-ul ține <code>en_random</code> activ, ultimii 3 biți aleg întârzierea: <strong>1, 2, 3, 4 sau 5 secunde</strong> (1, 2 și 3 s ies de două ori mai des decât 4 și 5 s). În IDLE registrul e citit continuu, până apeși START, deci momentul apăsării decide valoarea. Jucătorul nu are cum să știe când apare semnalul.</p>
             <p class="eq">r ← r(14:0) &amp; (r15 ⊕ r13 ⊕ r12 ⊕ r10)</p>
           </article>
           <article>
@@ -370,7 +375,7 @@
           <article>
             <p class="mono">debouncer.vhd, btn_press_ctrl.vhd</p>
             <h3 data-i18n="cs.t3h">Debouncing și apăsări lungi</h3>
-            <p data-i18n-html="cs.t3">Un buton real oscilează când e apăsat. Debouncerul acceptă o schimbare abia după <strong>1 000 000 de cicluri stabile (10 ms)</strong> și scoate un singur impuls, pe frontul crescător. Pentru BTNL, un numărător separă apăsarea scurtă de cea lungă: peste <strong>100 000 000 de cicluri (1 s)</strong> e lungă.</p>
+            <p data-i18n-html="cs.t3">Un buton real oscilează când e apăsat. Debouncerul acceptă o schimbare abia după <strong>1 000 000 de cicluri stabile (10 ms)</strong> și scoate un singur impuls, pe frontul crescător. RST și BTNL au câte un numărător care separă apăsarea scurtă de cea lungă: la BTNL, <strong>100 000 000 de cicluri (1 s)</strong>; la RST, <strong>200 000 000 de cicluri (2 s)</strong> înseamnă reset total. Sub 10 ms, apăsarea e ignorată.</p>
             <p class="eq">count = x"F4240" → btn_state ← btn_in</p>
           </article>
           <article>
@@ -416,7 +421,7 @@
       <div class="wrap">
         <header class="sec-head rule-t">
           <p class="sec-label mono"><span>06</span> / <span data-i18n="cs.s6">Încearcă</span></p>
-          <h2 class="sec-title split" id="cs-joc" data-i18n="cs.h6">Joacă cinci runde</h2>
+          <h2 class="sec-title split" id="cs-joc" data-i18n="cs.h6">Joacă 4 jucători × 5 runde</h2>
         </header>
         <div class="rig lift">
           <div class="rig-board">
@@ -428,18 +433,27 @@
               </div>
               <p class="rig-state mono"><span data-i18n="cs.state">stare</span>: <b id="rig-state">IDLE</b></p>
             </div>
-            <button class="btn btn-primary rig-btn" id="rig-btn" type="button"><span class="btn-in">Start</span></button>
+            <div class="rig-pad" role="group" aria-label="Butoanele plăcii" data-i18n-aria="cs.pad">
+              <button class="rig-key" type="button" data-key="START"><b class="mono">START</b><span data-i18n="cs.kStart">pornește jocul</span></button>
+              <button class="rig-key rig-key-main" type="button" data-key="REACT"><b class="mono">REACT</b><span data-i18n="cs.kReact">apasă la LED_SEMNAL</span></button>
+              <button class="rig-key" type="button" data-key="SKIP"><b class="mono">SKIP</b><span data-i18n="cs.kSkip">sare runda</span></button>
+              <button class="rig-key" type="button" data-key="RST" data-hold="2000"><b class="mono">RST</b><span data-i18n="cs.kRst">scurt: jucătorul · 2 s: tot</span><i class="rig-hold" aria-hidden="true"></i></button>
+              <button class="rig-key" type="button" data-key="BTNL" data-hold="1000"><b class="mono">BTNL</b><span data-i18n="cs.kBtnl">scurt: recorduri · 1 s: șterge</span><i class="rig-hold" aria-hidden="true"></i></button>
+            </div>
           </div>
           <div class="rig-side">
             <p class="rig-status" id="rig-status" aria-live="polite"></p>
-            <ul class="rig-best mono" aria-label="Timpii pe runde" data-i18n-aria="cs.rounds">
-              <li><span>r1</span><span data-round="0">–</span></li>
-              <li><span>r2</span><span data-round="1">–</span></li>
-              <li><span>r3</span><span data-round="2">–</span></li>
-              <li><span>r4</span><span data-round="3">–</span></li>
-              <li><span>r5</span><span data-round="4">–</span></li>
-            </ul>
-            <p class="rig-note mono" data-i18n="cs.note">Simulare în browser, simplificată la un singur jucător (U1). Stările, întârzierile de 1–5 s, pauzele de 0,5 s și formatul afișajului urmează codul VHDL.</p>
+            <table class="rig-log mono">
+              <caption class="visually-hidden" data-i18n="cs.rounds">Timpii pe jucători și runde</caption>
+              <thead><tr><th scope="col"></th><th scope="col">r1</th><th scope="col">r2</th><th scope="col">r3</th><th scope="col">r4</th><th scope="col">r5</th><th scope="col">best</th></tr></thead>
+              <tbody>
+                <tr data-u="0"><th scope="row">U1</th><td data-r="0"></td><td data-r="1"></td><td data-r="2"></td><td data-r="3"></td><td data-r="4"></td><td data-best></td></tr>
+                <tr data-u="1"><th scope="row">U2</th><td data-r="0"></td><td data-r="1"></td><td data-r="2"></td><td data-r="3"></td><td data-r="4"></td><td data-best></td></tr>
+                <tr data-u="2"><th scope="row">U3</th><td data-r="0"></td><td data-r="1"></td><td data-r="2"></td><td data-r="3"></td><td data-r="4"></td><td data-best></td></tr>
+                <tr data-u="3"><th scope="row">U4</th><td data-r="0"></td><td data-r="1"></td><td data-r="2"></td><td data-r="3"></td><td data-r="4"></td><td data-best></td></tr>
+              </tbody>
+            </table>
+            <p class="rig-note mono" data-i18n="cs.note">Simulare în browser, după codul VHDL: aceleași stări, întârzieri de 1–5 s, pauze de 0,5 s, praguri de 1 s și 2 s pentru BTNL și RST, același afișaj. Tabelul e doar jurnalul simulării: placa ține minte numai coloana „best”.</p>
           </div>
         </div>
       </div>
@@ -462,7 +476,7 @@
     </section>
   </main>
 
-  <script src="../assets/js/i18n-fpga.js?v=8" defer></script>
-  <script src="../assets/js/main.js?v=8" defer></script>
+  <script src="../assets/js/i18n-fpga.js?v=9" defer></script>
+  <script src="../assets/js/main.js?v=9" defer></script>
 </body>
 </html>

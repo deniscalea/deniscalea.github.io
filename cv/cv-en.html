@@ -40,10 +40,10 @@
         <span class="meta">2026 · <a href="https://github.com/deniscalea/FPGA-Multi-Player-Reaction-Time-Game">github</a></span>
       </div>
       <ul class="points">
-        <li>A reaction time game for up to 4 players and 5 rounds, written entirely in VHDL: no processor, no software.</li>
-        <li>14 VHDL modules (15 instances) around a control unit: an FSM with 11 states and a data path that counts, compares and keeps each player’s best time.</li>
-        <li>A random 1–5 s delay from a 16-bit LFSR, false start detection, and debounced buttons (10 ms) with short and long presses.</li>
-        <li>The 100 MHz clock is divided down to a 1 ms tick; times appear on 8 multiplexed 7-segment digits, converted to BCD with Double Dabble.</li>
+        <li>A reaction time game for 4 players × 5 rounds, written entirely in VHDL on a Nexys A7 FPGA board: no processor, no software.</li>
+        <li>An 11-state FSM control unit and a data path that measures each reaction in ms, keeps every player’s best time and shows the fastest player at the end.</li>
+        <li>Random 1–5 s delay from a 16-bit LFSR, a fault LED for early presses, and buttons to skip a round, reset one player (short press) or the whole game (held 2 s).</li>
+        <li>100 MHz clock divided to a 1 ms tick, 10 ms debouncers, Double Dabble BCD on 8 multiplexed 7-segment digits; 14 VHDL files, 15 instances.</li>
       </ul>
     </div>
     <div class="item">
