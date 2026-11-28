@@ -1186,11 +1186,11 @@ body.header-shown .chan { top: var(--header-h); }
 .phone-duo > .phone-back { z-index: 0; opacity: 0.5; filter: saturate(0.8) brightness(0.75); transform: translateX(-44%) translateY(-5%) rotateY(-10deg) rotateX(6deg) rotateZ(-5deg) scale(0.86); }
 @media (hover: hover) { .teaser-media:hover .phone-duo > .phone-back { opacity: 0.7; transform: translateX(-52%) translateY(-4%) rotateZ(-7deg) scale(0.86); } }
 /* pagina Bonix: galeria cu ecranele */
-.shots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(18px, 2.6vw, 40px); margin-top: clamp(28px, 5vh, 56px); }
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(18px, 2.6vw, 40px); margin-top: clamp(28px, 5vh, 56px); }
 .shot { display: grid; gap: 16px; align-content: start; margin: 0; }
 .shot .phone-shell, .tinted .shot .phone-shell { width: 100%; transform: none; border-radius: 40px; padding: 8px; }
 .shot .phone-shot { border-radius: 32px; }
-.shot:nth-child(2) .phone-shell { transition-delay: 0.12s; } .shot:nth-child(3) .phone-shell { transition-delay: 0.24s; } .shot:nth-child(4) .phone-shell { transition-delay: 0.36s; }
+.shot:nth-child(2) .phone-shell { transition-delay: 0.12s; } .shot:nth-child(3) .phone-shell { transition-delay: 0.24s; } .shot:nth-child(4) .phone-shell { transition-delay: 0.12s; } .shot:nth-child(5) .phone-shell { transition-delay: 0.24s; } .shot:nth-child(6) .phone-shell { transition-delay: 0.36s; }
 .shot figcaption { display: grid; gap: 4px; }
 .shot figcaption .mono { color: rgb(var(--tint)); font-size: 0.7rem; }
 .shot figcaption b { font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; }

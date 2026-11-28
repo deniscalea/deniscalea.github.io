@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Martian+Mono:wdth,wght@75..112.5,300..600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/style.css?v=7">
+  <link rel="stylesheet" href="../assets/css/style.css?v=8">
 
   <script>
     (function () {
@@ -82,13 +82,14 @@
         <p class="cs-kicker mono rule-b"><a class="nav-back" href="../#p-app"><span class="arrow" aria-hidden="true">←</span><span data-i18n="cs.back">Toate proiectele</span></a><span data-i18n="bx.kicker">CH 02, în lucru, 2026</span></p>
         <h1 class="cs-title split" id="cs-titlu" data-i18n="p2.title">Bonix, cheltuieli pe fiecare produs</h1>
         <div class="cs-intro">
-          <p class="cs-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane. Bonix citește bonul, recunoaște fiecare produs (bananele de la Lidl și cele de la Kaufland ajung în același loc) și arată unde se duc banii, pe săptămână și pe lună. Totul stă pe telefon.</p>
+          <p class="cs-lede lift" data-i18n="p2.desc">Vreau să știu nu doar cât am dat pe mâncare, ci cât pe banane. Fac poză bonului și Bonix îl citește offline, recunoaște fiecare produs (bananele de la Lidl și cele de la Kaufland ajung în același loc) și arată unde se duc banii, pe săptămână și pe lună. Totul stă pe telefon.</p>
           <ul class="cs-facts lift">
             <li><span class="mono" data-i18n="p2.f1">Platformă</span><b>Flutter, Dart, Android</b></li>
             <li><span class="mono" data-i18n="p2.f2">Date</span><b data-i18n="p2.f2v">SQLite local, fără cont</b></li>
             <li><span class="mono" data-i18n="p2.f4">Ecrane</span><b data-i18n="p2.f4v">Acasă, Analize, Scanează, Produse, Profil</b></li>
-            <li><span class="mono" data-i18n="bx.f6">Teste</span><b data-i18n="bx.f6v">15, cu bonuri Lidl și Kaufland</b></li>
-            <li><span class="mono" data-i18n="bx.f5">Stadiu</span><b class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="bx.f5v">În lucru, v0.4</span></b></li>
+            <li><span class="mono" data-i18n="bx.f6">Teste</span><b data-i18n="bx.f6v">27, cu bonuri Lidl, Kaufland și Carrefour</b></li>
+            <li><span class="mono" data-i18n="bx.f5">Stadiu</span><b class="state"><span class="state-dot" aria-hidden="true"></span><span data-i18n="bx.f5v">În lucru, v0.6</span></b></li>
+            <li><span class="mono" data-i18n="bx.f7">Folosită</span><b data-i18n="bx.f7v">zilnic, de mine, pe telefon</b></li>
           </ul>
         </div>
         <div class="cs-phone">
@@ -111,26 +112,36 @@
         <div class="shots">
           <figure class="shot">
             <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-analize.webp" width="600" height="1333" loading="lazy" decoding="async"
-                 alt="Ecranul Analize: 237,30 lei săptămâna asta, cu 19% mai puțin decât săptămâna trecută, și bare pe zile" data-i18n-alt="bx.g1a"></span>
+                 alt="Ecranul Analize: 237,30 lei săptămâna asta, cu 19% mai puțin decât cei 294 lei de săptămâna trecută, și bare pe zile" data-i18n-alt="bx.g1a"></span>
             <figcaption><span class="mono">02 / Analize</span><b data-i18n="bx.g1h">Săptămâna și luna</b><span data-i18n="bx.g1">Glisezi între perioade. Bare pe zile față de săptămâna dinainte, distribuția pe categorii și o prognoză pentru final de lună.</span></figcaption>
           </figure>
           <figure class="shot">
+            <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-hub.webp" width="600" height="1333" loading="lazy" decoding="async"
+                 alt="Hubul Adaugă: Scanează bon, Cheltuială, Livrare, Ieșit în oraș și Plată recurentă" data-i18n-alt="bx.g5a"></span>
+            <figcaption><span class="mono">03 / Adaugă</span><b data-i18n="bx.g5h">Un singur buton pentru tot</b><span data-i18n="bx.g5">Butonul din mijloc deschide hubul: scanezi un bon sau notezi o cheltuială, o livrare, o ieșire în oraș ori o plată recurentă.</span></figcaption>
+          </figure>
+          <figure class="shot">
             <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-scan.webp" width="600" height="1333" loading="lazy" decoding="async"
-                 alt="Ecranul Scanează bonul: un bon Lidl citit rând cu rând, cu butonul pentru textul bonului și poza marcată „în curând”" data-i18n-alt="bx.g3a"></span>
-            <figcaption><span class="mono">03 / Scanează</span><b data-i18n="bx.g3h">Bonul, rând cu rând</b><span data-i18n="bx.g3">Acum lipești textul bonului și îl confirmi. Poza cu camera e marcată „în curând”: încă nu merge.</span></figcaption>
+                 alt="Ecranul Scanează bonul: un bon Lidl citit rând cu rând și butoanele Fă poză la bon, Din galerie și Scrie textul" data-i18n-alt="bx.g3a"></span>
+            <figcaption><span class="mono">04 / Scanează</span><b data-i18n="bx.g3h">Poză, galerie sau text</b><span data-i18n="bx.g3">Faci poză bonului sau o alegi din galerie, iar telefonul o citește fără internet. Mai poți lipi și textul bonului.</span></figcaption>
+          </figure>
+          <figure class="shot">
+            <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-confirma.webp" width="600" height="1333" loading="lazy" decoding="async"
+                 alt="Ecranul Verifică bonul: Lidl, patru produse recunoscute și suma lor egală cu totalul bonului, 43,17 lei" data-i18n-alt="bx.g6a"></span>
+            <figcaption><span class="mono">05 / Verifică</span><b data-i18n="bx.g6h">Verifici înainte să salvezi</b><span data-i18n="bx.g6">Fiecare rând arată produsul recunoscut și textul de pe bon. Aplicația verifică dacă suma produselor e egală cu totalul. Bonul din captură e un exemplu de test.</span></figcaption>
           </figure>
           <figure class="shot">
             <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-produse.webp" width="600" height="1333" loading="lazy" decoding="async"
                  alt="Ecranul Produse: 21 de produse din 4 magazine, primul fiind Banane, cumpărate de 13 ori, 104,24 lei" data-i18n-alt="bx.g2a"></span>
-            <figcaption><span class="mono">04 / Produse</span><b data-i18n="bx.g2h">Fiecare produs, din toate magazinele</b><span data-i18n="bx.g2">De câte ori l-ai cumpărat, cât ai dat pe el, prețul mediu și din ce magazine.</span></figcaption>
+            <figcaption><span class="mono">06 / Produse</span><b data-i18n="bx.g2h">Fiecare produs, din toate magazinele</b><span data-i18n="bx.g2">De câte ori l-ai cumpărat, cât ai dat pe el, prețul mediu și din ce magazine.</span></figcaption>
           </figure>
           <figure class="shot">
             <span class="phone-shell"><img class="phone-shot" src="../assets/img/bonix-profil.webp" width="600" height="1333" loading="lazy" decoding="async"
-                 alt="Ecranul Profil: 54 de tranzacții, 17 bonuri, 21 de produse, bugetul lunar și cheltuielile recurente" data-i18n-alt="bx.g4a"></span>
-            <figcaption><span class="mono">05 / Profil</span><b data-i18n="bx.g4h">Buget și plăți fixe</b><span data-i18n="bx.g4">Bugetul pe lună, plățile recurente (cămin, sală, Spotify) care se adaugă singure la scadență și copierea datelor ca CSV.</span></figcaption>
+                 alt="Ecranul Profil, secțiunea Aspect: temele de culoare Smarald, Roz, Roșu și Albastru, apoi limbile Română, English, Français și Español; deasupra, 54 de tranzacții, 17 bonuri și 21 de produse" data-i18n-alt="bx.g4a"></span>
+            <figcaption><span class="mono">07 / Profil</span><b data-i18n="bx.g4h">Teme și limbi</b><span data-i18n="bx.g4">Cinci teme de culoare și patru limbi (română, engleză, franceză, spaniolă), schimbate pe loc. Mai jos: bugetul lunar, plățile recurente și copierea datelor ca CSV.</span></figcaption>
           </figure>
         </div>
-        <p class="shots-note mono" data-i18n="bx.gnote">Capturi din aplicație pe un emulator Android, cu datele demo din aplicație (5 săptămâni de bonuri inventate, marcate „DATE DEMO”).</p>
+        <p class="shots-note mono" data-i18n="bx.gnote">Capturi din aplicație pe un emulator Android, cu datele demo din aplicație (5 săptămâni de bonuri inventate, marcate „DATE DEMO”), în română.</p>
       </div>
     </section>
 
@@ -171,13 +182,15 @@
         </div>
         <div class="cs-body">
           <div class="cs-col lift">
-            <p data-i18n-html="bx.p2a">Întâi parserul citește bonul: <strong>magazinul</strong>, rândurile cu preț, cantitățile (<code>1,234 KG x 6,99</code>), reducerile și linia <code>TOTAL</code>. Apoi verifică dacă rândurile adună cât totalul, ca să nu se piardă nimic. Ce nu are un preț clar e ignorat: nu inventează nimic.</p>
+            <p data-i18n-html="bx.p2a">Fac poză bonului sau o aleg din galerie, iar telefonul o citește singur, <strong>offline</strong>, cu Google ML Kit. Rândurile se reconstruiesc după unghiul pozei, deci merge și când bonul e strâmb. Apoi parserul citește <strong>magazinul</strong>, rândurile cu preț, cantitățile (<code>1,234 KG x 6,99</code>), reducerile și linia <code>TOTAL</code>, și verifică dacă rândurile adună cât totalul. Dacă un preț lipsește, îl calculează din cantitate și preț unitar și îl marchează; rândurile pe care nu le poate citi le raportează, nu le inventează.</p>
+            <p data-i18n="bx.p2r">Pe bonuri reale, fotografiate cu telefonul: Lidl 10 din 10 produse, 64,77 lei, și Carrefour 4 din 4, 26,23 lei.</p>
             <p data-i18n="bx.p2b">Pe urmă fiecare rând devine un produs, în trei pași, în ordine:</p>
             <ul class="cs-list">
-              <li><code>1 · aliasuri</code><span data-i18n="bx.c1">corecturile tale: îi spui o dată ce e un rând și ține minte pentru bonurile viitoare</span></li>
-              <li><code>2 · dicționar</code><span data-i18n="bx.c2">115 reguli cu cuvinte-cheie, cele mai specifice primele (un „suc portocale” e suc, nu portocale)</span></li>
+              <li><code>1 · aliasuri</code><span data-i18n="bx.c1">corecturile tale, ținute minte pe magazin: îi spui o dată ce e un rând și știe la bonurile viitoare</span></li>
+              <li><code>2 · dicționar</code><span data-i18n="bx.c2">132 de reguli cu cuvinte-cheie, cele mai specifice primele (un „suc portocale” e suc, nu portocale); repară greșeli de OCR (cifre în loc de litere, cuvinte rupte) și înțelege prescurtările</span></li>
               <li><code>3 · primul cuvânt</code><span data-i18n="bx.c3">dacă nu știe produsul, ia primul cuvânt și îl marchează „verifică”, ca să-l confirmi tu</span></li>
             </ul>
+            <p data-i18n="bx.p2d">Pentru un produs necunoscut pot căuta online (Open Food Facts), doar când cer eu. Garanția SGR și ecotaxa ajung într-o categorie separată, „Garanții și taxe”, nu printre produse.</p>
             <p data-i18n-html="bx.p2c">Același bon scanat de două ori e blocat: fiecare bon are o <strong>amprentă</strong> din magazin, dată, total și rânduri.</p>
           </div>
         </div>
@@ -225,18 +238,24 @@
       <div class="wrap">
         <header class="sec-head rule-t">
           <p class="sec-label mono"><span>05</span> / <span data-i18n="p2.s2">Unde e acum</span></p>
-          <h2 class="sec-title split" id="bx-acum" data-i18n="bx.h4">Merge cu textul bonului, urmează camera</h2>
+          <h2 class="sec-title split" id="bx-acum" data-i18n="bx.h4">Scanarea cu camera merge, urmează alertele și exportul</h2>
         </header>
         <ul class="todo lift">
           <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d1">Baza de date locală, cu sumele în bani</span></li>
-          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d2">Citirea textului de pe bon: magazin, cantități, reduceri, total</span></li>
-          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d3">Recunoașterea produselor, cu corecturile tale</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="p2.d5">Scanarea bonului cu camera (OCR pe telefon)</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d2">Citirea bonului: magazin, cantități, reduceri, total, chiar și din poze strâmbe</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d3">Recunoașterea produselor, cu corecturile tale ținute minte pe magazin</span></li>
           <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d4">Livrări, restaurante și plăți recurente, separat de cumpărături</span></li>
           <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d5">Analize pe săptămână și lună, cu prognoză</span></li>
-          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d6">Cele 5 ecrane, cu design propriu și logo</span></li>
-          <li><i aria-hidden="true"></i><span data-i18n="p2.d5">Scanarea bonului cu camera (OCR pe telefon)</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d6">Cele 5 ecrane, cu design propriu, logo și hub de adăugare</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d9">Română, engleză, franceză și spaniolă, cu 5 teme de culoare</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d10">Prima pornire ghidată și ștergere cu „Anulează”</span></li>
+          <li class="is-done"><i aria-hidden="true"></i><span data-i18n="bx.d11">Garanțiile SGR și taxele, separate de produse</span></li>
           <li><i aria-hidden="true"></i><span data-i18n="bx.d7">Alerte de buget și raportul de duminică</span></li>
-          <li><i aria-hidden="true"></i><span data-i18n="bx.d8">Temă luminoasă și limba engleză</span></li>
+          <li><i aria-hidden="true"></i><span data-i18n="bx.d8">Temă luminoasă</span></li>
+          <li><i aria-hidden="true"></i><span data-i18n="bx.d12">Export CSV ca fișier și raport lunar PDF</span></li>
+          <li><i aria-hidden="true"></i><span data-i18n="bx.d13">Cont și sincronizare în cloud</span></li>
+          <li><i aria-hidden="true"></i><span data-i18n="bx.d14">Clasificare cu AI pentru produsele necunoscute</span></li>
         </ul>
       </div>
     </section>
@@ -244,9 +263,9 @@
     <!-- ===== Final ===== -->
     <section class="wrap" aria-labelledby="cs-final" data-reveal="once">
       <div class="cs-end rule-t">
-        <h2 class="cs-end-title split" id="cs-final" data-i18n="bx.end">Codul vine pe GitHub</h2>
+        <h2 class="cs-end-title split" id="cs-final" data-i18n="bx.end">Codul nu e încă pe GitHub</h2>
         <div class="cs-end-actions lift">
-          <p class="work-note" data-i18n="p2.note">Codul ajunge pe GitHub când scanarea bonului merge.</p>
+          <p class="work-note" data-i18n="p2.note">Codul ajunge pe GitHub după ce curăț proiectul.</p>
           <a class="proj-link mono" href="../#proiecte"><span aria-hidden="true">←</span> <span data-i18n="cs.back">Toate proiectele</span></a>
         </div>
       </div>
@@ -258,7 +277,7 @@
     </section>
   </main>
 
-  <script src="../assets/js/i18n-bonix.js?v=7" defer></script>
-  <script src="../assets/js/main.js?v=7" defer></script>
+  <script src="../assets/js/i18n-bonix.js?v=8" defer></script>
+  <script src="../assets/js/main.js?v=8" defer></script>
 </body>
 </html>
